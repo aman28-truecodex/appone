@@ -1,0 +1,103 @@
+<div class="container-fluid gryBG">  
+    <form [formGroup]="statusForm">      
+      <div class="row">
+      <div class="col-md-12">
+      <div class="boxs_BG mt-4">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="titleBG">Status</div>
+            <div class="row mt-4">
+              <div class="col-md-12">
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-6 col-form-label col-form-label-sm">Status Name <span
+                    class="red">*</span></label>
+                  <div class="col-sm-6 input_i_icon pr-0">
+                    <input type="text" class="form-control col-form-label-sm" placeholder="Status"
+                           (focus)="onFocusForElement('name')"
+                           (focusout)="onFocusOutForElement()"
+                           [ngClass]="{'my-error': shouldShowErrors('name', statusForm)}"
+                           formControlName="name"
+                           name="Status">
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-6 col-form-label col-form-label-sm">Description </label>
+                  <div class="col-sm-6 pr-0">
+                    <textarea class="form-control col-form-label-sm"  formControlName="description"
+                              name="description"
+                              placeholder="Description"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mt-4 balancedScorecardRadios">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Score </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="number" class="form-control col-form-label-sm"  placeholder="Numbers"
+                         formControlName="score" name="score">
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Status Icon </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="Status"
+                         formControlName="iconName"
+                         name="iconName">
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Custom Icon </label>
+                <div class="col-sm-6 pr-0">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                    <label class="custom-file-label" for="customFileLang">Upload Status Icon...</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-md-12">
+            <div class="form-group row m-0">
+              <label for="" class="col-sm-3 col-form-label col-form-label-sm">Elements </label>
+              <div class="col-sm-9 pr-0">
+                <div class="row">
+                  <div class="col-md-4" *ngFor="let item of linkedItems">
+                    <div class="bscElementsbroders">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="objectives1"
+                               (select)="getElements($event)">
+                        <label class="custom-control-label" for="objectives1">{{item.element}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="float-right">
+            <button type="button" class="btn btn-info btn-sm" (click)="saveStatus()"[disabled]="!statusForm.valid"
+                    [ngClass]="{'button-disabled': !statusForm.valid}"> Save
+            </button>
+            <button type="button" class="btn btn-cancel btn-sm" (click)="clearFileds()"> Cancel</button>
+          </div>
+        </div>
+      </div>
+      
+</div>  
+</div>
+    </form>
+</div>

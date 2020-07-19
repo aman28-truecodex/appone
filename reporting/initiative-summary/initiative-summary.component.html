@@ -1,0 +1,241 @@
+<div class="container-fluid ">
+  <!-- <div class="row"
+       style="background-color: #805ce6;text-align: center; padding: 15px;color:#fff;text-transform: uppercase">
+    <div class="col-md-12">
+
+       {{summaryReport.name}} {{'Report'}}
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-4" style="height:100%;background-color:rgb(248,248,248);box-shadow: 0 0 5px grey;;">
+        <div class="titleBG">  INITIATIVE SUMMARY REPORT</div>
+
+
+
+
+
+  <div class="row">
+    <div class="col-md-5">
+      <div class="boxs_BG mt-4" style="height:330px;">
+        <div class="titleBG"> Reports</div>
+        <div style="width: 280px; padding: 16px">
+          <div class="card-padding">
+            <label class="float-left">Year:</label>
+            <label class="float-right">
+              {{summaryReport.year ? summaryReport.year : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Period:</label>
+            <label class="float-right">
+              {{summaryReport.period ? summaryReport.period : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Organization:</label>
+            <label class="float-right">
+              {{summaryReport.orgUnit ? summaryReport.orgUnit : 'NA'}} - {{summaryReport.orgName ? summaryReport.orgName
+              : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Scorecard:</label>
+            <label class="float-right">{{summaryReport.scoreCard ? summaryReport.scoreCard : 'NA'}} -
+              {{summaryReport.scName ? summaryReport.scName : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Objective:</label>
+            <label class="float-right">
+              {{summaryReport.objective ? summaryReport.objective : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Description:
+            </label>
+            <label class="float-right">{{summaryReport.description ? summaryReport.description : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Owner :</label>
+            <label class="float-right">{{summaryReport.owner ? summaryReport.owner : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Collaborator:
+            </label>
+            <label class="float-right">
+              {{summaryReport.collaborators ? summaryReport.collaborators : 'NA'}}
+            </label>
+          </div>
+          <div class="card-padding">
+            <label class="float-left">Status:</label>
+            <label class="float-right">
+              {{summaryReport.status ? summaryReport.status : 'NA'}}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="boxs_BG mt-4" style="height:140px;">
+        <div class="titleBG"> Analysis</div>
+        <div class="mt-4">
+          <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+            <p>{{summaryReport.analysis}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="boxs_BG mt-5" style="height:140px">
+        <div class="titleBG"> Recommendation</div>
+        <div class="mt-4">
+          <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+            <p>{{summaryReport.recommendation}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-3" style="height: 317px;">
+        <div class="titleBG">Gantt chart</div>
+        <div class="bscTable" style="margin-top: 20px">
+          <table class="table">
+            <ng-container *ngFor="let item of summaryReport.initiativeList; let i = index;">
+              <tr *ngIf="i===0" class="bscBg-primary white th_center">
+                <th>Initiative Code</th>
+                <th>Initiative Name</th>
+                <th>Milestone Code</th>
+                <th>MileStone Name</th>
+                <th>Owner</th>
+                <th>Percent Complete</th>
+                <th>completed</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+              </tr>
+              <tr *ngIf="!!item.milestoneList && item.milestoneList.length > 0">
+                <td [attr.rowspan]="item.milestoneList.length +1">{{item.code}}</td>
+                <td [attr.rowspan]="item.milestoneList.length +1">{{item.name}}</td>
+              </tr>
+              <ng-container *ngIf="!!item.milestoneList && item.milestoneList.length > 0">
+                <tr *ngFor="let mile of item.milestoneList, let i = index;">
+                  <td>{{mile.code ? mile.code : 'NA'}}</td>
+                  <td>{{mile.name ? mile.name : 'NA'}}</td>
+                  <td>{{mile.owner ? mile.owner : 'NA'}}</td>
+                  <td>{{mile.percentComplete ? mile.percentComplete : 0}}%</td>
+                  <td>{{mile.completed === false ? 'In-progress' : 'Completed'}}</td>
+                  <td>{{mile.startDate ? (mile.startDate | date) : 'NA'}}</td>
+                  <td>{{mile.endDate ? (mile.endDate | date) : 'NA'}}</td>
+                </tr>
+              </ng-container>
+
+              <ng-container *ngIf="item.milestoneList === null">
+                <tr>
+                  <td>{{item.code}}</td>
+                  <td>{{item.name}}</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                  <td>NA</td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="boxs_BG mt-3" style="height: 317px;">
+        <div class="titleBG">Initiatives</div>
+        <div class="bscTable" style="margin-top: 20px;max-height: 256px;">
+          <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="sNo">
+              <th mat-header-cell *matHeaderCellDef>S.No</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>NAME</th>
+              <td mat-cell *matCellDef="let data; let i = index">{{data.name ? data.name : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>OWNER</th>
+              <td mat-cell *matCellDef="let data; let i = index"> {{data.owner ? data.owner : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+              <td mat-cell *matCellDef="let data"> {{data.status ? data.status : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentComplete">
+              <th mat-header-cell *matHeaderCellDef>PERCENT COMPLETE</th>
+              <td mat-cell *matCellDef="let data"> {{data.percentComplete ? data.percentComplete : 0}}%</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef>START DATE</th>
+              <td mat-cell *matCellDef="let data"> {{data.startDate}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef>END DATE</th>
+              <td mat-cell *matCellDef="let data">{{data.endDate}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedInitiativeColumns" style="background-color: #805ce6"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedInitiativeColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5,10]" [pageSize]="10" #paginatorRef>
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="boxs_BG mt-2" style="height:115px;">
+        <div class="titleBG"> Attachments</div>
+        <div class="border mt-4 pt-3 pb-2 pl-3">
+          <!--<span *ngIf="themeReportsNames.length === 0">No Reports Available</span>-->
+          <!--<span class="badge-chip" *ngFor="let item of themeReportsNames"><a>{{item.reportName}}</a></span>-->
+          <span *ngFor="let item of summaryReport.initiativeList" style="padding: 14px;">{{item.fileName ? item.fileName : 'No Files Available'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="boxs_BG mt-2" style="height:115px;">
+        <div class="titleBG"> Reports</div>
+        <div class="border mt-4 pt-3 pb-2 pl-3">
+          <span *ngFor="let item of summaryReport.initiativeList"><a [href]="item.fileName" download>{{item.fileName}} </a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="">
+    <div class="col-md-12">
+      <div class="float-right">
+        <button type="button" class="btn btn-info global-btn" (click)="makePdf()"> Generate
+        </button>
+      </div>
+    </div>
+  </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

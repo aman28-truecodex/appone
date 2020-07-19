@@ -1,0 +1,369 @@
+<div class="container-fluid gryBG">
+
+
+  <!-- ================= SWOT Analysis Start=================== -->
+  <form [formGroup]="strategyProjectionForm">
+    <div class="row">
+      <div class="col-md-12 mt-1 btn.Product">
+        <input type="button" class="btn btn-info btn-sm global-btn float-right" data-toggle="modal"
+               data-target="#modalLoginForm" (click)="clearFieldsForModal()"value="Product Group">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG" style="height:275px;">
+          <div class="titleBG"> Strategic Projection</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row mt-2">
+                <div class="col-md-6  ">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code<span
+                      class="red">*</span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"data-placement="top"
+                            title="{{tooltipInfo.orgCode}}"></span>
+                    </label>
+                    <div class="col-sm-7 input_i_icon">
+                      <select
+                        (change)="getCodeNameForPestal(); onFocusForElement('orgCode')"
+                        (focusout)="onFocusOutForElement()"
+                        [ngClass]="{'my-error': shouldShowErrors('orgCode', strategyProjectionForm)}"
+                        formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                        <option selected [ngValue]="null">Select Unit Code</option>
+                        <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                          {{ codeName.code}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  <div class="col-md-6">
+                    <div class="form-group row m-0 pb-2">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name </label>
+                      <div class="col-sm-7 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" formControlName="orgName" name="orgName"
+                               readonly placeholder="Organization Unit Name">
+                      </div>
+                    </div>
+                  </div>               
+                  <div class="col-md-6">
+                    <div class="form-group row m-0 pb-2">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Region <span
+                        class="red">*</span></label>
+                      <div class="col-sm-7">
+                        <input type="text" class="form-control col-form-label-sm"formControlName="region" name="region"
+                               placeholder="Region">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row m-0 pb-2">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Currency Unit </label>
+                      <div class="col-sm-7 pr-0">
+                        <select class="form-control col-form-label-sm" formControlName="currencyType" name="currencyType">
+                          <option selected [value]="null">Select curreny Unit</option>
+                          <option *ngFor="let unit of currencyUnit" [value]="unit.type">
+                            {{ unit.type}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>                
+                  <div class="col-md-6">
+                    <div class="form-group row m-0  pb-2">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Product Group <span
+                        class="red">*</span></label>
+                      <div class="col-sm-7">
+                        <select class="form-control col-form-label-sm" formControlName="productGroupName"
+                                (focus)="onFocusForElement('productGroupName')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('productGroupName', strategyProjectionForm)}"
+                                name="productGroupName" (change)="getProductUnitOfMeasure()">
+                          <option selected [ngValue]="null">Product Group</option>
+                          <option *ngFor="let item of prdGrp" [ngValue]="item.name">{{item.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row m-0 pb-2">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Unit Of Measure </label>
+                      <div class="col-sm-7 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" placeholder="Unit Of Measure" readonly
+                        formControlName="productGroupUnitOfMeasure" name="productGroupUnitOfMeasure">
+                      </div>
+                    </div>
+                  </div>                
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2 ">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version <span class="red">*</span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                            data-placement="top"
+                            title="{{tooltipInfo.version}}"></span>
+                    </label>
+                    <div class="col-sm-7">
+                      <select (change)="onFocusForElement('version')"
+                              formControlName='version' name='version'
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('version', strategyProjectionForm)}"
+                              class="form-control col-form-label-sm">
+                        <option selected [ngValue]="null">Select Version</option>
+                        <option *ngFor="let item of versions" [ngValue]="item.version">
+                          {{ item.version}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+               </div>
+                <div class="col-md-6 ">               
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Current Year <span
+                      class="red">*</span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                            data-placement="top"
+                            title="{{tooltipInfo.year}}"></span>
+                    </label>
+                    <div class="col-sm-7 pr-0">
+                      <select (ngModelChange)="getYear($event); onFocusForElement('year')"
+                              formControlName='year'
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('year', strategyProjectionForm)}"
+                              name='year' class="form-control col-form-label-sm">
+                        <option selected [ngValue]="null">Select Year</option>
+                        <option *ngFor="let year of years" [ngValue]="year.name">
+                          {{ year.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="boxs_BG" style="height:275px;">
+          <div class="titleBG"> Values</div>
+          <div class="row">
+            <div class="col-md-12 scrollbar" style="height: 191px; overflow-y: scroll">
+              <div class="row mt-4">
+                <div class="col-md-3">
+                  <div class="valuesBg"><p> Years </p></div>
+                </div>
+                <div class="col-md-3">
+                  <div class="valuesBg"><p> Quantity </p></div>
+                </div>
+                <div class="col-md-3">
+                  <div class="valuesBg"><p> Average Price </p></div>
+                </div>
+                <div class="col-md-3">
+                  <div class="valuesBg"><p> Revenue Amount </p></div>
+                </div>
+              </div>
+              <div class="row" formArrayName="values"
+                   *ngFor="let cd of strategyProjectionForm.controls.values['controls'];let i=index">
+                <div class="col-md-3">
+                  <div class="valuesBg"><p> {{AllYearsData[i].yearRef}} </p></div>
+                </div>
+                <ng-container formGroupName={{i}}>
+                  <div class="col-md-3"><input type="text" formControlName="quantity" name="quantity"
+                                               class="form-control col-form-label-sm" placeholder=" "
+                                               numbersOnly
+                                               (keyup)="calRevenueAmt(i)">
+                  </div>
+                  <div class="col-md-3"><input type="text" class="form-control col-form-label-sm" placeholder=" "
+                                               formControlName="averagePrice" name="averagePrice"
+                                               numbersOnly
+                                               (keyup)="calRevenueAmt(i)">
+                  </div>
+                  <div class="col-md-3"><input type="text" class="form-control col-form-label-sm" placeholder=" "
+                                               [readOnly]="true"
+                                               numbersOnly
+                                               formControlName="revenueAmount" name="revenueAmount">
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="float-right ">
+                <button type="button" class="btn btn-info btn-sm mr-1 btn.Product" (click)="submitStrategyProjection()"
+                        [disabled]="!strategyProjectionForm.valid"
+                        [ngClass]="{'button-disabled': !strategyProjectionForm.valid}"> Save
+                </button>
+                <button type="button" class="btn btn-cancel btn-sm btn.Product" (click)="clear()"> Cancel</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+
+
+    <div class="col-md-12">
+      <app-modal></app-modal>
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <!--  <label for="file-upload" class="custom-file-upload float-right global-btn btn btn-info">
+             <i class="fa fa-cloud-download" aria-hidden="true"></i> Import
+           </label>
+           <input id="file-upload" type="file" (change)="ImportAsExcel($event)"/>
+
+           <input type="button" class="btn btn-info global-btn float-right ml-2" (click)="exportAsExcel()"
+                  value="Export"> -->
+
+          <!--   <input type="button" class="btn btn-info global-btn float-right" data-toggle="modal"
+                   data-target="#modalLoginForm"
+                   (click)="clearFieldsForModal()"
+                   value="Product Group"> -->
+        </div>
+      </div>
+
+      <div class="boxs_BG mt-1">
+        <div class="titleBG">Strategic Projection</div>
+        <input class="form-control col-form-label-sm float-right mt-1"
+               placeholder="Search by code, name and product group..." type="text" style="width: 300px;"
+               [(ngModel)]="Filter">
+
+        <input id="file-upload" type="file" (change)="ImportAsExcel($event)"/>
+        <label for="file-upload" class="smallbuttons custom-file-upload float-right global-btn btn btn-info">
+          <i class="fa fa-cloud-download" aria-hidden="true"></i>Import</label> 
+          <label for="file-uploa" (click)="exportAsExcel()"class="smallbuttons btn-info global-btn float-right ml-2">
+          <i class="fa fa-cloud-upload" aria-hidden="true"></i> Export
+        </label>
+
+
+<!-- 
+        <button type="button" class="custom-file-upload float-right global-btn btn btn-info" (click)="exportAsExcel()"
+        >
+          <i class="fa fa-cloud-upload" aria-hidden="true"></i> Export
+        </button>
+ -->
+        <div class="col-md-12 mt-4 bscTable stajyprjctnscrll">
+          <table class="table table-striped">
+            <thead>
+            <tr class="bg-primary white">
+              <th scope="col" rowspan="2">S.No</th>
+              <th scope="col" rowspan="2">Organization Unit Code</th>
+              <th scope="col" rowspan="2">Organization Unit Name</th>
+              <th scope="col" rowspan="2">Year</th>
+              <th scope="col" rowspan="2">Version</th>
+              <th scope="col" rowspan="2">Region</th>
+              <th scope="col" rowspan="2">Currency Unit</th>
+              <th scope="col" rowspan="2">Product group</th>
+              <th scope="col" rowspan="2">Unit of Measure</th>
+              <th scope="col" colspan="3">Y -5</th>
+              <th scope="col" colspan="3">Y -4</th>
+              <th scope="col" colspan="3">Y -3</th>
+              <th scope="col" colspan="3">Y -2</th>
+              <th scope="col" colspan="3">Y -1</th>
+              <th scope="col" colspan="3">Y</th>
+              <th scope="col" colspan="3">Y +1</th>
+              <th scope="col" colspan="3">Y +2</th>
+              <th scope="col" colspan="3">Y +3</th>
+              <th scope="col" colspan="3">Y +4</th>
+              <th scope="col" colspan="3">Y +5</th>
+              <th scope="col" rowspan="2"> Action</th>
+            </tr>
+            <tr class="bg-primary white">
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+
+              <th scope="col">Quantity</th>
+              <th scope="col">Average Price</th>
+              <th scope="col">Revene Amount</th>
+            </tr>
+
+            </thead>
+            <tbody class="scrollbarbody">
+            <tr
+              *ngFor="let item of strategyProjectionTableData | filter: ['orgCode' , 'orgName' , 'productGroupName', 'year', 'version', 'region']: Filter;let i=index">
+              <td scope="row">{{i + 1}}</td>
+              <td>{{item.orgCode}}</td>
+              <td>{{item.orgName}}</td>
+              <td>{{item.year}}</td>
+              <td>{{item.version}}</td>
+              <td>{{item.region}}</td>
+              <td>{{item.currencyType}}</td>
+              <td>{{item.productGroupName}}</td>
+              <td>{{item.productGroupUnitOfMeasure}}</td>
+              <ng-container *ngFor="let item of item.values">
+                <td><span>{{item.quantity}}</span></td>
+                <td><span>{{item.averagePrice}}</span></td>
+                <td><span>{{item.revenueAmount}}</span></td>
+              </ng-container>
+
+              <td>
+              <span class="btn btn-pink btn-sm">
+              <i class="fa fa-pencil" (click)="editStrategyProjection(strategyProjectionTableData, i)"></i>
+              <i class="fa fa-trash" (click)="showConfirm(item.id)"></i>
+            </span>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+
+
+        </div>
+        
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-12 mb-3">
+          <div class="float-right">
+            <button type="button" class="btn btn-cancel btn-sm mr-1"> Cancel</button>
+            <button type="button" class="btn btn-info  btn-sm"> Save</button>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+  <!-- ================= Strategic Projection Data End=================== -->
+
+</div>

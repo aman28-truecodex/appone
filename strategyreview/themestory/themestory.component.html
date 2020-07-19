@@ -1,0 +1,334 @@
+<div class="container-fluid gryBG">
+  <!-- ================= Start=================== -->
+  <form [formGroup]="themeStoryForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4" style="height: 370px;">
+          <div class="titleBG"> Theme Story</div>
+
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Year
+                      <span
+                        class="red">*</span>
+                    </label>
+                    <div class="col-sm-7">
+                      <select name="name"
+                              class="form-control col-form-label-sm"
+                              (change)="onFocusForElement('year')"
+                              (focusout)="onFocusOutForElement()"
+                              formControlName="year"
+                              [ngClass]="{'my-error': shouldShowErrors('year', themeStoryForm)}"
+                      >
+                        <option selected [ngValue]="null">Select Year</option>
+                        <option *ngFor="let item of years" [value]="item.name">
+                          {{ item.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">Period
+                      <span
+                        class="red">*</span>
+                    </label>
+                    <div class="col-sm-7">
+                      <select class="form-control col-form-label-sm" formControlName="period" name="period"
+                              (focus)="onFocusForElement('period')"
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('period', themeStoryForm)}"
+                      >
+                        <option selected [ngValue]="null">Select Month</option>
+                        <option *ngFor="let item of period" [value]="item.month">{{item.month}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr/>
+
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                  <span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select
+                    (change)="getCodeName();onFocusForElement('orgCode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('orgCode', themeStoryForm)}"
+                    formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                      {{ codeName.code}} -- {{codeName.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Scorecard Code
+                  <span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm" formControlName="scCode"
+                          (ngModelChange)="getScCode($event); onFocusForElement('scCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scCode', themeStoryForm)}"
+                          name="scCode">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{ item.code}}
+                      -- {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Theme Code
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm"
+                          formControlName='code' name='code'
+                          (ngModelChange)="getAllObjectivesforAScorecard();getAllInitiativesForAScorecard(); onFocusForElement('code'); getThemeName($event)"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('code', themeStoryForm)}"
+                  >
+                    <option selected [ngValue]="null">Select Theme</option>
+                    <option *ngFor="let item of themes" [ngValue]="item.code">
+                      {{ item.code}} -- {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Description </label>
+                <div class="col-sm-7">
+                  <textarea class="form-control col-form-label-sm" placeholder="Description"
+                            formControlName="description" name="description"></textarea>
+                </div>
+              </div>
+
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Owner </label>
+                <div class="col-sm-7">
+                  <select name="Owner"
+                          formControlName='owner' name='owner'
+                          class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Owner</option>
+                    <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                      {{ item.employeeName | uppercase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Collaborators </label>
+                <div class="col-sm-7">
+                  <select
+                    formControlName='collaborators' name='collaborators'
+                    class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select collaborator</option>
+                    <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                      {{ item.employeeName | uppercase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+
+        <div class="boxs_BG mt-4"style="height:170px;">
+          <div class="titleBG"> Analysis</div>
+          <div class="mt-4">
+            <div class="col-md-12 mvv_textarea mt-1">
+              <textarea placeholder="Analysis..." formControlName="analysis" name="analysis" style="height:95px;"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="boxs_BG mt-4" style="height:170px;">
+          <div class="titleBG"> Recommendation</div>
+          <div class="mt-4">
+            <div class="col-md-12 mvv_textarea mt-1">
+              <textarea placeholder="Recommendation..." formControlName="recommendation"
+                        name="recommendation"style="height:95px;"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="boxs_BG mt-1" style="height: 317px;">
+        <div class="titleBG">Initiatives</div>
+        <div class="bscTable" style="margin-top: 20px">
+          <table mat-table [dataSource]="dataSource1">
+
+
+            <ng-container matColumnDef="sNo">
+              <th mat-header-cell *matHeaderCellDef>S.No</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>NAME</th>
+              <td mat-cell *matCellDef="let data; let i = index">{{data.name ? data.name : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>OWNER</th>
+              <td mat-cell *matCellDef="let data; let i = index"> {{data.owner ? data.owner : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+              <td mat-cell *matCellDef="let data"> {{data.status ? data.status : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentComplete">
+              <th mat-header-cell *matHeaderCellDef>PERCENT COMPLETE</th>
+              <td mat-cell *matCellDef="let data"> {{data.percentComplete ? data.percentComplete : 0}}%</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef>START DATE</th>
+              <td mat-cell *matCellDef="let data"> {{data.startDate}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef>END DATE</th>
+              <td mat-cell *matCellDef="let data"> {{data.endDate}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedInitiativeColumns" style="background-color: #805ce6"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedInitiativeColumns;"></tr>
+          </table>
+          <mat-paginator
+            #paginator2="matPaginator"
+            [pageSizeOptions]="[2,3]" [pageSize]="3" #paginatorRef>
+          </mat-paginator>
+          <h6 class="text-center p-2" *ngIf="initiativeList.length === 0">No Initiatives available.</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="boxs_BG mt-1" style="height: 317px;">
+        <div class="titleBG"> Theme KPI Performance</div>
+        <div class="bscTable" style="margin-top: 20px;max-height: 256px;">
+          <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="objective">
+              <th mat-header-cell *matHeaderCellDef> OBJECTIVE</th>
+              <td mat-cell *matCellDef="let data; let i = index"
+                  [attr.rowspan]="getRowSpan('name', i)"
+                  [style.display]="getRowSpan('name', i) ? '' : 'none'">{{data.name}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="measure">
+              <th mat-header-cell *matHeaderCellDef> MEASURE</th>
+              <td mat-cell *matCellDef="let data; let i = index"
+                  [attr.rowspan]="getRowSpan('measureName', i)"
+                  [style.display]="getRowSpan('measureName', i) ? '' : 'none'"> {{data.measureName}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="frequency">
+              <th mat-header-cell *matHeaderCellDef> FREQUENCY</th>
+              <td mat-cell *matCellDef="let data">{{data.frequency}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actual">
+              <th mat-header-cell *matHeaderCellDef> ACTUAL</th>
+              <td mat-cell *matCellDef="let data"> {{data.actual}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="target">
+              <th mat-header-cell *matHeaderCellDef> TARGET</th>
+              <td mat-cell *matCellDef="let data"> {{data.target}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> STATUS</th>
+              <td mat-cell *matCellDef="let data"> {{data.status}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: #805ce6"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator
+            #paginator1="matPaginator"
+            [pageSizeOptions]="[2,3]" [pageSize]="3">
+          </mat-paginator>
+          <h6 class="text-center p-2" *ngIf="nestedArr.length === 0">Please select Theme Code.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="boxs_BG mt-1" style="height: 115px;">
+        <div class="titleBG"> Reports</div>
+        <div class="border mt-4 pt-3 pb-2 pl-3">
+          <span class="badge-chip" *ngFor="let item of themeReportsNames"><a>{{item.reportName}}</a></span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="boxs_BG mt-1" style="height:115px;">
+        <div class="titleBG"> Attachments</div>
+        <div class="border mt-4 pt-3 pb-2 pl-3">
+          <span *ngIf="objectivesList.length === 0">No Reports Available</span>
+          <span *ngFor="let item of objectivesList"><a [href]="item.fileName" download>{{item.fileName}}</a></span>
+          <span *ngFor="let item of initiativeList"><a [href]="item.fileName" download>{{item.fileName}} </a></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="offset-9 float-right mb-2">
+          <button type="button" class="btn btn-info btn-sm mr-1"[disabled]="!themeStoryForm.valid"
+                  [ngClass]="{'button-disabled': !themeStoryForm.valid}" style="margin-top:-10px" (click)="saveReport()"
+          > Save
+          </button>
+          <button type="button" class="btn btn-cancel btn-sm" style="margin-top:-10px" (click)="clearFields()"> Cancel</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =================  End=================== -->
+</div>
+

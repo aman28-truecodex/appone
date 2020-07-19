@@ -1,0 +1,297 @@
+<div class="container-fluid gryBG">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="boxs_BG mt-4">
+        <div class="titleBG"> Objectives</div>
+        <form [formGroup]="objectiveForm">
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Code<span
+                  class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select
+                    (ngModelChange)="getCodeName(); onFocusForElement('orgCode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('orgCode', objectiveForm)}"
+                    formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Code
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm" (change)="getScorecardName()" formControlName="scCode"
+                          (focus)="onFocusForElement('scCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scCode', objectiveForm)}"
+                          name="scCode">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Objective Code<span
+                  class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.objCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="Objective Code"
+                         (focus)="onFocusForElement('code')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('code', objectiveForm)}"
+                         formControlName="code" name="code">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" readonly
+                         formControlName="orgName" name="orgName"
+                         placeholder="Organization Unit Name">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="Scorecard Name" readonly
+                         formControlName="scName" name="scName">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Objective Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="Objective Name"
+                         formControlName="name" name="name">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Description</label>
+                <div class="col-sm-9 pr-0 pl-8">
+                  <textarea class="form-control col-form-label-sm"  placeholder="Description"
+                            formControlName="description" name="description"></textarea>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Perspective </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select (ngModelChange)="getPerspectiveCode($event)"
+                          formControlName='perspectiveName' name='perspectiveName'
+                          class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Perspective</option>
+                    <option *ngFor="let item of PerspectivesByCode" [ngValue]="item.name">
+                      {{ item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Owner </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select
+                    formControlName='owner' name='owner'
+                    class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Owner</option>
+                    <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                      {{ item.employeeName | uppercase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Reporting Frequency </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm" formControlName="reportingFrequency"
+                          name="reportingFrequency">
+                    <option selected [value]="null">Reporting Frequency</option>
+                    <option *ngFor="let item of reportingFrequency" [value]="item.frequency">
+                      {{ item.frequency}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Attachments </label>
+                <div class="col-sm-6 pr-0">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input cursorPointer" id="customFileLang" lang="es" #myInput
+                           (change)="uploadLogo($event)">
+                    <label class="custom-file-label" for="customFileLang"><span>{{fileName}}</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Theme
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm"
+                          formControlName='themeName' name='themeName'
+                          (change)="getThemeCode()"
+                          [ngClass]="{'my-error': shouldShowErrors('themeName', objectiveForm)}"
+                  >
+                    <option selected [ngValue]="null">Select Theme</option>
+                    <option *ngFor="let item of themes" [ngValue]="item.name">
+                      {{ item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Collaborators </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select
+                    formControlName='collaborators' name='collaborators'
+                    class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Owner</option>
+                    <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                      {{ item.employeeName | uppercase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Unmapped Objectives </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm" formControlName="unmapped" name="unmapped">
+                    <option selected [value]="null">Select Unmapped Objectives</option>
+                    <option>true</option>
+                    <option>false</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Analysis </label>
+                <div class="col-sm-9 pr-0 pl-8">
+                  <textarea class="form-control col-form-label-sm"  placeholder="Analysis"
+                            formControlName="analysis" name="analysis"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Recommendations </label>
+                <div class="col-sm-9 pr-0 pl-8">
+                  <textarea class="form-control col-form-label-sm"  placeholder="Recommendations"
+                            formControlName="recommendations" name="recommendations"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 1</label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="info1"
+                         formControlName="info1">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 3 </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="info3" formControlName="info3">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 2</label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="info2" formControlName="info2">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 4 </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="info4" formControlName="info4">
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+         
+
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4 mt-2">
+      <div class="boxs_BG">
+        <div class="titleBG"> {{orgCode ? orgCode : 'Code'}}: {{orgName ? orgName : 'Name'}}</div>
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <div class="perapectivesRightTitle"><span> {{scCode ? scCode : 'Code'}}
+              : {{codeName ? codeName : 'Name'}} </span></div>
+          </div>
+        </div>
+        <div class="scrollbart row mt-4" style="height:480px;">
+          <div class="col-10 offset-md-2 verticalMenu">
+            <ul class="nav flex-column flex-nowrap">
+              <li class="nav-item" *ngFor="let item of PerspectivesByCode; let i = index">
+                <a class="nav-link" [attr.href]="'#'+ 'submenu' + i" data-toggle="collapse"
+                   [attr.data-target]="'#'+ 'submenu' + i" aria-expanded="true">{{item.name}}</a>
+                <div class="collapse show" [attr.id]="'submenu' + i" aria-expanded="false">
+                  <ul class="flex-column pl-3 nav">
+                    <li class="nav-item" *ngFor="let item of item.objectiveList; let i=index">
+                      <span class="nav-link">{{item.name}}
+                        <div class="iConsHover float-right cursorPointer"><i class="fa fa-pencil mr-1"
+                                                                             (click)="editObjective(item)"></i> <i
+                          class="fa fa-trash ml-1 cursorPointer" (click)="confirmDelete(item)"></i></div></span>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-1">
+        <div class="col-md-12">
+          <div class="float-right">
+            <button type="button" class=" btn-sm btn btn-info mr-1"(click)="saveObjective()"
+                    [disabled]="!objectiveForm.valid"
+                    [ngClass]="{'button-disabled': !objectiveForm.valid}">Save</button>
+            <button type="button" class="btn btn-cancel btn-sm"(click)="clearFields()"> Cancel</button>
+      
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

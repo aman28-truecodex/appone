@@ -1,0 +1,381 @@
+<div class="container-fluid gryBG">
+
+
+  <!-- ================= Start=================== -->
+  <form [formGroup]="initiativeStoryForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG"> Initiative Story</div>
+          <div class="row mt-4" style="height:395px">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Year
+                      <span
+                        class="red">*</span>
+                    </label>
+                    <div class="col-sm-7">
+                      <select name="year"
+                              (change)="onFocusForElement('year')"
+                              (focusout)="onFocusOutForElement()"
+                              formControlName="year"
+                              [ngClass]="{'my-error': shouldShowErrors('year', initiativeStoryForm)}"
+                              class="form-control col-form-label-sm">
+                        <option selected [ngValue]="null">Select Year</option>
+                        <option *ngFor="let year of years" [ngValue]="year.name">
+                          {{ year.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Period
+                      <span
+                        class="red">*</span>
+                    </label>
+                    <div class="col-sm-7">
+                      <select class="form-control col-form-label-sm"
+                              formControlName="period" name="period"
+                              (focus)="onFocusForElement('period')"
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('period', initiativeStoryForm)}"
+                      >
+                        <option selected [ngValue]="null">Select Month</option>
+                        <option *ngFor="let item of period" [value]="item.month">{{item.month}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr/>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit
+                  <span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select
+                    (change)="onFocusForElement('orgUnit'); getCodeName()"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('orgUnit', initiativeStoryForm)}"
+                    formControlName='orgUnit' name='orgUnit' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{ codeName.code}} -- {{codeName.name}}
+                    </option>
+                  </select>
+
+
+                </div>
+              </div>
+
+
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Scorecard
+                  <span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm" formControlName="scoreCard"
+                          (ngModelChange)="getScCode($event); onFocusForElement('scoreCard')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scoreCard', initiativeStoryForm)}"
+                          name="scCode">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{item.code}}
+                      -- {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Objective
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm"
+                          (change)="getInitiaitvesForObjective();onFocusForElement('objective')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('objective', initiativeStoryForm)}"
+                          formControlName='objective' name='objective'>
+                    <option selected [ngValue]="null">Select Objective</option>
+                    <option *ngFor="let item of objectivesSc" [ngValue]="item.code">
+                      {{ item.code}} -- {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Initiative
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm"
+                          (ngModelChange)="onFocusForElement('code'); getInitiativeName($event)"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('code', initiativeStoryForm)}"
+                          formControlName="code" name="code"
+                  >
+                    <option selected [ngValue]="null">Select Initiative</option>
+                    <option *ngFor="let item of initiativeList" [ngValue]="item.code">{{item.code}} -- {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Description </label>
+                <div class="col-sm-7">
+                  <textarea class="form-control col-form-label-sm" placeholder="Description"
+                            formControlName="description" name="description"></textarea>
+                </div>
+              </div>
+
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Owner </label>
+                <div class="col-sm-7">
+                  <select
+                    formControlName='owner' name='owner'
+                    class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Owner</option>
+                    <option *ngFor="let item of empMasterData" [ngValue]="item.employeeName">
+                      {{ item.employeeName | uppercase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Collaborators </label>
+                <div class="col-sm-7">
+                  <select
+                    formControlName='collaborators' name='collaborators'
+                    class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select collaborator</option>
+                    <option *ngFor="let item of empMasterData" [ngValue]="item.employeeName">
+                      {{ item.employeeName | uppercase}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-md-6">
+
+        <div class="boxs_BG mt-4">
+          <div class="titleBG"> Analysis</div>
+          <div class="mt-4">
+            <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+              <textarea placeholder="Analysis..." formControlName="analysis" name="analysis"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="boxs_BG mt-5">
+          <div class="titleBG"> Recommendation</div>
+          <div class="mt-4">
+            <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+              <textarea placeholder="recommendation..." formControlName="recommendation"
+                        name="recommendation"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="boxs_BG mt-3" style="height: 265px;">
+        <div class="titleBG"> Initiative</div>
+        <div class="bscTable" style="margin-top: 20px">
+          <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="sNo">
+              <th mat-header-cell *matHeaderCellDef>S.No</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>NAME</th>
+              <td mat-cell *matCellDef="let data; let i = index">{{data.name ? data.name : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>OWNER</th>
+              <td mat-cell *matCellDef="let data; let i = index"> {{data.owner ? data.owner : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+              <td mat-cell *matCellDef="let data"> {{data.status ? data.status : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentComplete">
+              <th mat-header-cell *matHeaderCellDef>PERCENT COMPLETE</th>
+              <td mat-cell *matCellDef="let data"> {{data.percentComplete ? data.percentComplete : 0}}%</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef>START DATE</th>
+              <td mat-cell *matCellDef="let data"> {{data.startDate}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef>END DATE</th>
+              <td mat-cell *matCellDef="let data">{{data.endDate}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedInitiativeColumns" style="background-color: #805ce6"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedInitiativeColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[2]" [pageSize]="2" #paginatorRef>
+          </mat-paginator>
+          <h6 class="text-center p-2" *ngIf="initiativeList.length === 0">No Initiatives available.</h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="boxs_BG mt-3">
+        <div class="titleBG"> Performance</div>
+        <div class="mt-4">
+          <div id="chartdiv" class="border" style="height:200px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG">
+
+        <div class="titleBG"> Gantt Chart</div>
+
+
+        <div class="row">
+          <div class="col-md-12 mt-4 bscTable">
+            <div class="bscTable">
+              <div class="bscTable">
+                <table class="table table-striped">
+                  <thead>
+                  <tr class="bscBg-primary white">
+                    <th scope="col">Initiative code</th>
+                    <th scope="col">Initiative Name</th>
+                    <th scope="col">Milestone Code</th>
+                    <th scope="col">Milestone Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Percentage Complete</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <ng-container *ngIf="!!ganttChart && ganttChart.milestoneList === null">
+                    <tr>
+                      <td>{{ganttChart.code ? ganttChart.code : 'NA'}}</td>
+                      <td>{{ganttChart.name ? ganttChart.name : 'NA'}}</td>
+                      <ng-container>
+                        <td>NA</td>
+                        <td class="right aligned">NA</td>
+                        <td class="center aligned">NA</td>
+                        <td>0%</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                      </ng-container>
+                    </tr>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="!!ganttChart && !!ganttChart.milestoneList && ganttChart.milestoneList.length > 0">
+                    <tr *ngFor="let item of ganttChart.milestoneList; let i = index">
+                      <td *ngIf="i == 0"
+                          [attr.rowspan]="i === 0  ? ganttChart.milestoneList.length: 0">
+                        {{ganttChart.code ? ganttChart.code : 'NA'}}
+                      </td>
+                      <td *ngIf="i == 0"
+                          [attr.rowspan]="i === 0 ? ganttChart.milestoneList.length: 0">
+                        {{ganttChart.name ? ganttChart.name : 'NA'}}
+                      </td>
+                      <ng-container *ngIf="ganttChart.milestoneList && ganttChart.milestoneList.length > 0">
+                        <td>{{item.code ? item.code : 'NA'}}</td>
+                        <td>{{item.name ? item.name : 'NA'}}</td>
+                        <td>{{item.status ? item.status : 'NA'}}</td>
+                        <td>{{item.percentComplete ? item.percentComplete : 0}}%</td>
+                        <td>{{item.owner ? item.owner : 'NA'}}</td>
+                        <td>{{item.startDate ? (item.startDate | date) : 'NA'}}</td>
+                        <td>{{item.endDate ? (item.endDate | date) : 'NA'}}</td>
+                      </ng-container>
+                    </tr>
+                  </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="boxs_BG mt-3">
+        <div class="titleBG"> Attachments</div>
+        <div class="border mt-4 pt-3 pb-2 pl-3" style="height: 106px;">
+          <div>
+            <p>{{ganttChart.fileName ? ganttChart.fileName : 'No Attachment files available.'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="boxs_BG mt-3" style="height: 169px;">
+        <div class="titleBG"> Reports</div>
+        <div class="border mt-4 pt-3 pb-2 pl-3" style="height: 106px;">
+          <span class="badge-chip" *ngFor="let item of initiativeReportsNames">{{item.reportName}}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="offset-10 float-right">
+      <button type="button" class="btn btn-info btn-sm mr-1"[disabled]="!initiativeStoryForm.valid"
+              [ngClass]="{'button-disabled': !initiativeStoryForm.valid}" (click)="saveReport()">Save</button>
+      <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+    </div>
+  </div>
+</div>

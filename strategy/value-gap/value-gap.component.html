@@ -1,0 +1,308 @@
+<div class="container-fluid gryBG">
+
+  <!-- ================= Strategic Projection Data End=================== -->
+
+
+  <!-- ================= SWOT Analysis Start=================== -->
+  <form [formGroup]="valueGapForm">
+    <div class="row">
+      <div class="col-md-6 mt-1">
+        <div class="boxs_BG" style="height:275px;">
+          <div class="titleBG"> Value Gap</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row mt-4">
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code <span
+                      class="red">*</span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                            data-placement="top"
+                            title="{{tooltipInfo.orgCode}}"></span>
+                    </label>
+                    <div class="col-sm-7 input_i_icon pb-2">
+                      <select
+                        (change)="getCodeNameForPestal(); onFocusForElement('orgCode'); getRevenueAmt()"
+                        (focusout)="onFocusOutForElement()"
+                        [ngClass]="{'my-error': shouldShowErrors('orgCode', valueGapForm)}"
+                        formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                        <option selected [ngValue]="null">Select Unit Code</option>
+                        <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                          {{ codeName.code}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name </label>
+                    <div class="col-sm-7 pr-0">
+                      <input type="text" class="form-control col-form-label-sm" formControlName="orgName" name="orgName"
+                             readonly
+                             placeholder="Organization Unit Name">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">Region <span
+                      class="red">*</span></label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm" formControlName="region" name="region"
+                             (focus)="onFocusForElement('orgCode')"
+                             (focusout)="onFocusOutForElement()"
+                             [ngClass]="{'my-error': shouldShowErrors('region', valueGapForm)}"
+                             placeholder="Region">
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">Currency Unit </label>
+                    <div class="col-sm-7 pr-0">
+                      <select class="form-control col-form-label-sm" formControlName="currencyType" name="currencyType">
+                        <option selected [value]="null">Select currency Unit</option>
+                        <option *ngFor="let unit of currencyUnit" [value]="unit.type">
+                          {{ unit.type}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Product Group <span
+                      class="red">*</span></label>
+                    <div class="col-sm-7">
+                      <select class="form-control col-form-label-sm" formControlName="productGroupName"
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('productGroupName', valueGapForm)}"
+                              name="productGroupName"
+                              (change)="getProductUnitOfMeasure(); onFocusForElement('productGroupName');getRevenueAmt()">
+                        <option selected [ngValue]="null">Product Group</option>
+                        <option *ngFor="let item of prdGrp" [ngValue]="item.name">{{item.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  
+                  <div class="form-group row m-0 pb-1">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Unit Of Measure </label>
+                    <div class="col-sm-7 pr-0">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="Unit Of Measure"
+                             readonly
+                             formControlName="productGroupUnitOfMeasure" name="productGroupUnitOfMeasure">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+                 
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row m-0 pb-2">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version
+                        <span
+                          class="red">*</span>
+                      </label>
+                      <div class="col-sm-7">
+                        <select
+                          (change)="onFocusForElement('version');getRevenueAmt()"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('version', valueGapForm)}"
+                          formControlName='version' name='version' class="form-control col-form-label-sm">
+                          <option selected [ngValue]="null">Select Version</option>
+                          <option *ngFor="let item of versions" [ngValue]="item.version">
+                            {{ item.version}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                <div class="col-md-6 ">
+                 <div class="form-group row m-0 pb-1">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Current Year <span
+                      class="red">*</span> </label>
+                    <div class="col-sm-7 pr-0">
+                      <select class="form-control col-form-label-sm" formControlName="year" name="year"
+                              (focus)="onFocusForElement('year')"
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('year', valueGapForm)}"
+                              (change)="getRevenueAmt()">
+                        <option selected [ngValue]="null">Select Year</option>
+                        <option *ngFor="let year of years" [ngValue]="year.name">
+                          {{ year.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mt-1">
+        <div class="boxs_BG" style="height: 275px">
+          <div class="titleBG">Values</div>
+          <div class="row">
+            <div class="col-md-12 scrollbar" style="height: 191px; overflow-y: scroll">
+              <div class="row mt-4">
+                <div class="col-md-4">
+                  <div class="valuesBg"><p> Years </p></div>
+                </div>
+                <div class="col-md-4">
+                  <div class="valuesBg"><p> Revenue Amount </p></div>
+                </div>
+                <div class="col-md-4">
+                  <div class="valuesBg"><p> Revenue Gap </p></div>
+                </div>
+              </div>
+
+              <div class="row" formArrayName="values"
+                   *ngFor="let cd of valueGapForm.controls.values['controls'];let i=index">
+                <div class="col-md-4">
+                  <div class="valuesBg"><p> {{AllYearsData[i].yearRef}} </p></div>
+                </div>
+                <ng-container formGroupName={{i}}>
+                  <div class="col-md-4"><input type="text" class="form-control col-form-label-sm" [readOnly]="true"
+                                               numbersOnly
+                                               formControlName="revenueAmount" name="revenueAmount" placeholder=" ">
+                  </div>
+                  <div class="col-md-4"><input type="text" class="form-control col-form-label-sm" numbersOnly
+                                               formControlName="revenueGap" name="revenueGap" placeholder=" ">
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+           <div class="row" style="">
+          <div class="col-md-12">
+            <div class="float-right">
+              <button type="button" class="btn-sm btn-info mr-1" (click)="saveValueGap()"
+                      [disabled]="!valueGapForm.valid"[ngClass]="{'button-disabled': !valueGapForm.valid}"> Save</button>
+              <button type="button" class="btn btn-cancel btn-sm" (click)="clear()"> Cancel</button>
+            </div>
+          </div>
+        </div>
+        </div>       
+      </div>       
+    </div>    
+  </form>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-3">
+        <div class="titleBG"> Value Gap</div>
+        <input class="form-control col-form-label-sm float-right ml-2 mt-1"
+               placeholder="Search by code, name and product group..." type="text"
+               style="width: 300px;"
+               [(ngModel)]="Filter">
+               <label for="file-uploa" (click)="exportAsExcel()"class="btn-sm btn-info float-right ml-2 mt-1">
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i> Export
+              </label>
+        <!-- <button type="button" class="btn btn-info global-btn float-right mb-2" (click)="exportAsExcel()"
+        >Export</button> -->
+
+        <div class="col-md-12 mt-4 bscTable stajyprjctnscrll">
+          <table class="table table-striped">
+            <thead>
+            <tr class="bg-primary white">
+              <th scope="col" rowspan="2">S.No</th>
+              <th scope="col" rowspan="2">Organization Unit Code</th>
+              <th scope="col" rowspan="2">Organization Unit Name</th>
+              <th scope="col" rowspan="2">Year</th>
+              <th scope="col" rowspan="2">Version</th>
+              <th scope="col" rowspan="2">Region</th>
+              <th scope="col" rowspan="2">Currency Unit</th>
+              <th scope="col" rowspan="2">Product group</th>
+              <th scope="col" rowspan="2">Unit of Measure</th>
+              <th scope="col" colspan="2">Y -5</th>
+              <th scope="col" colspan="2">Y -4</th>
+              <th scope="col" colspan="2">Y -3</th>
+              <th scope="col" colspan="2">Y -2</th>
+              <th scope="col" colspan="2">Y -1</th>
+              <th scope="col" colspan="2">Y</th>
+              <th scope="col" colspan="2">Y +1</th>
+              <th scope="col" colspan="2">Y +2</th>
+              <th scope="col" colspan="2">Y +3</th>
+              <th scope="col" colspan="2">Y +4</th>
+              <th scope="col" colspan="2">Y +5</th>
+              <th scope="col" rowspan="2"> Action</th>
+            </tr>
+            <tr class="bg-primary white">
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+
+              <th scope="col">Revenue Amount (in $)</th>
+              <th scope="col">Product Group (Value Gap)</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="let item of valueGapTableData | filter: ['orgCode','orgName','productGroupName', 'year', 'version', 'region']: Filter;let i=index">
+              <td scope="row">{{i + 1}}</td>
+              <td>{{item.orgCode}}</td>
+              <td>{{item.orgName}}</td>
+              <td>{{item.year}}</td>
+              <td>{{item.version}}</td>
+              <td>{{item.region}}</td>
+              <td>{{item.currencyType}}</td>
+              <td>{{item.productGroupName}}</td>
+              <td>{{item.productGroupUnitOfMeasure}}</td>
+              <ng-container *ngFor="let item of item.values">
+                <td>{{item.revenueAmount}}</td>
+                <td>{{item.revenueGap}}</td>
+              </ng-container>
+
+              <td>
+                <span class="btn btn-pink btn-sm">
+                <i class="fa fa-pencil" (click)="editValueGap(valueGapTableData, i)"></i>
+                <i class="fa fa-trash" (click)="confirmDelete(item.id)"></i>
+              </span>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

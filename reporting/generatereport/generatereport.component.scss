@@ -1,0 +1,39 @@
+tr td b {
+  color: #805ce6;
+  float: right;
+}
+
+table tr td {
+  padding: 7px;
+  text-align: initial;
+}
+
+.modal-content {
+  max-width: none;
+}
+
+.matTable {
+  width: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
+  th {
+    color: #fff !important;
+    text-transform: uppercase !important;
+    vertical-align: inherit !important;
+  }
+  th, td {
+    vertical-align: inherit;
+    border-right: 1px solid rgba(0, 0, 0, .12);
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    text-align: center !important;
+  }
+}
+
+//::ng-deep .mat-select-panel {
+//  background-color: #000 !important;
+//  z-index: 999 !important;
+//  position: absolute !important;
+//
+//}
+
+

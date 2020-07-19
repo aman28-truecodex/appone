@@ -1,0 +1,220 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="corporateStructureForm">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="boxs_BG mt-4">
+            <div class="titleBG"> Organization Structure</div>
+            <div class="row mt-4" >
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="code" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code <span
+                      class="red">*</span>
+                    <span class="fa fa-info-circle cursorPointer info-styles"  data-toggle="tooltip" data-placement="top"
+                      title="{{tooltipInfo.orgCode}}"></span>
+                  </label>
+                  <div class="col-sm-7 input_i_icon">
+                    <input type="text" class="form-control col-form-label-sm" placeholder="Organization Unit Code"
+                      id="code" (focus)="onFocusForElement('code')" (focusout)="onFocusOutForElement()" tabindex="1"
+                      [ngClass]="{'my-error': shouldShowErrors('code', corporateStructureForm)}" id="myModal"formControlName="code"
+                      name="code" autofocus >
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label for="orgUnitName" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit
+                    Name </label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control col-form-label-sm" placeholder="Organization Unit Name"
+                      id="orgUnitName" (focus)="onFocusForElement('name')" (focusout)="onFocusOutForElement()" tabindex="2"
+                      [ngClass]="{'my-error': shouldShowErrors('name', corporateStructureForm)}" formControlName="name"
+                      name="name">
+                  </div>
+                </div>
+              </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">Parent Org Name</label>
+                    <div class="col-sm-7 input_i_icon">
+                      <select formControlName='parentCode' id="parentOrgUnitCode"
+                        (change)="onFocusForElement('parentCode')" tabindex="3" (focusout)="onFocusOutForElement()" name='parentCode'
+                        class="form-control col-form-label-sm">
+                        <option selected [value]="null">Select Unit Code</option>
+                        <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                          {{ codeName.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="unitType" class="col-sm-5 col-form-label col-form-label-sm">Type of Unit <span
+                        class="red">*
+                      </span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                        data-placement="top" title="{{tooltipInfo.typeOfUnit}}"></span>
+                    </label>
+                    <div class="col-sm-7 input_i_icon">
+                      <select formControlName="type" name="type" tabindex="4" id="unitType" class="form-control col-form-label-sm"
+                        (change)="onFocusForElement('type')" (focusout)="onFocusOutForElement()"
+                        [ngClass]="{'my-error': shouldShowErrors('type', corporateStructureForm)}">
+                        <option selected [value]="null">Select Unit Type</option>
+                        <option *ngFor="let code of unitCodes" [value]="code.value">
+                          {{ code.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">
+                      Manager </label>
+                    <div class="col-sm-7">
+                      <select (change)="getJobTitle($event)" tabindex="5" formControlName='managerName' name='managerName'
+                        class="form-control col-form-label-sm">
+                        <option selected [value]="null" >Select Owner</option>
+                        <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                          {{ item.employeeName | uppercase}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="head" class="col-sm-5 col-form-label col-form-label-sm">Position</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm" tabindex="6" placeholder="Head of Organization"
+                        readonly id="head" formControlName="head" name="head">
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="employeeCount" class="col-sm-5 col-form-label col-form-label-sm">No of Employees
+                    </label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm inputWithoutDecimal" id="employeeCount"
+                        numbersOnly (focus)="onFocusForElement('employeeCount')" tabindex="7" (focusout)="onFocusOutForElement()"
+                        [ngClass]="{'my-error': shouldShowErrors('employeeCount', corporateStructureForm)}"
+                        placeholder="No of Employees" formControlName="employeeCount" name="employeeCount">
+                    </div>
+                  </div>
+                </div>
+                 <div class="col-md-6">
+                  <div class="form-group row m-0 row">
+                    <label for="location" class="col-sm-5 col-form-label m-0 col-form-label-sm">Location <span
+                        class="red">*</span></label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm pr-1" tabindex="8" placeholder="Location" id="location"
+                        (focus)="onFocusForElement('location')" (focusout)="onFocusOutForElement()"
+                        [ngClass]="{'my-error': shouldShowErrors('location', corporateStructureForm)}"
+                        formControlName="location" name="location">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row row">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Logo
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" tabindex="9"
+                        data-placement="top" title="Upload your organization Logo from local computer"></span>
+                    </label>
+                    <div class="col-sm-7">
+                      <div class="custom-file "id="myModal">
+                        <input type="file" #myInput  class="custom-file-input cursorPointer" tabindex="10" id="customFileLang"
+                          (change)="uploadLogo($event)">
+                        <label class="custom-file-label" for="customFileLang"><span>{{fileName}}</span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="boxs_BG mt-4" style="height:338px;">
+            <div class="titleBG"> Mission</div>
+            <div class="mt-4" style="height: 181px;">
+              <div class="col-md-12 mvv_Box mvv_textarea mb-3">
+                <div [ngClass]="{ 'readonlyControl1': editMission === false }" *ngIf="!editMission">
+                  <p> Mission is an brief statement that defines why the organization exists and it describe the
+                    fundamental
+                    purpose of the Organization, especially what it provides to customers and clients</p>
+                </div>
+                <!--<textarea placeholder="Enter your mission..." *ngIf="editMission" name="mission"-->
+                <!--[ngClass]="{'readonlyControl': editMission === true}"></textarea>-->
+              </div>
+              <div class="col-md-12 mvv_textarea  mt-1">
+                <textarea placeholder="Enter your mission..." tabindex="11" formControlName="missionStmt"
+                  name="missionStmt"style="height:203px;"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG">
+          <div class="titleBG"> Vision</div>
+          <div class="mt-4">
+            <div class="col-md-12 mvv_Box mvv_textarea mb-3">
+              <div [ngClass]="{ 'readonlyControl1': editMission === false }" *ngIf="!editVision">
+                <p>Sets out the compelling rationale (strategic soundness) for the firm’s direction.
+                  Uses distinctive and specific language to set the firm apart from its rivals.</p>
+              </div>
+              <!--<textarea placeholder="Enter your Vision" *ngIf="editVision" name="vision"-->
+              <!--[ngClass]="{'readonlyControl': editVision === true}"></textarea>-->
+            </div>
+            <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+              <textarea placeholder="Enter your vision..." tabindex="12" formControlName="visionStmt" name="visionStmt"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="boxs_BG">
+          <div class="titleBG"> Values</div>
+          <div class="mt-4">
+            <div class="col-md-12 mvv_Box mvv_textarea mb-3">
+              <div [ngClass]="{ 'readonlyControl1': editValue === false }" *ngIf="!editValue">
+                <p>Organizational values guide your organization’s thinking and actions. You can think of your
+                  organizational values in terms of pro social, market, financial and achievement.</p>
+              </div>
+              <!--<textarea placeholder="Enter your Values" *ngIf="editValue"-->
+              <!--name="vision"-->
+              <!--[ngClass]="{'readonlyControl': editValue === true}"></textarea>-->
+            </div>
+            <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+              <textarea placeholder="Enter your values..." tabindex="13" formControlName="valuesStmt" name="valuesStmt"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row padding_10">
+      <div class="col-md-6">
+        <div class="float-left">
+          <button class="btn btn-pink" (click)="routeToSummaryView()"><i class="fa fa-eye" tabindex="14"></i> Summary View</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="float-right">
+          <button type="button" class="btn btn-info global-btn mr-2 global-btn" (click)="submitOrganization()" tabindex="14"
+            [disabled]="!corporateStructureForm.valid" [ngClass]="{'button-disabled': !corporateStructureForm.valid}">
+            Save
+          </button>
+          <button type="button" class="btn btn-cancel global-btn" (click)="clearFields()" tabindex="15">Clear</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

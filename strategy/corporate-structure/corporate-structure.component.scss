@@ -1,0 +1,77 @@
+.btn-pink {
+  color: #fff;
+  background-color: #e16a87;
+  border-color: #e16a87;
+  font-size: 14px;
+  padding: 6px 24px;
+}
+
+.btn-pink:hover {
+  color: #fff;
+  background-color: #bf5770;
+  border-color: #bf5770;
+}
+
+.btn-cancel {
+  color: #fff;
+  background-color: #6d6d6d;
+  border-color: #6d6d6d;
+  font-size: 14px;
+  padding: 6px 20px;
+  border-radius: 3px;
+}
+
+.btn-cancel:hover {
+  color: #fff;
+  background-color: #5a5a5a;
+  border-color: #5a5a5a;
+}
+
+.btn-save {
+  color: #fff;
+  background-color: #4aa116;
+  border-color: #4aa116;
+  font-size: 14px;
+  padding: 6px 24px;
+  border-radius: 3px;
+}
+
+.btn-save:hover {
+  color: #fff;
+  background-color: #418f13;
+  border-color: #418f13;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.scrollbart {
+  height: 400px;
+  overflow-y: auto;
+  overflow-x:auto;
+  margin-bottom: 10px;   
+  }
+  .scrollbart::-webkit-scrollbar-track
+  {
+  border-radius:10px;
+  background-color: grey;
+  width:8px !important;
+  
+  }  
+  .scrollbart::-webkit-scrollbar
+  {
+    border-radius:10px;
+    background-color: #15d6ce;
+    width:8px !important;
+    
+  }  
+  .scrollbart::-webkit-scrollbar-thumb 
+  {
+  background-color: #15d6ce;
+  border-radius:5px;
+  height:8px !important;
+  width:8px !important;
+  }
+  
+  /* Table Ends */

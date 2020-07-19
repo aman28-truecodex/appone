@@ -1,0 +1,22 @@
+.mat-input-element {
+  background-color: transparent !important;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.custom-file-label{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis!important;
+  display: inline-block;
+  width: 146px;
+}
+input.custom-file-label{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis!important;
+  display: inline-block;
+  width: 146px;
+  
+}

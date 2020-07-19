@@ -1,0 +1,194 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="kpiMaterForm">
+    <div class="row p-2">
+      <div class="col-md-7">
+        <div class="boxs_BG mt-3">
+          <div class="titleBG"> KPI MASTER</div>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">KPI Code <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.kpiCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="code"
+                         (focus)="onFocusForElement('code')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('code', kpiMaterForm)}"
+                         placeholder="kpi code">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-6 col-form-label col-form-label-sm">KPI Name
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Kpi Name"
+                         formControlName="name" name="name"
+                         (focus)="onFocusForElement('name')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('name', kpiMaterForm)}"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div class="col-md-12">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Description</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control col-form-label-sm" placeholder="Description"
+                            formControlName="description" name="description"style="width:529px;margin-left=-14px;"></textarea>
+                </div>
+              </div>
+            </div>
+          
+
+             
+               <div class="row">
+                 <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm"> Data Source
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                            title="{{tooltipInfo.dataSource}}"></span>
+                    </label>
+                    <div class="col-sm-6 input_i_icon pr-0">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="Data Source"
+                             formControlName="dataSource" name="dataSource">
+    
+                      <!--  <textarea class="form-control col-form-label-sm" placeholder="Data Source"
+                                 formControlName="dataSource" name="dataSource"></textarea> -->
+                    </div>
+                  </div>
+
+                 </div>
+                 <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm">Polarity
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                            title="{{tooltipInfo.kpiPolarity}}"></span>
+                      <span class="red">*</span>
+                    </label>
+                    <div class="col-sm-6 pr-0">
+                      <select formControlName='polarity' name='polarity' (focus)="onFocusForElement('polarity')"
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('polarity', kpiMaterForm)}"
+                              class="form-control col-form-label-sm">
+                        <option selected [value]="null">Polarity</option>
+                        <option *ngFor="let item of polarity" [value]="item.polarity">
+                          {{ item.polarity}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                 </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm">Data Quality
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                            title="{{tooltipInfo.dataQuality}}"></span>
+                    </label>
+                    <div class="col-sm-6 pr-0">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="Data Quality"
+                             formControlName="dataQuality" name="dataQuality">
+                    </div>
+                  </div>
+
+                 </div>
+                 <div class="col-md-6">
+                   
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Data Collector </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Data Collector"
+                         formControlName="dataCollector" name="dataCollector">
+                </div>
+              </div>
+
+                 </div>
+               </div>
+             
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label class="col-sm-6 col-form-label col-form-label-sm">Frequency </label>
+                  <div class="col-sm-6 input_i_icon pr-0">
+                    <select class="form-control col-form-label-sm" formControlName="frequency"
+                            name="frequency">
+                      <option selected [value]="null">Reporting Frequency</option>
+                      <option *ngFor="let item of reportingFrequency" [value]="item.frequency">
+                        {{ item.frequency}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-6 col-form-label col-form-label-sm">Attachments </label>
+                  <div class="col-sm-6 pr-0">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFileLang" lang="es"
+                             (change)="uploadLogo($event)">
+                      <label class="custom-file-label" for="customFileLang"><span>{{fileName}}</span></label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label class="col-sm-6 col-form-label col-form-label-sm"> Formula </label>
+                  <div class="col-sm-6 pr-0 pl-9">
+                    <textarea class="form-control col-form-label-sm" placeholder="Formula" formControlName="formula"
+                              name="formula"></textarea>
+                  </div>
+                </div>
+                
+
+              </div>
+            </div>
+             
+             
+
+
+        <!--     </div> --><!-- col-md-6 closing -->
+            <div class="col-md-6">
+            
+            
+            </div>
+          
+         
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="boxs_BG mt-3" style="height: 320px;">
+          <div class="titleBG"> KEY PERFORMANCE INDICATOR</div>
+          <div class="row mt-2 scrollbarkpi">
+
+            <div class="col-md-6 offset-md-2">
+              <div class="perapectivesBSCNames" *ngFor="let item of kpiMaters"> {{item.name}}
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o" (click)="editKPI(item)"></i> <i
+                  class="fa fa-trash" (click)="showConfirm(item.id)"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 ">
+          <div class="float-right">
+            <button type="button" class=" btn-sm btn btn-info mr-1" (click)="saveKpiMater()"[disabled]="!kpiMaterForm.valid"
+                    [ngClass]="{'button-disabled': !kpiMaterForm.valid}">Save</button>
+            <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,348 @@
+<div class="container-fluid gryBG">
+
+  <!-- ========== Corporate Start =========== -->
+
+
+  <form [formGroup]="hrAlignmentForm">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG"> HR Alignment</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="corporateTopBG">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group ml-4 row m-0">
+                          <label for="" class="col-sm-4 col-form-label col-form-label-sm fb pr-0 pl-0">Organization Unit
+                            Code </label>
+                          <div class="col-sm-8">
+                            <select
+                              (change)="getCodeAndName()"
+                              formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                              <option selected [ngValue]="null">Select Unit Code</option>
+                              <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                                {{ codeName.code}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-4 col-form-label col-form-label-sm fb pr-0 pl-0">Organization Unit
+                            Name </label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control col-form-label-sm"
+                                   formControlName="orgName" name="orgName" readonly
+                                   placeholder=" Organization Unit Name">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5 offset-md-1">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-4 col-form-label col-form-label-sm fb">Year </label>
+                          <div class="col-sm-8">
+                            <select class="form-control col-form-label-sm" formControlName="year" name="year">
+                              <option selected [value]="null">Select Year</option>
+                              <option *ngFor="let year of years" [value]="year.name">
+                                {{ year.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-4 col-form-label col-form-label-sm fb">Version </label>
+                          <div class="col-sm-8">
+                            <select
+                              formControlName='version' name='version' class="form-control col-form-label-sm">
+                              <option selected [value]="null">Select Version</option>
+                              <option *ngFor="let item of versions" [value]="item.version">
+                                {{ item.version}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-4 col-form-label col-form-label-sm">Scorecard </label>
+                <div class="col-sm-8">
+                  <select class="form-control col-form-label-sm" formControlName="scCode"
+                          name="scCode"
+                          (change)="getScCode($event)">
+                    <option selected [value]="null">Select Scorecard</option>
+                    <option *ngFor="let item of balanceScoreCardData" [value]="item.code">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-4 col-form-label col-form-label-sm">Link Type </label>
+                <div class="col-sm-8">
+                  <select class="form-control col-form-label-sm"
+                          (change)="getLinkType($event)"
+                          formControlName="linkType" name="linkType"
+                  >
+                    <option selected [value]="null">Select Link Type</option>
+                    <option *ngFor="let item of linkTypes" [value]="item.type">{{item.type}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-4 col-form-label col-form-label-sm">Elements </label>
+                <div class="col-sm-8">
+                  <select class="form-control col-form-label-sm" (change)="getElementCode($event)"
+                          formControlName="linkTypeCname">
+                    <option selected [value]="null">Select Elements</option>
+                    <option *ngFor="let item of elements" [value]="item.code">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========== Corporate End =========== -->
+
+    <!-- ========== SBU Start =========== -->
+
+
+    <div class="boxs_BG mt-2" formArrayName="toElements">
+      <div class="row" *ngFor="let child of toElements.controls; let i=index">
+        <div class="col-md-12" formGroupName="{{i}}">
+          <div class="titleBG"> HR Alignment - SBU</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="corporateTopBG">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group ml-4 row m-0">
+                          <label for="" class="col-sm-4 col-form-label col-form-label-sm fb pr-0 pl-0">Organization
+                            Unit
+                            Code </label>
+                          <div class="col-sm-8">
+                            <select class="form-control col-form-label-sm" (change)="getCodeAndNameForSbu()"
+                                    formControlName="orgCode" name='orgCode'>
+                              <option selected [value]="null">Select Unit Code</option>
+                              <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                                {{ codeName.code}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label class="col-sm-4 col-form-label col-form-label-sm fb pr-0 pl-0">Organization
+                            Unit
+                            Name </label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control col-form-label-sm" readonly
+                                   name="orgName" formControlName="orgName"
+                                   placeholder="Organization Unit Name">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 ml-5">
+
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-4 col-form-label col-form-label-sm">Scorecard </label>
+                    <div class="col-sm-8">
+                      <select class="form-control col-form-label-sm" formControlName="scCode" name="scCode"
+                              (change)="getSubUnitCode($event)">
+                        <option>Select Unit Code</option>
+                        <option *ngFor="let item of balanceScoreCardData" [value]="item.code">{{item.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-1">
+                  <p> HR </p>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col-md-7">
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">Link Type: {{linkType}} </label>
+
+                    <select class="form-control col-form-label-sm" (change)="getSubElementCode($event)"
+                            formControlName="linkTypeCode">
+                      <option [value]="null" selected>Select Elements</option>
+                      <option *ngFor="let item of sbuElements" [value]="item.code">{{item.name}}</option>
+                    </select>
+
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>Note </label>
+
+                    <textarea class="form-control" placeholder="Reason of Align..." formControlName="reason"
+                              name="reason"></textarea>
+
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">Link Type: {{linkType}} </label>
+
+                    <select class="form-control col-form-label-sm" formControlName="linkTypeCode1"
+                            (change)="getSubElementTwoName($event)"
+                    >
+                      <option selected [value]="null">Select Elements</option>
+                      <option *ngFor="let item of sbuElements" [value]="item.code">{{item.name}}</option>
+                    </select>
+
+
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="">Note </label>
+                    <textarea class="form-control" placeholder="Reason of Align..." formControlName="reasontwo"
+                              name="reason"></textarea>
+
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+     
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="float-right mr-4">
+          <button type="button" class="btn btn-info btn-sm mr-1"
+                  (click)="addAlignmentLink()" [disabled]="!hrAlignmentForm.valid"
+                  [ngClass]="{'button-disabled': !hrAlignmentForm.valid}"
+          > Add Link
+          </button>
+          <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+
+  <!-- ========== SBU End =========== -->
+
+
+  <!-- ========== Corporate SBU Start =========== -->
+
+
+  <div class="boxs_BG mt-2">
+    <div class="row ">
+      <div class="col-md-12">
+        <div class="titleBG"> HR Alignment - SBU</div>
+        <div class="corporateTopBG p-2">
+          <b>{{!!orgCode ? orgCode : 'Select Org code'}} - HR</b>
+          <b>{{!!sbuOrgCode ? sbuOrgCode : ' Select sbu org code'}} - SBU</b>
+        </div>
+        <div class="scrollbart">
+        <div class="row" *ngFor="let item of alignmentList; let i = index">
+          <div class="col-md-3 ml-5 mt-5">
+
+            <div class="row">
+              <div class="col-md-12">
+                 <span> <b>HR Department:</b> {{item.scName}}: <b>SBU: </b> {{item.toElements[0].scName}}
+                 </span>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-8 corporateDetailsTable">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">{{item.linkType}}:{{item.linkTypeCode}}</th>
+                <th>SBU Link</th>
+                <th scope="col">Note</th>
+                <th scope="col">Year</th>
+                <th scope="col">Version</th>
+                <th scope="col">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{item.toElements[0].linkTypeName}} : {{item.toElements[0].linkTypeCode}}</td>
+                <td>{{item.toElements[0].linkTypeName1 ? item.toElements[0].linkTypeName1 : 'NA'}} :
+                  {{item.toElements[0].linkTypeCode1 ? item.toElements[0].linkTypeCode1 : 'NA'}}
+                </td>
+                <td>{{item.toElements[0].reason}}</td>
+                <td>{{item.year}}</td>
+                <td>{{item.version}}</td>
+                <td class="text-right">
+                  <!--<button type="submit" class="btn btn-info btn-sm mr-1"><i class="fa fa-pencil" aria-hidden="true"-->
+                                                                            <!--(click)="edit(item)"></i>-->
+                  <!--</button>-->
+                  <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-chain-broken"
+                                                                         (click)="showConfirm(item.id)"
+                                                                         aria-hidden="true"></i></button>
+                </td>
+              </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <!-- ========== Corporate SBU End =========== -->
+
+</div>

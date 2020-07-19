@@ -1,0 +1,197 @@
+<div class="container-fluid gryBG">
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG mt-4 createSeries">        
+          <div class="titleBG">USER REGISTRATION</div>
+         <!--  <div class="text-center">
+          <h6 class="title" style="text-align: center;">USER REGISTRATION</h6>
+         </div> -->
+    <div class="loginFormUser" style="width: 100%">
+      <form [formGroup]="createUserForm">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="First Name" formControlName="firstName">
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Last Name" formControlName="lastName">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput type="password" placeholder="Password" formControlName="password">
+              <mat-error *ngIf="createUserForm.controls['password'].errors?.required">Password is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+              <mat-error
+                *ngIf="createUserForm.controls['confirmPassword'].pristine || createUserForm.controls['confirmPassword'].errors?.MatchPassword">
+                Password does not match
+              </mat-error>
+
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Address" formControlName="address">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Organization" formControlName="orgCodes" multiple>
+                <mat-select-trigger>
+                  {{orgValue.value ? orgValue.value[0] : ''}}
+                  <span *ngIf="orgValue.value?.length > 1" class="example-additional-selection">
+                    (+{{orgValue.value.length - 1}} {{orgValue.value?.length === 2 ? 'other' : 'others'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let org of codeAndName" [value]="org.code">{{org.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Scorecard" formControlName="scCodes" multiple>
+                <mat-select-trigger>
+                  {{scCode.value ? scCode.value[0] : ''}}
+                  <span *ngIf="scCode.value?.length > 1" class="example-additional-selection">
+                    (+{{scCode.value.length - 1}} {{scCode.value?.length === 2 ? 'other' : 'others'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let scorecard of balanceScoreCardData" [value]="scorecard.code">
+                  {{scorecard.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Client" formControlName="clientId">
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Role</mat-label>
+              <mat-select formControlName="role">
+                <mat-option *ngFor="let user of users" [value]="user.value">
+                  {{user.viewValue ? user.viewValue : 'NA'}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+              <mat-label>Access</mat-label>
+              <mat-select formControlName="accessType">
+                <mat-option *ngFor="let type of accessRights" [value]="type.viewValue">
+                  {{type.viewValue ? type.viewValue : 'NA'}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+        </div>
+       
+      </form>
+    </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 ">  
+            <div class="float-right">      
+          <button type="button" class="btn btn-info btn-sm mr-2" (click)="createUser()"
+                  [disabled]="!createUserForm.valid" [ngClass]="{'button-disabled': !createUserForm.valid}">Submit
+          </button>
+        </div>
+        </div>
+        </div>
+        
+      </div>
+  </div>
+<div class="boxs_BG">
+  <div class="titleBG">User Creation </div>
+
+  <div class="row mt-3" style="width: 100%">
+    <div class="col-md-12 bscTable">
+      <div class="bscTable">
+        <table mat-table [dataSource]="dataSource">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+          <ng-container matColumnDef="sNo">
+            <th mat-header-cell *matHeaderCellDef>S.No</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+              {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+            </td>
+          </ng-container>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.firstName}} - {{element.lastName}}
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="loginId">
+            <th mat-header-cell *matHeaderCellDef>Login ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.loginId ? element.loginId : 'NA'}}</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef>Address</th>
+            <td mat-cell *matCellDef="let element"> {{element.address ? element.address : 'NA'}}</td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="accessType">
+            <th mat-header-cell *matHeaderCellDef>Access</th>
+            <td mat-cell *matCellDef="let element"> {{element.accessType ? element.accessType : 'NA'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef>username</th>
+            <td mat-cell *matCellDef="let element"> {{element.username ? element.username: 'NA'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>email</th>
+            <td mat-cell *matCellDef="let element"> {{element.email ? element.email: 'NA'}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-primary"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[2,4,6,8,10]" [pageSize]="10" #paginatorRef>
+        </mat-paginator>
+        <h6 class="text-center p-2" *ngIf="userData.length === 0">No Users exist, Please Add.</h6>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>

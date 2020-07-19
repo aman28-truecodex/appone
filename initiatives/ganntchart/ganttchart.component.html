@@ -1,0 +1,182 @@
+<div class="container-fluid gryBG">
+
+
+  <!-- ================= Gantt Charts Form Start=================== -->
+  <form [formGroup]="gantChartForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG"> Gantt Charts</div>
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select (change)="getCodeAndName(); onFocusForElement('orgCode')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('orgCode', gantChartForm)}" formControlName='orgCode'
+                    name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="orgName" name="orgName"
+                    readonly placeholder="Organization Unit Name">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Scorecard Code
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm"
+                    (change)="getScorecardName(); onFocusForElement('scCode')" formControlName="scCode"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('scCode', gantChartForm)}" name="scCode">
+                    <option selected [ngValue]="null">Select Scorecard</option>
+                    <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Scorecard Name</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Scorecard Name" readonly
+                    formControlName="scName" name="scName">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Initiative Code
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.initiativeCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm"
+                    (change)="getInitiativeName(); onFocusForElement('initiativecode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('initiativecode', gantChartForm)}"
+                    formControlName="initiativecode" name="initiativecode">
+                    <option selected [ngValue]="null">Select Initiative</option>
+                    <option *ngFor="let item of initiativeList" [ngValue]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Initiative Name </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Initiative Name"
+                    formControlName="initiativename" name="initiativename" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+<!-- ================= Gantt Charts Form End=================== -->
+
+
+<!-- ================= Gantt Charts Table Start=================== -->
+
+<div class="row">
+  <div class="col-md-12" style="margin-top: -27px;
+    ">
+    <div class="boxs_BG">
+      <!-- <div class="titleBG"> Risk Assissment </div> -->
+      <div class="row">
+        <div class="col-md-12 mt-1 bscTable">
+          <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef>INITIATIVE</th>
+              <td mat-cell [attr.rowspan]="getRowSpan('name', i)" [style.display]="getRowSpan('name', i) ? '' : 'none'"
+                *matCellDef="let data; let i = index">{{data.code}} - {{data.name}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="milestoneCode">
+              <th mat-header-cell *matHeaderCellDef>MILESTONE CODE</th>
+              <td mat-cell *matCellDef="let data; let i = index"> {{data.milestoneCode ? data.milestoneCode : 'NA'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="milestoneName">
+              <th mat-header-cell *matHeaderCellDef>MILESTONE NAME</th>
+              <td mat-cell *matCellDef="let data"> {{data.milestoneName ? data.milestoneName : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>STATUS</th>
+              <td mat-cell *matCellDef="let data"> {{data.status ? data.status : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="completed">
+              <th mat-header-cell *matHeaderCellDef>COMPLETED</th>
+              <td mat-cell *matCellDef="let data"> {{data.completed === 'NA' ? 'NA' : data.completed}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="percentComplete">
+              <th mat-header-cell *matHeaderCellDef>PERCENT COMPLETE</th>
+              <td mat-cell *matCellDef="let data"> {{data.percentComplete === 'NA' ? 0 + "%" : data.percentComplete +
+                  '%'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="owner">
+              <th mat-header-cell *matHeaderCellDef>OWNER</th>
+              <td mat-cell *matCellDef="let data"> {{data.owner ? data.owner : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+              <th mat-header-cell *matHeaderCellDef>START DATE</th>
+              <td mat-cell *matCellDef="let data"> {{data.startDate ? data.startDate : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+              <th mat-header-cell *matHeaderCellDef>END DATE</th>
+              <td mat-cell *matCellDef="let data"> {{data.endDate ? data.endDate : 'NA'}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: #805ce6"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[2,4,6,8,10]" [pageSize]="5">
+          </mat-paginator>
+          <h6 class="text-center p-2" *ngIf="nestedArr.length === 0">Please select Initiative.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================= Gantt Charts Table End=================== -->
+</div>

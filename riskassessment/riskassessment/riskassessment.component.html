@@ -1,0 +1,311 @@
+<div class="container-fluid gryBG">
+
+
+
+
+  <!-- ================= Risk Assessment Form Start=================== -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-4">
+        <form [formGroup]="riskAssessmentForm">
+          <div class="titleBG"> Risk Assessment</div>
+
+
+          <div class="row mt-4">
+            <div class="col-md-4 pr-0">
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Risk ID </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Risk ID"
+                         formControlName="riskId" name="riskId">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Risk Name </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Risk Name"
+                         formControlName="riskName" name="riskName">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Risk Description </label>
+                <div class="col-sm-7">
+                <textarea class="form-control col-form-label-sm" formControlName="description"
+                          placeholder="Risk Description"></textarea>
+                </div>
+              </div>    
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code </label>
+                <div class="col-sm-7">
+                  <select
+                    (change)="getCodeName()"
+                    formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="orgName"
+                         name="orgName" readonly
+                         placeholder="Organization Unit Name">
+                </div>
+              </div>
+              <div formArrayName="details"
+                   *ngFor="let item of toElements.controls; let i = index;">
+                <div formGroupName="{{i}}">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Strategic Objective Code </label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm" formControlName="objectiveCode"
+                             name="objectiveCode"
+                             placeholder="Strategic Objective Code">
+                    </div>
+                  </div>
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Strategic Objective
+                      Name </label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm"formControlName="objectiveName" name="objectiveName"
+                             placeholder="Strategic Objective Name">
+                    </div>
+                  </div>
+
+                  
+
+                 
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div formArrayName="details"
+                   *ngFor="let item of toElements.controls; let i = index;">
+                <div formGroupName="{{i}}">
+                  <div class="row">
+                    <div class="col-md-6">
+
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Outcomes </label>
+                        <div class="col-sm-7">
+                          <textarea class="form-control col-form-label-sm" placeholder="Outcomes"
+                                    formControlName="outcomes" name="outcomes"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Risk Indicators </label>
+                      <div class="col-sm-7 pr-0">
+                          <textarea class="form-control col-form-label-sm" formControlName="riskIndicators"
+                                    name="riskIndicators"
+                                    placeholder="Risk Indicators"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr/>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Management Control </label>
+                        <div class="col-sm-7">
+                          <textarea class="form-control col-form-label-sm" formControlName="managementControl"
+                                    name="managementControl"
+                                    placeholder="Management Control"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Likelihood </label>
+                        <div class="col-sm-7">
+                          <input type="number" class="form-control col-form-label-sm" [max]="5" [min]="0"
+                                 placeholder="Likelihood"
+                                 formControlName="likelihood">
+                        </div>
+                      </div>
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Consequence </label>
+                        <div class="col-sm-7">
+                          <input type="number" class="form-control col-form-label-sm" [max]="5" [min]="0"
+                                 placeholder="Consequence"
+                                 formControlName="consequence" name="consequence">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr/>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Accountable Manager </label>
+                        <div class="col-sm-7 pr-0">
+                          <select (change)="getEmpDesignation($event)"
+                                  formControlName='accountableManager' name='accountableManager'
+                                  class="form-control col-form-label-sm">
+                            <option selected [value]="null">Select Manager</option>
+                            <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                              {{ item.employeeName | uppercase}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Designation </label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Designation" readonly
+                                 formControlName="accountableManagerDesignation" name="accountableManagerDesignation">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+         
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="float-right">
+            <button type="button" class="btn btn-info btn-sm mr-1" (click)="saveRiskAssessment()"
+                    [ngClass]="{'button-disabled': !riskAssessmentForm.valid}"[disabled]="!riskAssessmentForm.valid"> Save</button>
+            <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- ================= Risk Assessment Form End=================== -->
+
+    <!-- ================= Risk Assissment Table Start=================== -->
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="boxs_BG">
+          <input class="form-control col-form-label-sm float-right"
+                 placeholder="Search by code, name and product group..." type="text" style="width: 300px;"
+                 [(ngModel)]="Filter">
+           <div class="titleBG"> Risk Assissment Data  </div>
+
+          <div class="row" style="width: 100%;">
+
+            <div class="col-md-12 mt-4 bscTable scrollbart">
+
+              <table class="table table-striped">
+                <thead>
+                <tr class="bscBg-primary white">
+                  <th scope="col" rowspan="2">S.No</th>
+                  <th scope="col" rowspan="2">Risk ID</th>
+                  <th scope="col" rowspan="2">Risk Name</th>
+                  <th scope="col" rowspan="2">Organization Unit Code</th>
+                  <th scope="col" rowspan="2">Organization Unit Name</th>
+                  <th scope="col" rowspan="2">Strategic objective</th>
+                  <th scope="col" rowspan="2">Outcomes</th>
+                  <th scope="col" rowspan="2">Risk Indicators</th>
+                  <th scope="col" colspan="5">Likelihood</th>
+                  <th scope="col" colspan="5">Consequence</th>
+                  <th scope="col" rowspan="2">Management Control</th>
+                  <th scope="col" rowspan="2">Accountable Manager</th>
+                  <th scope="col" rowspan="2">Action</th>
+                </tr>
+
+                <tr class="bscBg-primary white">
+                  <th scope="col">1</th>
+                  <th scope="col">2</th>
+                  <th scope="col">3</th>
+                  <th scope="col">4</th>
+                  <th scope="col">5</th>
+                  <th scope="col">1</th>
+                  <th scope="col">2</th>
+                  <th scope="col">3</th>
+                  <th scope="col">4</th>
+                  <th scope="col">5</th>
+                </tr>
+
+
+                </thead>
+                <tbody>
+                <tr
+                  *ngFor="let item of riskAssessmentTableDataSource | filter: ['riskId', 'riskName', 'orgCode', 'orgName']: Filter; let i = index">
+                  <td scope="row">{{i + 1}}</td>
+                  <td>{{item.riskId}}</td>
+                  <td>{{item.riskName}}</td>
+                  <td>{{item.orgCode}}</td>
+                  <td>{{item.orgName}}</td>
+                  <ng-container *ngFor="let item of item.details">
+                    <td>{{item.objectiveName}}</td>
+                    <td>{{item.outcomes}}</td>
+                    <td>{{item.riskIndicators}}</td>
+                    <td>
+                      <span *ngIf="item.likelihood === 1">1</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.likelihood === 2">2</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.likelihood === 3">3</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.likelihood === 4">4</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.likelihood === 5">5</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.consequence === 1">1</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.consequence === 2">2</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.consequence === 3">3</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.consequence === 4">4</span>
+                    </td>
+                    <td>
+                      <span *ngIf="item.consequence === 5">5</span>
+                    </td>
+                    <td>{{item.managementControl}}</td>
+                    <td>{{item.accountableManager}}</td>
+                  </ng-container>
+                  <td><span class="btn btn-pink btn-sm"> <i class="fa fa-pencil"
+                                                            (click)="editRiskAssessment(item)"></i> <i class="fa fa-trash"
+                                                                                                       (click)="showConfirm(item)"></i> </span>
+                  </td>
+                </tr>
+                </tbody>
+
+              </table>
+              <h6 class="text-center" *ngIf="riskAssessmentTableDataSource.length === 0">No Risk assessments exist,
+                Please add</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= Risk Assissment Table End=================== -->
+
+
+</div>

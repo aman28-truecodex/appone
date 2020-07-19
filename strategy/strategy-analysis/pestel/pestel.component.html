@@ -1,0 +1,290 @@
+<form [formGroup]="pestalAnalysisFrom">
+  <div class="strategryAnalysisTbs">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG">
+          <div class="strategryAnalysisTitle" id="pESTELAnalysis">
+            <div class="titleBG"> PESTEL Analysis</div>
+            <i class="fa fa-angle-down collapsed" id="angleup2" data-toggle="collapse"
+               data-target="#collapsePESTELAnalysis"></i>
+          </div>
+          <div id="collapsePESTELAnalysis" class="collapse" aria-labelledby="pestalAnalysis"
+               data-parent="#accordionSTrategryAnalysis">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+
+                  <div class="row mt-4">
+                    <div class="col-md-6 pr-0">
+                      <div class="form-group row m-0 pr-3 row">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                          <span class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                data-placement="top"
+                                title="{{tooltipInfo.orgCode}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon">
+                          <select
+                            (change)="getCodeName(); getPestelAnalysis('PESTEL'); onFocusForElement('orgCode')"
+                            (focusout)="onFocusOutForElement()" tabindex="1"
+                            [ngClass]="{'my-error': shouldShowErrors('orgCode', pestalAnalysisFrom)}"
+                            formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Unit Code</option>
+                            <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                              {{ codeName.code}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name</label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="2" formControlName="orgName"
+                                 readonly
+                                 name="orgName"
+                                 placeholder="Organization Unit Name">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Description </label>
+                        <div class="col-sm-7">
+                              <textarea class="form-control col-form-label-sm" formControlName="description"
+                                        name="description" tabindex="3"
+                                        placeholder="Description"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Year <span
+                          class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer c" data-toggle="tooltip"
+                                data-placement="top"
+                                title="{{tooltipInfo.year}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon pr-0">
+                          <select
+                            (change)="getPestelAnalysis('PESTEL'); onFocusForElement('year')"
+                            (focusout)="onFocusOutForElement()" tabindex="4"
+                            [ngClass]="{'my-error': shouldShowErrors('year', pestalAnalysisFrom)}"
+                            formControlName='year' name='year' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Year</option>
+                            <option *ngFor="let year of years" [ngValue]="year.name">
+                              {{ year.name}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version <span
+                          class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                data-placement="top"
+                                title="{{tooltipInfo.version}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon pr-0">
+                          <select
+                            (change)="getPestelAnalysis('PESTEL'); onFocusForElement('version')"
+                            (focusout)="onFocusOutForElement()" tabindex="5"
+                            [ngClass]="{'my-error': shouldShowErrors('version', pestalAnalysisFrom)}"
+                            formControlName='version' name='version' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Version</option>
+                            <option *ngFor="let item of versions" [ngValue]="item.version">
+                              {{ item.version}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red">Info 1 </label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="6" placeholder="info" formControlName="info1">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 2</label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="7" placeholder="info" formControlName="info2">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red">Info 3 </label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="8" placeholder="info" formControlName="info3">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 4 </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="9" placeholder="info" formControlName="info4">
+                        </div>
+                      </div>
+                    
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">                    
+                      
+
+                    </div>
+                  </div>
+                   
+                    
+                      
+                  
+                   
+                  
+                  <div class="row mt-4">
+                    <div class="col-md-4 criteriaList">
+                      <ul>
+                        <li *ngFor="let item of pestalAnalysis; let i = index" style="cursor: pointer"
+                            (click)="activateClass(item.name, i)" tabindex="10"
+                            [class.blockquote]="selectedIndex === i"
+                        >
+                          <a>{{item.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-8">
+                      <tag-input formControlName="details" name="details" (onAdd)="addPestel($event)"
+                                 placeholder='Add PESTEL'
+                                 (onRemove)="deletePestel($event)"></tag-input>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-4 mt-4">
+                  <div class="criteria">
+                    <div class="accordion" id="accordionCriteria2">
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="politicalAnalysis"><i class="fa fa-angle-down"
+                                                                             data-toggle="collapse"
+                                                                             data-target="#collapsePoliticalAnalysis"></i>
+                          <div class="titleBG"> Political Analysis</div>
+                        </div>
+                        <div id="collapsePoliticalAnalysis" class="collapse show"
+                             aria-labelledby="politicalAnalysis"
+                             data-parent="#accordionCriteria2">
+                          <div class="card-body">
+                                <span class="badge-chip"
+                                      *ngFor="let item of politicalAnalysis">{{item.value ? item.value : item}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="economicAnalysis"><i class="fa fa-angle-down collapsed"
+                                                                            data-toggle="collapse"
+                                                                            data-target="#collapseEconomicAnalysis"></i>
+                          <div class="titleBG"> Economic Analysis</div>
+                        </div>
+                        <div id="collapseEconomicAnalysis" class="collapse" aria-labelledby="economicAnalysis"
+                             data-parent="#accordionCriteria2">
+                          <div class="card-body">
+                                <span class="badge-chip"
+                                      *ngFor="let item of economicAnalysis">{{item.value ? item.value : item}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="socialAnalysis"><i class="fa fa-angle-down collapsed"
+                                                                          data-toggle="collapse"
+                                                                          data-target="#collapseSocialAnalysis"></i>
+                          <div class="titleBG"> Social Analysis</div>
+                        </div>
+                        <div id="collapseSocialAnalysis" class="collapse" aria-labelledby="socialAnalysis"
+                             data-parent="#accordionCriteria2">
+                          <div class="card-body">
+                                <span class="badge-chip"
+                                      *ngFor="let item of socialAnalysis">{{item.value ? item.value : item}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="technologicalAnalysis"><i
+                          class="fa fa-angle-down collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseTechnologicalAnalysis"></i>
+                          <div class="titleBG"> Technological Analysis</div>
+                        </div>
+                        <div id="collapseTechnologicalAnalysis" class="collapse"
+                             aria-labelledby="technologicalAnalysis" data-parent="#accordionCriteria2">
+                          <div class="card-body">
+                                <span class="badge-chip"
+                                      *ngFor="let item of technologicalAnalysis">{{item.value ? item.value : item}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="environmentalAnalysis"><i
+                          class="fa fa-angle-down collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseEnvironmentalAnalysis"></i>
+                          <div class="titleBG"> Environmental Analysis</div>
+                        </div>
+                        <div id="collapseEnvironmentalAnalysis" class="collapse"
+                             aria-labelledby="environmentalAnalysis" data-parent="#accordionCriteria2">
+                          <div class="card-body">
+                                <span class="badge-chip"
+                                      *ngFor="let item of environmentalAnalysis">{{item.value ? item.value : item}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="legalAnalysis"><i class="fa fa-angle-down collapsed"
+                                                                         data-toggle="collapse"
+                                                                         data-target="#collapseLegalAnalysis"></i>
+                          <div class="titleBG"> Legal Analysis</div>
+                        </div>
+                        <div id="collapseLegalAnalysis" class="collapse" aria-labelledby="legalAnalysis"
+                             data-parent="#accordionCriteria2">
+                          <div class="card-body">
+                                <span class="badge-chip"
+                                      *ngFor="let item of legalAnalysis">{{item.value ? item.value : item}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="float-right">
+                    <button type="button" class="btn btn-info mr-1 btn-sm" (click)="savePestelAnalysis('PESTEL')"
+                            [disabled]="!pestalAnalysisFrom.valid"
+                            [ngClass]="{'button-disabled': !pestalAnalysisFrom.valid}"> Save
+                    </button>
+                    <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,348 @@
+<div class="container-fluid gryBG">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-4 createSeries">
+        <form [formGroup]="employeeMasterTableForm">
+          <div class="titleBG"> Employee Master</div>
+          <div class="row mt-5">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code<span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-7 pr-0 ">
+                  <select (change)="getOrgUnitName(); onFocusForElement('organizationUnitCode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('organizationUnitCode', employeeMasterTableForm)}"
+                    formControlName='organizationUnitCode' name='organizationUnitCode'
+                    class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="organizationUnitName"
+                    name="organizationUnitName" placeholder="Organization Unit Name">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Department Code
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.deptCode}}"></span>
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <select (change)="getOrgUnitNameForDept(); onFocusForElement('departmentCode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('departmentCode', employeeMasterTableForm)}"
+                    formControlName='departmentCode' name='departmentCode' class="form-control col-form-label-sm">
+                    <option selected [value]="null" disabled>Select Dept Code</option>
+                    <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Department Name
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="departmentName"
+                    name="departmentName" placeholder="Department Name">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Employee ID
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.empId}}"></span>
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="employeeID"
+                    name="employeeID" (focus)="onFocusForElement('employeeID')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('employeeID', employeeMasterTableForm)}"
+                    placeholder="Employee ID">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Employee Name
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="employeeName"
+                    name="employeeName" (focus)="onFocusForElement('employeeName')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('employeeName', employeeMasterTableForm)}"
+                    placeholder="Employee Name">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Reporting Manager
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="reportingManager"
+                    name="reportingManager" placeholder="Reporting Manager">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Annual
+                  Salary
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="annualSalary" numbersOnly
+                    name="annualSalary" placeholder="Annual Salary">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Job Title
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.empTitle}}"></span>
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="jobTitle"
+                    (focus)="onFocusForElement('jobTitle')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('jobTitle', employeeMasterTableForm)}" name="jobTitle"
+                    placeholder="Job Title">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Email ID
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="emailID" name="emailID"
+                    (focus)="onFocusForElement('emailID')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('emailID', employeeMasterTableForm)}"
+                    placeholder="Email ID">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Address
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="address"
+                    name="address"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Date of
+                  Joining
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control mb-3" placeholder="Date of Joining" bsDatepicker
+                    autocomplete="off" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }"
+                    formControlName="dateOfJoining" name="dateOfJoining" />
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Phone Number
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="phoneNumber" numbersOnly
+                    name="phoneNumber" placeholder="Phone Number">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Pan Card
+                  Number
+                </label>
+                <div class="col-sm-7 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="panNumber" name="panNumber"
+                    placeholder="Pan Card ">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="float-right">
+        <button type="button" class="btn btn-info global-btn mr-1" style="margin-top:-25px" (click)="saveEmpMaster()"
+          [disabled]="!employeeMasterTableForm.valid" [ngClass]="{'button-disabled': !employeeMasterTableForm.valid}">
+          Save
+        </button>
+        <button type="button" class="btn btn-sm global-btn" style="margin-top:-25px"
+          (click)="clearFields()">Cancel</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-2">
+        <div class="titleBG">Employee Master Table</div>
+
+
+        <input class="form-control col-form-label-sm float-right mt-1"
+          placeholder="Search by code, name and product group..." type="text" style="width: 300px;"
+          (keyup)="applyFilter($event.target.value)">
+
+        <!-- <input type="button" class="btn btn-info global-btn float-right ml-2" (click)="exportAsExcel()"
+           value="Export">-->
+
+        <input id="file-upload" type="file" (change)="ImportAsExcel($event)" />
+        <label for="file-upload" class="smallbuttons custom-file-upload float-right global-btn btn btn-info">
+          <i class="fa fa-cloud-download" aria-hidden="true"></i>Import
+
+
+        </label> <label for="file-uploa" (click)="exportAsExcel()"
+          class="smallbuttons btn-info global-btn float-right ml-2">
+          <i class="fa fa-cloud-upload" aria-hidden="true"></i> Export
+        </label>
+        <!--   <label for="file-upload" class=" smallbuttons custom-file-upload global-btn float-right ml-2 btn btn-info">
+          <i class="fa fa-cloud-download" aria-hidden="true"></i> Import
+        </label>
+        <input id="file-upload" type="file" (change)="ImportAsExcel($event)" />
+
+        <label for="file-uploa" (click)="exportAsExcel()" class=" smallbuttons btn btn-info global-btn float-right ml-2">
+          <i class="fa fa-cloud-upload" aria-hidden="true"></i> Export
+        </label>
+ -->
+
+
+
+
+        <div class="example-container">
+          <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="sNo">
+              <th mat-header-cell *matHeaderCellDef>S.No</th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+              </td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="organizationUnitCode">
+              <th mat-header-cell *matHeaderCellDef>Org Unit Code</th>
+              <td mat-cell *matCellDef="let element"> {{element.organizationUnitCode}} -
+                {{element.organizationUnitName}}
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="departmentCode">
+              <th mat-header-cell *matHeaderCellDef>Dept Code</th>
+              <td mat-cell *matCellDef="let element"> {{element.departmentCode}} - {{element.departmentName}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="employeeID">
+              <th mat-header-cell *matHeaderCellDef>Emp Id</th>
+              <td mat-cell *matCellDef="let element"> {{element.employeeID}} - {{element.employeeName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="reportingManager">
+              <th mat-header-cell *matHeaderCellDef>Reporting Manager</th>
+              <td mat-cell *matCellDef="let element"> {{element.reportingManager}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="jobTitle">
+              <th mat-header-cell *matHeaderCellDef>Job Title</th>
+              <td mat-cell *matCellDef="let element"> {{element.jobTitle}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+              <th mat-header-cell *matHeaderCellDef>Address</th>
+              <td mat-cell *matCellDef="let element"> {{element.address ? element.address: 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="emailID">
+              <th mat-header-cell *matHeaderCellDef>Email Id</th>
+              <td mat-cell *matCellDef="let element"> {{element.emailID ? element.emailID : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateOfJoining">
+              <th mat-header-cell *matHeaderCellDef>DOJ</th>
+              <td mat-cell *matCellDef="let element"> {{element.dateOfJoining | date}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="panNumber">
+              <th mat-header-cell *matHeaderCellDef>PAN</th>
+              <td mat-cell *matCellDef="let element"> {{element.panNumber ? element.panNumber : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="phoneNumber">
+              <th mat-header-cell *matHeaderCellDef>Phone</th>
+              <td mat-cell *matCellDef="let element"> {{element.phoneNumber ? element.phoneNumber : 'NA'}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let element">
+                <span class="btn btn-pink btn-sm">
+                  <i class="fa fa-pencil p-1" (click)="editEmpMaster(element.id, element)"></i>
+                  <i class="fa fa-trash p-1" (click)="confirmDelete(element.id)"></i>
+                </span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-primary"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[2,4,6,8,10]" [pageSize]="10" #paginatorRef>
+          </mat-paginator>
+          <h6 class="text-center p-2" *ngIf="empMaterData.length === 0">No Milestone exist, Please Add.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

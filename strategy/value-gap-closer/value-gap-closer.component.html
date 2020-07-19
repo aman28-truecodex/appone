@@ -1,0 +1,379 @@
+<div class="container-fluid gryBG">
+  <!-- ================= SWOT Analysis Start=================== -->
+  <form [formGroup]="valueGapCloserForm">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG">Value Gap Closer</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row mt-4">
+                <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Years <span
+                      class="red">*</span></label>
+                    <div class="col-sm-7 input_i_icon">
+                      <select class="form-control col-form-label-sm" formControlName="year" name="year"
+                              (focusout)="onFocusOutForElement()"
+                              [ngClass]="{'my-error': shouldShowErrors('year', valueGapCloserForm)}"
+                              (change)="getRevenueGapAmt();onFocusForElement('year')">
+                        <option selected [ngValue]="null">Select Year</option>
+                        <option *ngFor="let year of years" [ngValue]="year.name">
+                          {{ year.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  <div class="col-md-6">
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version <span
+                        class="red">*</span></label>
+                      <div class="col-sm-7 pr-0">
+                        <select
+                          (change)="getRevenueGapAmt(); onFocusForElement('version')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('version', valueGapCloserForm)}"
+                          formControlName='version' name='version' class="form-control col-form-label-sm">
+                          <option selected [ngValue]="null">Select Version</option>
+                          <option *ngFor="let item of versions" [ngValue]="item.version">
+                            {{item.version}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                        <span
+                          class="red">*</span>
+                        <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                              data-placement="top"
+                              title="{{tooltipInfo.orgCode}}"></span>
+                      </label>
+                      <div class="col-sm-7">
+                        <select
+                          (change)="getCodeAndName(); onFocusForElement('orgCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('orgCode', valueGapCloserForm)}"
+                          formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                          <option selected [ngValue]="null">Select Unit Code</option>
+                          <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                            {{ codeName.code}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row m-0">
+                      <label class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name </label>
+                      <div class="col-sm-7 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" placeholder="Organization Unit Name"
+                               formControlName="orgName" name="orgName"
+                               readonly></div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Product Group
+                        <span class="red">*</span></label>
+                      <div class="col-sm-7">
+                        <select class="form-control col-form-label-sm" formControlName="productGroupName"
+                                (change)="getRevenueGapAmt(); onFocusForElement('productGroupName')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('productGroupName', valueGapCloserForm)}"
+                                name="productGroupName">
+                          <option selected [ngValue]="null">Product Group</option>
+                          <option *ngFor="let item of prdGrp" [ngValue]="item.name">{{item.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Revenue Gap </label>
+                      <div class="col-sm-7 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" placeholder="Revenue Gap" readonly
+                               formControlName="revenueGap" name="revenueGap">
+                      </div>
+                    </div>
+                  </div>
+                </div>                  
+                 <div class="row">
+
+                 <div class="col-md-6">
+                  <div class="form-group row m-0">
+                    <label class="col-sm-5 col-form-label col-form-label-sm">Percentage
+                      <span
+                        class="red">*</span>
+                    </label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="Percentage" numbersOnly
+                             (change)="onFocusForElement('percentage')"
+                             (focusout)="onFocusOutForElement()"
+                             [ngClass]="{'my-error': shouldShowErrors('percentage', valueGapCloserForm)}"
+                             (keyup)="calcAmount($event)"
+                             formControlName="percentage" name="percentage">
+                    </div>
+                  </div>
+                 </div>
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                    <label for="" class="col-sm-5 col-form-label col-form-label-sm">Amount</label>
+                    <div class="col-sm-7 pr-0">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="Amount" numbersOnly
+                             readonly
+                             formControlName="amount" name="amount">
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="boxs_BG mt-4" style="height: 217px;">
+          <div class="row">
+            <div class="col-md-12 mt-3">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Scorecard Name </label>
+                <div class="col-sm-7 pr-0">
+                  <select class="form-control col-form-label-sm" formControlName="scorecardCode"
+                          (ngModelChange)="getScCode($event)"
+                          name="scorecardCode">
+                    <option selected [ngValue]="null">Select Scorecard</option>
+                    <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Objectives Name </label>
+                <div class="col-sm-7 pr-0">
+                  <select class="form-control col-form-label-sm"
+                          (ngModelChange)="getObjCode($event)"
+                          formControlName="objectiveCode" name="objectiveCode">
+                    <option selected [ngValue]="null">Link Objective</option>
+                    <option *ngFor="let item of objectives" [ngValue]="item.code">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Initiatives Name </label>
+                <div class="col-sm-7 pr-0">
+                  <select
+                    formControlName='initiativeCode' name='initiativeCode' class="form-control col-form-label-sm"
+                    (ngModelChange)="setInitiativeName($event)"
+                  >
+                    <option selected [ngValue]="null">Select Initiative Code</option>
+                    <option *ngFor="let codeName of initiatives" [ngValue]="codeName.code">
+                      {{ codeName.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="float-right">
+                <button type="button" class="btn btn-info btn-sm mr-1" (click)="saveValueGapCloser()"
+                        [disabled]="!valueGapCloserForm.valid"
+                        [ngClass]="{'button-disabled': !valueGapCloserForm.valid}"> Save
+                </button>
+                <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()">Cancel</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+
+  <!-- ================= SWOT Analysis End=================== -->
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-3">
+        <div class="titleBG"> Value Gap Closer</div>
+        <input class="form-control col-form-label-sm float-right ml-2 mt-1"
+               placeholder="Search by code, name and product group..." type="text"
+               style="width: 300px;"
+               [(ngModel)]="Filter">
+               <label for="file-uploa" (click)="exportAsExcel()"class="btn-sm btn-info float-right ml-2 mt-1">
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i> Export
+              </label>
+        <!-- <button type="button" class="btn btn-info global-btn float-right mb-2" (click)="exportAsExcel()"
+        >Export</button> --
+
+        <div class="col-md-12 bscTable scrollbart">
+          <table class="table table-striped ">
+            <thead>
+            <tr class="bg-primary white">
+              <th scope="col">S.No</th>
+              <th scope="col">Year</th>
+              <th scope="col">Organization Unit Code</th>
+              <th scope="col">Organization Unit Name</th>
+              <th scope="col">productGroup</th>
+              <th scope="col">revenueGap</th>
+              <th scope="col">version</th>
+              <th scope="col">percentage</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Scorecard</th>
+              <th scope="col">Objective</th>
+              <th scope="col">Initiative</th>
+              <th scope="col"> Action</th>
+            </tr>
+            
+
+            </thead>
+            <tbody>
+            <tr *ngFor="let element of valueGapCloserTableData;let i=index;">
+              <td scope="row">{{i + 1}}</td>
+              <td>{{element.year}}</td>
+              <td>{{element.orgCode}}</td>
+              <td>{{element.orgName}}</td>             
+              <td>{{element.productGroupName}}</td>
+              <td>{{element.revenueGap}}</td>
+              <td>{{element.version}}</td>
+              <td>{{element.percentage}}</td>
+              <td>{{element.amount}}</td>
+              <td>{{element.scorecard}}</td>
+              <td>{{element.objectiveName}}</td>
+              <td>{{element.initiativeName}}</td>
+             
+              <td>
+                <span class="btn btn-pink btn-sm">
+                <i class="fa fa-pencil " (click)="editValueGapCloser(element.id, element)"></i>
+                <i class="fa fa-trash" (click)="confirmDelete(element.id)"></i>
+              </span>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="boxs_BG mt-3">
+    <div class="titleBG">Value Gap Closer</div>
+    <input class="form-control col-form-label-sm float-right ml-2 mt-1"
+           placeholder="Search by code, name and product group..." type="text"
+           style="width: 300px;" (keyup)="applyFilter($event.target.value)">
+    <button type="button" class=" btn-sm btn btn-info  float-right mr-1 mb-2"(click)="exportAsExcel()">
+      <i class="fa fa-upload m-0"></i><span class="m-1"></span>Export</button>
+    <div class="example-container">
+
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="sNo">
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+          </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="year">
+          <th mat-header-cell *matHeaderCellDef>year</th>
+          <td mat-cell *matCellDef="let element"> {{element.year}}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="organizationUnitCode">
+          <th mat-header-cell *matHeaderCellDef>Org Unit Code</th>
+          <td mat-cell *matCellDef="let element"> {{element.orgCode}}</td>
+        </ng-container>
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="organizationUnitName">
+          <th mat-header-cell *matHeaderCellDef>Org Unit Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.orgName}}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="productGroup">
+          <th mat-header-cell *matHeaderCellDef>Product Group</th>
+          <td mat-cell *matCellDef="let element"> {{element.productGroupName}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="revenueGap">
+          <th mat-header-cell *matHeaderCellDef>Revenue Gap</th>
+          <td mat-cell *matCellDef="let element"> {{element.revenueGap}}</td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="version">
+          <th mat-header-cell *matHeaderCellDef>Version</th>
+          <td mat-cell *matCellDef="let element">{{element.version}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="percentage">
+          <th mat-header-cell *matHeaderCellDef>Percentage</th>
+          <td mat-cell *matCellDef="let element"> {{element.percentage}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="scorecard">
+          <th mat-header-cell *matHeaderCellDef>Scorecard</th>
+          <td mat-cell *matCellDef="let element"> {{element.scorecardName ? element.scorecardName: 'NA'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="objective">
+          <th mat-header-cell *matHeaderCellDef>Objective</th>
+          <td mat-cell *matCellDef="let element"> {{element.objectiveName ? element.objectiveName: 'NA'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="initiative">
+          <th mat-header-cell *matHeaderCellDef>Initiative</th>
+          <td mat-cell *matCellDef="let element"> {{element.initiativeName ? element.initiativeName : 'NA'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+                <span class="btn btn-pink btn-sm">
+                <i class="fa fa-pencil p-1" (click)="editValueGapCloser(element.id, element)"></i>
+                <i class="fa fa-trash p-1" (click)="confirmDelete(element.id)"></i>
+                </span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-primary"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" #paginatorRef>
+      </mat-paginator>
+
+      <h6 class="text-center" *ngIf="valueGapCloserTableData.length === 0">No Value gap closer exist, Please add.</h6>
+
+    </div>
+  </div><br/>
+
+
+  <!-- ================= Strategic Projection Data End=================== -->
+
+
+</div>
+

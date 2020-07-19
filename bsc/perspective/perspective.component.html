@@ -1,0 +1,234 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="perspectiveForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4" style="height:360px;">
+          <div class="titleBG">PERSPECTIVES</div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-3">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Type </label>
+                <div class="col-sm-6 pr-0">
+                  <span class="form-control col-form-label-sm disabledText"> Perspective </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-3">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Code <span
+                  class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select placeholder="Parent Organization Unit Code"
+                          (change)="getCodeName(); onFocusForElement('orgCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('orgCode', perspectiveForm)}"
+                          formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-3">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" readonly
+                         formControlName="orgName" name="orgName"
+                         placeholder="Organization Unit Name">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-3">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Code <span
+                  class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm"
+                          (change)="getScorecardName(); onFocusForElement('scCode')" formControlName="scCode"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scCode', perspectiveForm)}"
+                          name="scCode">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [value]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-3">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Scorecard Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="Scorecard Name" readonly
+                         formControlName="scName" name="scName">
+                </div>
+              </div>
+
+            </div>
+          </div>
+             <div class="row">
+               <div class="col-md-6">
+                <div class="form-group row m-0 pb-3">
+                  <label for="" class="col-sm-6 col-form-label col-form-label-sm">Perspective Code <span
+                    class="red">*</span>
+                    <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                          title="{{tooltipInfo.perspectiveCode}}"></span>
+                  </label>
+                  <div class="col-sm-6 input_i_icon pr-0">
+                    <input type="text" class="form-control col-form-label-sm" placeholder="Perspective Code"
+                           (focus)="onFocusForElement('code')"
+                           (focusout)="onFocusOutForElement()"
+                           [ngClass]="{'my-error': shouldShowErrors('code', perspectiveForm)}"
+                           formControlName="code" name="code">
+                  </div>
+                </div>
+
+               </div>
+               <div class="col-md-6">
+                 
+              <div class="form-group row m-0 pb-3">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Perspective Name
+                  <span
+                    class="red">*
+                  </span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.perspectiveName}}"></span>
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Perspective Name"
+                         (focus)="onFocusForElement('name')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('name', perspectiveForm)}"
+                         formControlName="name" name="name">
+                </div>
+              </div>
+
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6">
+                <div class="form-group row m-0 pb-3">
+                  <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 1</label>
+                  <div class="col-sm-6 pr-0">
+                    <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info1">
+                  </div>
+                </div>
+
+               </div>
+               <div class="col-md-6">
+                <div class="form-group row m-0 pb-3">
+                  <label class="col-sm-6 col-form-label col-form-label-sm red">Info 2</label>
+                  <div class="col-sm-6 pr-0">
+                    <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info2">
+                  </div>
+                </div>
+               </div>
+             </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0 pb-3">
+                        <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 3</label>
+                        <div class="col-sm-6 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info3">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+              <div class="form-group row m-0 pb-3">
+                <label class="col-sm-6 col-form-label col-form-label-sm red">Info 4</label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info4">
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4 mb-0" style="height:360px;">
+          <div class="titleBG"><span>{{orgCode ? orgCode : 'Code'}}: {{orgName ? orgName : 'Name'}}</span></div>
+
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <div class="perapectivesRightTitle">
+                <span> {{scCode ? scCode : 'Code'}}: {{codeName? codeName : 'Name'}} </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 scrollbart">
+            <div class="col-md-6 offset-md-2" *ngFor="let item of PerspectivesByCode">
+              <div class="perapectivesBSCNames" *ngIf="item.name !== null && item.name !== ''"> {{item.name}}
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o"
+                                                          (click)="editPerspective(item)"></i> <i
+                  class="fa fa-trash" (click)="confirmDelete(item.id)"></i>
+                </div>
+              </div>
+            </div>
+
+             <div class="row scrollbart">
+            <div class="col-md-6 offset-md-2" *ngIf="showDefaultProjType">
+              <div class="perapectivesBSCNames"> Financial
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o"></i> <i class="fa fa-trash"></i>
+                </div>
+              </div>
+              <div class="perapectivesBSCNames"> Customer
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o"></i> <i class="fa fa-trash"></i>
+                </div>
+              </div>
+              <div class="perapectivesBSCNames"> Internal Process
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o"></i> <i class="fa fa-trash"></i>
+                </div>
+              </div>
+              <div class="perapectivesBSCNames"> Learning & Growth
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o"></i> <i class="fa fa-trash"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+          <div *ngIf="!!PerspectivesByCode && PerspectivesByCode.length === 0 && !showDefaultProjType" class="center-alignContent">
+            <p></p>
+          </div>
+        </div>
+        <div class="row" style="padding: 5px">
+          <div class="col-md-12">
+            <div class="float-right">
+              <button type="button" class=" btn-sm btn btn-info mr-1" (click)="savePerspective()"
+                      [disabled]="!perspectiveForm.valid"
+                      [ngClass]="{'button-disabled': !perspectiveForm.valid}"
+    
+              > Save
+              </button>
+              <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </form>
+</div>

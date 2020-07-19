@@ -1,0 +1,17 @@
+table {
+  width: 100%;
+}
+
+th {
+  color: #fff !important;
+  text-transform: uppercase !important;
+  vertical-align: inherit !important;
+}
+
+th, td {
+  vertical-align: inherit;
+  border-right: 1px solid rgba(0, 0, 0, .12);
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  text-align: center !important;
+}

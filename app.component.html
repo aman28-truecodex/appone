@@ -1,0 +1,12 @@
+<app-loader></app-loader>
+
+<div *ngIf="showHeader">
+  <app-header [headerData]="pageLevelHelp"></app-header>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="showHeader">
+  <app-footer></app-footer>
+</div>
+

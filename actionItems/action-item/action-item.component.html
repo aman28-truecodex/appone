@@ -1,0 +1,422 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="actionItemForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4" style="height:390px;">
+          <div class="titleBG"> Action Item Management</div>
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code<span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select placeholder="Parent Organization Unit Code"
+                          (change)="getCodeAndName(); onFocusForElement('orgCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('orgCode', actionItemForm)}"
+                          formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Organization Unit Name"
+                         formControlName="orgName" name="orgName"
+                         readonly>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label class="col-sm-5 col-form-label col-form-label-sm">Scorecard Code
+                  <span class="red m-1">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles ml-1" data-toggle="tooltip"
+                        data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-7">
+                  <select class="form-control col-form-label-sm"
+                          (change)="getScorecardName(); onFocusForElement('scCode')" formControlName="scCode"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scCode', actionItemForm)}"
+                          name="scCode">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [value]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Scorecard Name </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Scorecard Name" readonly
+                         formControlName="scName" name="scName">
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Action Item Code
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Action Item Code"
+                         (focus)="onFocusForElement('code')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('code', actionItemForm)}"
+                         formControlName="code" name="code">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-5 col-form-label col-form-label-sm">Action Item Name
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-7 mt-2">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Action Item"
+                         (focus)="onFocusForElement('name')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('name', actionItemForm)}"
+                         formControlName="name" name="name">
+                </div>
+              </div>
+            </div>
+          </div>
+             
+         
+            <div class="col-md-12">
+              <div class="form-group row row">
+                <label for="" class="col-sm-5  col-form-label col-form-label-sm">Description</label>
+                <div class="col-sm-7" style="">
+                  <textarea class="form-control col-form-label-sm" placeholder="Description"
+                            formControlName="description" name="description"style="width: 460px;margin-left:-135px;"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-5 col-form-label col-form-label-sm">Reporting Frequency</label>
+                  <div class="col-sm-7 mt-2">
+                    <select class="form-control col-form-label-sm" formControlName="reportingFrequency"
+                            name="reportingFrequency">
+                      <option selected [value]="null">Reporting Frequency</option>
+                      <option *ngFor="let item of reportingFrequency" [value]="item.frequency">
+                        {{ item.frequency}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-5 col-form-label col-form-label-sm">Evaluation Master Measure </label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control col-form-label-sm"
+                           formControlName="evaluationMasterMeasure" name="evaluationMasterMeasure"
+                           placeholder="Evaluation Master Measure">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-5 col-form-label col-form-label-sm">Owner </label>
+                  <div class="col-sm-7">
+                    <select
+                      formControlName='owner' name='owner'
+                      class="form-control col-form-label-sm">
+                      <option selected [value]="null" disabled>Select Owner</option>
+                      <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                        {{ item.employeeName | uppercase}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-5 col-form-label col-form-label-sm">Collaborators </label>
+                  <div class="col-sm-7">
+                    <select
+                      formControlName='collaborators' name='collaborators'
+                      class="form-control col-form-label-sm">
+                      <option selected [value]="null">Select collaborator</option>
+                      <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                        {{ item.employeeName | uppercase}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row m-0">
+                  <label for="" class="col-sm-5 col-form-label col-form-label-sm">Status </label>
+                  <div class="col-sm-7">
+                    <select
+                      formControlName='status' name='status' class="form-control col-form-label-sm">
+                      <option selected [value]="null">Select Status</option>
+                      <option *ngFor="let item of status" [value]="item.status">
+                        {{ item.status}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row m-0 mt-2">
+                  <label for="" class="col-sm-5 col-form-label col-form-label-sm">Attachments </label>
+                  <div class="col-sm-7">
+                    <div class="custom-file">
+                      <input type="file" max-length="8" class="custom-file-input" id="customFileLang" lang="es"
+                             (change)="uploadLogo($event)">
+                      <label class="custom-file-label" for="customFileLang">{{fileName}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="boxs_BG mt-2" style="height: 130px;">
+          <!-- <div class="titleBG"> Vission </div> -->
+
+          <div class="mt-4">
+
+            <div class="form-group row m-0">
+              <label for="" class="col-sm-3 col-form-label col-form-label-sm">Percent Complete </label>
+              <div class="col-sm-9 pr-0">
+                <ng5-slider [options]="options" [(value)]="value"
+                            (valueChange)="percentCompleted($event)"></ng5-slider>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG">Schedule Meeting</div>
+          <div class="bs-example">
+            <div class="accordion" id="accordionExample">
+              <div class="card mt-2">
+                <div class="durationTitle" id="headingTwo">
+                  <!-- <label for="r12" data-toggle="collapse" data-target="#collapseTw">
+                    <input type="radio" id="r12" name="occupation" value="Not-Working" required=""> <span> Schedule Meetings </span>
+                  </label> -->
+                </div>
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                     data-parent="#accordionExample">
+                  <div class="mt-2">
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-2 col-form-label col-form-label-sm">To </label>
+                      <div class="col-sm-10">
+                        <mat-form-field class="example-chip-list" style="width: 100%;">
+                          <mat-chip-list aria-label="Fruit selection" #chipList>
+                            <mat-chip *ngFor="let emp of empTo"
+                                      [selectable]="selectable"
+                                      [removable]="removable"
+                                      (removed)="removeTo(emp)"
+                            >
+                              {{emp}}
+                              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input matInput
+                                   placeholder="Enter Email"
+                                   #fruitInputTo
+                                   [formControl]="empEmailToCtrl"
+                                   [matAutocomplete]="autoTo"
+                                   [matChipInputFor]="chipList"
+                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                   [matChipInputAddOnBlur]="addOnBlur"
+                                   (matChipInputTokenEnd)="addTo($event)"
+                            >
+                          </mat-chip-list>
+                          <mat-autocomplete #autoTo="matAutocomplete" (optionSelected)="selectedTo($event)">
+                            <mat-option *ngFor="let email of filteredToEmails | async" [value]="email">
+                              {{email}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-2 col-form-label col-form-label-sm">CC </label>
+                      <div class="col-sm-10">
+                        <mat-form-field class="example-chip-list" style="width: 100%;">
+                          <mat-chip-list aria-label="Fruit selection" #chipList1>
+                            <mat-chip *ngFor="let fruit of empCc"
+                                      [selectable]="selectable"
+                                      [removable]="removable"
+                                      (removed)="removeCc(fruit)"
+                            >
+                              {{fruit}}
+                              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input matInput
+                                   placeholder="Enter Email"
+                                   #fruitInputCc
+                                   [formControl]="empEmailCcCtrl"
+                                   [matAutocomplete]="autoCc"
+                                   [matChipInputFor]="chipList1"
+                                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                   [matChipInputAddOnBlur]="addOnBlur"
+                                   (matChipInputTokenEnd)="addCc($event)"
+                            >
+                          </mat-chip-list>
+                          <mat-autocomplete #autoCc="matAutocomplete" (optionSelected)="selectedCc($event)">
+                            <mat-option *ngFor="let email of filteredCcEmails | async" [value]="email">
+                              {{email}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row m-0">
+                      <label for="" class="col-sm-2 col-form-label col-form-label-sm">Subject </label>
+                      <div class="col-sm-10">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Subject" formControlName="mailSubject" name="mailSubject">
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row m-0">
+                      <label for="" class="col-sm-2 col-form-label col-form-label-sm">Email Body</label>
+                      <div class="col-sm-10">
+                        <mat-form-field class="example-full-width">
+                          <input matInput placeholder="Email Body" formControlName="comments"
+                                 name="comments">
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+
+                    <div class="row m-0">
+                      <label class="col-sm-2 col-form-label col-form-label-sm">Location </label>
+                      <div class="col-sm-10">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="text" placeholder="Location" formControlName="meetingLocation"
+                                 name="meetingLocation">
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-12 mt-3">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-2 col-form-label col-form-label-sm">Start Date </label>
+                          <div class="col-sm-2">
+                            <input type="text" class="form-control mb-3" placeholder="From" bsDatepicker
+                                   autocomplete="off"
+                                   [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }"
+                                   formControlName="scheduledMeetingStartDate" name="scheduledMeetingStartDate"/>
+                          </div>
+                          <label for="" class="col-sm-2 col-form-label col-form-label-sm">End Date </label>
+                          <div class="col-sm-2">
+                            <input type="text" class="form-control mb-3" placeholder="To" bsDatepicker
+                                   autocomplete="off"
+                                   [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-blue' }"
+                                   formControlName="scheduledMeetingEndDate" name="scheduledMeetingEndDate"/>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="custom-control custom-checkbox mt-1">
+                              <input type="checkbox" class="custom-control-input" id="dayEvent"
+                                     formControlName="dayEvent" name="dayEvent">
+                              <label class="custom-control-label cursorPointer" for="dayEvent">Day Event</label>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 mt-3">
+                        <div class="form-group row m-0">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-info btn-sm mr-1"(click)="saveActionItem()"
+                    [disabled]="!actionItemForm.valid" [ngClass]="{'button-disabled': !actionItemForm.valid}"> Save
+            </button>
+            <button type="button" class="btn btn-cancel btn-sm"(click)="clearFields()"> Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG">
+          <!-- <div class="titleBG"> Vission </div> -->
+
+    <!--  <div class="mt-4">
+
+       <div class="form-group row m-0">
+         <label for="" class="col-sm-3 col-form-label col-form-label-sm">Percent Complete </label>
+         <div class="col-sm-9 pr-0">
+           <ng5-slider [options]="options" [(value)]="value"
+                       (valueChange)="percentCompleted($event)"></ng5-slider>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <br><br>
+</div> -->
+    <!--  <div class="row summary_View" style="background-color:#F2F2F2;">
+       <div class="offset-10 float-right">
+         <button type="button" class="btn btn-info global-btn mr-1" (click)="saveActionItem()"
+                 [disabled]="!actionItemForm.valid"
+                 [ngClass]="{'button-disabled': !actionItemForm.valid}"
+         > Save
+         </button>
+         <button type="button" class="btn btn-cancel" (click)="clearFields()"> Cancel</button>
+
+       </div>
+
+     </div> -->
+  </form>
+</div>

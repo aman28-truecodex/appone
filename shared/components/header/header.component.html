@@ -1,0 +1,82 @@
+<div class="container-fluid gryBG">
+  <div class="row">
+    <div class="col-md-12 col-lg-12 p-0 whiteBG">
+      <nav class="navbar navbar-dark sticky-top flex-md-nowrap innerPageBorder">
+        <div class="col-lg-2 p-0 text-center innerLogoBG cursorPointer" routerLink="/strategy/corporateStructure">
+          <div class="">
+            <img src="assets/images/Fruisce.png" width="200"/>
+          </div>
+
+          <div class="tabLine border-0">
+				<span>
+					STRATEGY EXECUTION SYSTEM
+				</span>
+          </div>
+        </div>
+
+        <div class="col-lg-10 p-0">
+          <div class="topMenuBG right_menu">
+            <a class="navbar-brand cursorPointer col-sm-4 col-md-3 mr-0 px-4 white mt-2" title="Balance ScoreCard">Balance Scorecard</a>
+            <ul class="navbar-nav float-right">
+              <li><i class="fa fa-question-circle"title="Help" tabindex="1" type="button"
+                     data-toggle="modal" style="cursor:pointer;"data-target="#modalLoginForm1"></i>
+              </li>
+              <li class="nav-item text-nowrap">
+
+                <a class="cursorPointer" style="color: #fff;font-size: 20px;" routerLink="dashboard"><i
+                  class="fa fa-home"title="Home"tabindex="2" aria-hidden="true"></i></a>
+                <a class="cursorPointer" (click)="logout()"tabindex="3" style="color: #fff;font-size: 20px;"><i
+                  class="fa fa-sign-out" title="SignOut" aria-hidden="true" style="margin-top: 10px"></i></a>
+                <a class="cursorPointer"><img
+                  src="assets/images/icons/user_male.png" tabindex="4"title="Profiles"class="user_male" width="30" height="30"/></a>
+              </li>
+            </ul>
+          </div>
+          <div class="innerPageMenuBG">
+            <ul>
+              <li *ngFor="let headerLink of headerLinks; let i = index"><a [routerLink]="headerLink.link"
+              ><img class="Action_ItemsImg" [src]="headerLink.imgOverlay" width="16" height="20"/>
+                <img class="Action_Items_whiteImg"
+                     [src]="headerLink.img" (click)="activeLink(headerLink.id, i)" width="20"
+                     height="20"/>{{headerLink.name}}</a>
+                <ul id="subMenus">
+                  <li  *ngFor="let link of headerLink.children"><a class="subMenus_last" [routerLink]="link.route">{{link.name}}</a>
+                  </li>
+                  <li  *ngFor="let link of headerLink.children"><a class="Submenu1"[routerLink]="link.route">{{link.subclass}}</a>
+                  </li>
+                  <li  *ngFor="let link of headerLink.children"><a class="Submenu2"[routerLink]="link.route">{{link.subclass1}}</a>
+                  </li>
+                  <li  *ngFor="let link of headerLink.children"><a class="Submenu3"[routerLink]="link.route">{{link.subclass2}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+<!--modal dialouge-->
+
+<div class="modal fade" id="modalLoginForm1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 50%">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Help File</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3" style="text-align: left;">
+        <h6>{{changeFileData.MAIN}}</h6>
+        <ul>
+          <li *ngFor="let item of changeFileData.LIST">{{item.ELEM}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

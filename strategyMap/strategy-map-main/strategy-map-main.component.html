@@ -1,0 +1,137 @@
+<div class="container-fluid gryBG">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-4">
+        <div class="titleBG"> STRATEGY MAP</div>
+        <form [formGroup]="strategyMapForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Strategy Map
+                  Name <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="strategyMapName"
+                         (focus)="onFocusForElement('strategyMapName')"
+                         (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('strategyMapName', strategyMapForm)}"
+                         placeholder="Strategy Map Name">
+                </div>
+              </div>
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Organization
+                  Unit Code
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select
+                    (change)="getCodeName()"
+                    (focus)="onFocusForElement('orgCode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('orgCode', strategyMapForm)}"
+                    formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-6 col-form-label col-form-label-sm">Scorecard
+                  Code
+                  <span
+                    class="red">*</span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm" formControlName="scCode"
+                          (focus)="onFocusForElement('scCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scCode', strategyMapForm)}"
+                          (change)="getScCode($event)"
+                          name="scCode">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [value]="item.code">{{item.code}}
+                      -- {{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-5">
+              <div class="form-group row mt-3">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization
+                  Unit Name
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="orgName"
+                         placeholder="Organization Unit Name">
+                </div>
+              </div>
+              <div class="form-group row mt-3">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Name
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" readonly formControlName="scName"
+                         placeholder="Scorecard Name">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="float-right">
+                <button type="button" class= "btn-sm btn btn-cancel" (click)="clearForm()">Cancel</button>
+                <button type="button" class=" btn-sm btn btn-save" (click)="saveStrategyMap()">Save</button>
+                <button type="button" class=" btn-sm btn btn-save" (click)="getStrategyMap()"
+                        [disabled]="!strategyMapForm.valid"
+                        [ngClass]="{'button-disabled': !strategyMapForm.valid}"
+                ><i class="fa fa-refresh"
+                    aria-hidden="true"></i> Refresh
+
+                </button>
+              </div>
+              <div class="float-left">
+                <label for="file-upload" class="custom-file-upload float-right global-btn btn btn-info">
+                  <i class="fa fa fa-download" aria-hidden="true"></i> Upload Strategy Map
+                </label>
+                <input id="file-upload" type="file" (change)="showStrategyMapImage($event)"/>
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+  </div>
+</div>
+<div class="boxs_BG_Panel" *ngIf="!showImage">
+  <div class="row boxs_BG_perspective mb-5 p-0" *ngIf="showPanel">
+    <div class="col-md-9 boxs_BG_perspective_1">
+      <h6 class="text-center" style="padding: 10px">STRATEGY MAP</h6>
+      <div *ngFor="let item of perspectiveList" style="border-bottom: 3px solid #15d6ce;">
+        <div class="row" style="padding: 20px;">
+          <h6 style="text-align: center;margin: auto;color: #8f68fd; width: 200px;" class="div2">{{item.name}}
+            {{'Perspective'}}</h6>
+        </div>
+        <div class="col-md-2 mr-3 ml-2" style="display: inline-block" *ngFor="let obj of item.objectiveList">
+          <div class="div4 mb-2">{{obj.name}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div>
+        <h6 style="text-align: center;padding: 10px">Initiatives</h6>
+        <div class="div3 mb-2" style="text-align: center;margin: auto;" *ngFor="let item of initiativesList">
+          {{item.name}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="boxs_BG_Panel" *ngIf="showImage">
+  <img [src]="fileAsBase64" style="width: 100%;">
+</div>

@@ -1,0 +1,184 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="generateReportForm">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG">REPORTING</div>
+          <div class="row">
+            <div class="col-md-6 ">
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Year
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select name="items" formControlName="year" (focus)="onFocusForElement('year')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('year', generateReportForm)}"
+                          class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Year</option>
+                    <option *ngFor="let year of years" [value]="year.name">
+                      {{ year.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col md-6">
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Period
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm" formControlName="period" name="period"
+                          (focus)="onFocusForElement('period')" (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('period', generateReportForm)}">
+                    <option selected [ngValue]="null">Select Month</option>
+                    <option *ngFor="let item of period" [value]="item.month">{{item.month}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row mt-3 p-0">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Organization
+                  Unit Code</label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select (change)="getCodeName()" formControlName='organisationUnitCode' name='organisationUnitCode'
+                          class="form-control col-form-label-sm">
+                    <option selected [value]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [value]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row mt-3">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Organization
+                  Unit Name
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="orgName" name="orgName" readonly
+                         placeholder="Organization Unit Name">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Scorecard
+                  Code
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm"
+                          (ngModelChange)="getScorecardName($event); onFocusForElement('scorecardCode')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scorecardCode', generateReportForm)}"
+                          formControlName="scorecardCode" name="scorecardCode">
+                    <option [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row mt-3">
+                <label for="" class="col-sm-3 col-form-label col-form-label-sm">Scorecard Name
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="scorecardName" readonly
+                         name="scorecardName" placeholder="Scorecard Name">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row mt-3">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Report Code
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="reportCode"
+                         (focus)="onFocusForElement('reportCode')" (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('reportCode', generateReportForm)}" name="reportCode"
+                         placeholder="Report Code">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row mt-3">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Report Name
+                  <span class="red">*</span>
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="reportName"
+                         name="reportName" (focus)="onFocusForElement('reportName')" (focusout)="onFocusOutForElement()"
+                         [ngClass]="{'my-error': shouldShowErrors('reportName', generateReportForm)}"
+                         placeholder="Report Name">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row mt-3 p-0">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Type of
+                  Report</label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm" formControlName="reportType" name="reportType"
+                          (change)="getReportType($event)">
+                    <option selected [value]="null">Select Report</option>
+                    <option *ngFor="let item of reportTypes" [value]="item.name">{{item.name}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row mt-3 p-0" *ngIf="bscReportFlag">
+                <label class="col-sm-3 col-form-label col-form-label-sm">Elements</label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm"
+                          (ngModelChange)="getReportForElement($event); onFocusForElement('elements')"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('elements', generateReportForm)}"
+                          formControlName="elements">
+                    <option [ngValue]="null" selected>Select Elements</option>
+                    <option *ngFor="let item of elemList" [ngValue]="item"> {{item.name ? item.name : ''}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="row" style="padding:10px;">
+      <div class="col-md-12">
+        <div class="float-right">
+          <button type="button" class="btn btn-info global-btn" data-toggle="modal"
+                  [attr.data-target]="shwoPopUp ? '#modalLoginForm': ''"
+                  [disabled]="!generateReportForm.valid" style="margin-top: -20px;"
+                  [ngClass]="{'button-disabled': !generateReportForm.valid}" (click)="openModalPopUp()"> Generate
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-generatereport [InputData]="reportData" [type]="type" [reportElement]="reportElement"
+                    [YearAndPeriod]="yearAndPeriod"></app-generatereport>

@@ -1,0 +1,164 @@
+<div class="container-fluid gryBG">
+  <!-- <div class="row"
+       style="background-color: #805ce6;text-align: center; padding: 11px;color:#fff;text-transform: uppercase">
+    <div class="col-md-12">
+      BALANCE SCORECARD REPORT
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-5">
+        <div class="titleBG"> ScoreCard Info</div>
+      <div class="">
+      <!--   <p class="card-header"
+           style="text-align: center;text-transform: uppercase;background-color: #805ce6;color:#fff">SCORECARD
+          INFO</p> -->
+        <table width="100%" class="bscTablestyles">
+          <tr>
+            <td>Organization Unit Code : {{balanceScorecardInfo.orgCode ? balanceScorecardInfo.orgCode : 'NA'}}</td>
+            <td>Organization Unit Name : {{balanceScorecardInfo.orgName ? balanceScorecardInfo.orgName : 'NA'}}</td>
+          </tr>
+          <tr>
+            <td>Balanced Scorecard Code : {{balanceScorecardInfo.scCode ? balanceScorecardInfo.scCode : 'NA'}}</td>
+            <td>Balanced ScoreBoard Name : {{balanceScorecardInfo.scName ? balanceScorecardInfo.scName : 'NA'}}</td>
+          </tr>
+        </table>
+        <div class="row mt-4">
+          <div class="col-md-12 mt-4 bscTable">
+            <table mat-table [dataSource]="dataSource">
+
+              <ng-container matColumnDef="perspective">
+                <th mat-header-cell *matHeaderCellDef> PERSPECTIVE</th>
+                <td mat-cell *matCellDef="let data; let i = index"
+                    [attr.rowspan]="getRowSpan('name', i)"
+                    [style.display]="getRowSpan('name', i) ? '' : 'none'">{{data.perspectiveCode}} -
+                  {{data.perspectiveName}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="objective">
+                <th mat-header-cell *matHeaderCellDef> OBJECTIVE</th>
+                <td mat-cell *matCellDef="let data; let i = index"
+                    [attr.rowspan]="getRowSpan('name', i)"
+                    [style.display]="getRowSpan('name', i) ? '' : 'none'">{{data.name}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="measure">
+                <th mat-header-cell *matHeaderCellDef> MEASURE</th>
+                <td mat-cell *matCellDef="let data; let i = index"
+                    [attr.rowspan]="getRowSpan('measureName', i)"
+                    [style.display]="getRowSpan('measureName', i) ? '' : 'none'"> {{data.measureName}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actual">
+                <th mat-header-cell *matHeaderCellDef> ACTUAL</th>
+                <td mat-cell *matCellDef="let data"> {{data.actual}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="target">
+                <th mat-header-cell *matHeaderCellDef> TARGET</th>
+                <td mat-cell *matCellDef="let data"> {{data.target}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> STATUS</th>
+                <td mat-cell *matCellDef="let data"> {{data.status}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: #805ce6"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <!--<mat-paginator-->
+              <!--#paginator="matPaginator"-->
+              <!--[pageSizeOptions]="[2,3]" [pageSize]="3">-->
+            <!--</mat-paginator>-->
+
+          </div>
+
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <div class="row" style="padding: 20px;">
+    <div class="col-md-12">
+      <div class="boxs_BG mt-5">
+        <div class="titleBG">Balanced ScoreCard Report</div>
+      <div class="">
+
+       <!--  <div class="card-header"
+             style="text-align: center;text-transform: uppercase;background-color: #805ce6;color:#fff"> Balance
+          Scorecard Report
+        </div>
+        <div class="row">
+          <div class="col-md-12 mt-4 bscTable">
+            <table mat-table [dataSource]="dataSource">
+
+              <ng-container matColumnDef="perspective">
+                <th mat-header-cell *matHeaderCellDef> PERSPECTIVE</th>
+                <td mat-cell *matCellDef="let data; let i = index"
+                    [attr.rowspan]="getRowSpan('name', i)"
+                    [style.display]="getRowSpan('name', i) ? '' : 'none'">{{data.perspectiveCode}} -
+                  {{data.perspectiveName}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="objective">
+                <th mat-header-cell *matHeaderCellDef> OBJECTIVE</th>
+                <td mat-cell *matCellDef="let data; let i = index"
+                    [attr.rowspan]="getRowSpan('name', i)"
+                    [style.display]="getRowSpan('name', i) ? '' : 'none'">{{data.name}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="measure">
+                <th mat-header-cell *matHeaderCellDef> MEASURE</th>
+                <td mat-cell *matCellDef="let data; let i = index"
+                    [attr.rowspan]="getRowSpan('measureName', i)"
+                    [style.display]="getRowSpan('measureName', i) ? '' : 'none'"> {{data.measureName}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actual">
+                <th mat-header-cell *matHeaderCellDef> ACTUAL</th>
+                <td mat-cell *matCellDef="let data"> {{data.actual}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="target">
+                <th mat-header-cell *matHeaderCellDef> TARGET</th>
+                <td mat-cell *matCellDef="let data"> {{data.target}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> STATUS</th>
+                <td mat-cell *matCellDef="let data"> {{data.status}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: #805ce6"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator
+              #paginator="matPaginator"
+              [pageSizeOptions]="[2,3]" [pageSize]="3">
+            </mat-paginator>
+
+          </div>
+
+        </div>
+      </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="row" style="padding: 20px;">
+    <div class="col-md-12">
+      <div class="float-right">
+        <button type="button" class="btn btn-info global-btn"(click)="makePdf()"> Generate</button>
+      </div>
+    </div>
+  </div>
+</div>

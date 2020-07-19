@@ -1,0 +1,255 @@
+<form [formGroup]="fourCornersFrom">
+  <div class="strategryAnalysisTbs">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG">
+          <div class="strategryAnalysisTitle" id="fourCornersAnalysis">
+            <div class="titleBG"> Four Corner's Analysis</div>
+            <i class="fa fa-angle-down collapsed" id="angleup4" data-toggle="collapse"
+               data-target="#collapseFourCornersAnalysis"></i>
+          </div>
+          <div id="collapseFourCornersAnalysis" class="collapse" aria-labelledby="fourCornersAnalysis"
+               data-parent="#accordionSTrategryAnalysis">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                          <span class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer info-styles"  data-toggle="tooltip"
+                                data-placement="top"
+                                title="{{tooltipInfo.orgCode}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon">
+                          <select
+                            (change)="getCodeName(); getFourCornersAnalysis('FOURCORNERS'); onFocusForElement('orgCode')"
+                            (focusout)="onFocusOutForElement()" tabindex="1"
+                            [ngClass]="{'my-error': shouldShowErrors('orgCode', fourCornersFrom)}"
+                            formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Unit Code</option>
+                            <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                              {{ codeName.code}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name
+                          <span
+                            class="red">*</span> </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="2" formControlName="orgName"
+                                 name="orgName"
+                                 placeholder="Organization Unit Name">
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Description </label>
+                        <div class="col-sm-7">
+                              <textarea class="form-control col-form-label-sm" formControlName="description"
+                                        name="description" tabindex="3"
+                                        placeholder="Description"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Year <span
+                          class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                data-placement="top" tabindex="4"
+                                title="{{tooltipInfo.year}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon pr-0">
+                          <select
+                            (change)="getFourCornersAnalysis('FOURCORNERS'); onFocusForElement('year')"
+                            (focusout)="onFocusOutForElement()" tabindex="5"
+                            [ngClass]="{'my-error': shouldShowErrors('year', fourCornersFrom)}"
+                            formControlName='year' name='year' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Year</option>
+                            <option *ngFor="let item of years" [ngValue]="item.name">
+                              {{item.name}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version <span
+                          class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                data-placement="top"
+                                title="{{tooltipInfo.version}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon pr-0">
+                          <select
+                            (change)="getFourCornersAnalysis('FOURCORNERS'); onFocusForElement('version')"
+                            (focusout)="onFocusOutForElement()" tabindex="6"
+                            [ngClass]="{'my-error': shouldShowErrors('version', fourCornersFrom)}"
+                            formControlName='version' name='version' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Version</option>
+                            <option *ngFor="let item of versions" [ngValue]="item.version">
+                              {{ item.version}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red">Info 1 </label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="7" placeholder="info"
+                                 formControlName="info1">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 2</label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="8" placeholder="info"
+                                 formControlName="info2">
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                     
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label class="col-sm-5 col-form-label col-form-label-sm red">Info 3 </label>
+                            <div class="col-sm-7">
+                              <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                              tabindex="9"    formControlName="info3">
+                            </div>
+                          </div>
+
+                        </div>
+                            
+                    <div class="col-md-6">
+                      
+                    
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 4 </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                          tabindex="10"     formControlName="info4">
+                        </div>
+                      </div>
+
+                    </div>                      </div>
+                     
+                
+                
+                  <div class="row mt-4">
+                    <div class="col-md-4 criteriaList">
+                      <ul>
+
+                        <li *ngFor="let item of fourCorners; let i = index" style="cursor: pointer" tabindex="11"
+                            (click)="activateClass(item.name, i)" [class.blockquote]="selectedIndex === i">
+                          <a> {{item.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-8">
+                      <tag-input formControlName="details" name="details"  (onAdd)="onItemAdded($event)"
+                                 placeholder='Add Four Corners'
+                                 (onRemove)="onItemRemoved($event)"></tag-input>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-4 mt-4">
+                  <div class="criteria">
+                    <div class="accordion" id="accordionCriteria4">
+
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="drivers"><i class="fa fa-angle-down collapsed"
+                                                                   data-toggle="collapse"
+                                                                   data-target="#collapseDrivers"></i>
+                          <div class="titleBG"> Drivers</div>
+                        </div>
+                        <div id="collapseDrivers" class="collapse" aria-labelledby="drivers"
+                             data-parent="#accordionCriteria4">
+                          <span class="badge-chip"
+                                *ngFor="let item of driver">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="currentStrategy"><i class="fa fa-angle-down collapsed"
+                                                                           data-toggle="collapse"
+                                                                           data-target="#collapseCurrentStrategy"></i>
+                          <div class="titleBG"> Current Strategy</div>
+                        </div>
+                        <div id="collapseCurrentStrategy" class="collapse show" aria-labelledby="currentStrategy"
+                             data-parent="#accordionCriteria4">
+                           <span class="badge-chip"
+                                 *ngFor="let item of currentStrategy">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="managementAssumptions"><i
+                          class="fa fa-angle-down collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseManagementAssumptions"></i>
+                          <div class="titleBG"> Management Assumptions</div>
+                        </div>
+                        <div id="collapseManagementAssumptions" class="collapse"
+                             aria-labelledby="managementAssumptions" data-parent="#accordionCriteria4">
+                          <span class="badge-chip"
+                                *ngFor="let item of managementAssumtion">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="capabilities"><i class="fa fa-angle-down collapsed"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#collapseCapabilities"></i>
+                          <div class="titleBG"> Capabilities</div>
+                        </div>
+                        <div id="collapseCapabilities" class="collapse" aria-labelledby="capabilities"
+                             data-parent="#accordionCriteria4">
+                          <span class="badge-chip"
+                                *ngFor="let item of capability">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="float-right">
+                    <button type="button" class="btn btn-info mr-1 btn-sm"
+                            (click)="saveFourCornerAnalysis('FOURCORNERS')"
+                            [disabled]="!fourCornersFrom.valid"
+                            [ngClass]="{'button-disabled': !fourCornersFrom.valid}"> Save
+                    </button>
+                    <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>

@@ -1,0 +1,36 @@
+<form [formGroup]="productGrpFrom">
+  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Add Product Group</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <div class="md-form mb-5">
+            <input type="text" class="form-control validate" name="name" formControlName="name" placeholder="Name">
+          </div>
+
+          <div class="md-form mb-4">
+            <input type="text" class="form-control validate" formControlName="unitOfMeasure" name="unitOfMeasure"
+                   (change)="onFocusForElement('unitOfMeasure')"
+                   (focusout)="onFocusOutForElement()"
+                   [ngClass]="{'my-error': shouldShowErrors('unitOfMeasure', productGrpFrom)}"
+                   placeholder="Unit Of Measure">
+
+          </div>
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button class="btn btn-info global-btn" (click)="addProductGrp()" data-dismiss="modal" [disabled]="!productGrpFrom.valid"
+                  [ngClass]="{'button-disabled': !productGrpFrom.valid}">ADD
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+

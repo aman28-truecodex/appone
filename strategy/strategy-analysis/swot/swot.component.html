@@ -1,0 +1,258 @@
+<form [formGroup]="swotAnalysisFrom">
+  <div class="strategryAnalysis">
+    <div class="accordion" id="accordionSTrategryAnalysis">
+      <div class="strategryAnalysisTbs">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="boxs_BG mt-4">
+              <div class="strategryAnalysisTitle" id="sWOTAnalysis">
+                <div class="titleBG"> SWOT Analysis</div>
+                <i class="fa fa-angle-up collapsed "id=angleup data-toggle="collapse"tabindex="7" data-target="#collapseSWOTAnalysis"></i>
+              </div>
+              <div id="collapseSWOTAnalysis" class="collapse show" aria-labelledby="sWOTAnalysis"
+                   data-parent="#accordionSTrategryAnalysis">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="row mt-4">
+                        <div class="col-md-6 pr-0">
+                          <div class="form-group row m-0 pr-4 row">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                              <span class="red">*</span>
+                              <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="{{tooltipInfo.orgCode}}"></span>
+                            </label>
+                            <div class="col-sm-7 input_i_icon pr-0">
+                              <select
+                                (change)="getCodeName(); getStrategyAnalysis('SWOT'); onFocusForElement('orgCode')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('orgCode', swotAnalysisFrom)}"
+                                formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                                <option selected [ngValue]="null">Select Unit Code</option>
+                                <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                                  {{ codeName.code}}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit
+                              Name</label>
+                            <div class="col-sm-7 pr-0">
+                              <input type="text" class="form-control col-form-label-sm"  readonly
+                                     formControlName="orgName" name="orgName"
+                                     placeholder="Organization Unit Name">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm">Description </label>
+                            <div class="col-sm-7">
+                              <textarea class="form-control col-form-label-sm" formControlName="description"
+                                        name="description"
+                                        placeholder="Description"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm">Year <span
+                              class="red">*</span>
+                              <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="{{tooltipInfo.year}}"></span>
+                            </label>
+                            <div class="col-sm-7 input_i_icon pr-0">
+                              <select
+                                (change)="getStrategyAnalysis('SWOT'); onFocusForElement('year')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('year', swotAnalysisFrom)}"
+                                formControlName='year' name='year' class="form-control col-form-label-sm">
+                                <option selected [ngValue]="null">Select Year</option>
+                                <option *ngFor="let year of years" [ngValue]="year.name">
+                                  {{ year.name}}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row m-0">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version <span
+                              class="red">*</span>
+                              <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="{{tooltipInfo.version}}"></span>
+                            </label>
+                            <div class="col-sm-7 input_i_icon pr-0">
+                              <select
+                                (change)="getStrategyAnalysis('SWOT'); onFocusForElement('year')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('version', swotAnalysisFrom)}"
+                                formControlName='version' name='version' class="form-control col-form-label-sm">
+                                <option selected [ngValue]="null">Select Version</option>
+                                <option *ngFor="let item of versions" [ngValue]="item.version">
+                                  {{ item.version}}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label class="col-sm-5 col-form-label col-form-label-sm red">Info 1 </label>
+                            <div class="col-sm-7">
+                              <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                                     formControlName="info1">
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 2</label>
+                            <div class="col-sm-7 pr-0">
+                              <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                                     formControlName="info2">
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label class="col-sm-5 col-form-label col-form-label-sm red">Info 3 </label>
+                            <div class="col-sm-7">
+                              <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                                     formControlName="info3">
+                            </div>
+                          </div>
+                          
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row m-0 row">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm red"> Info 4 </label>
+                            <div class="col-sm-7 pr-0">
+                              <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                                     formControlName="info4">
+                            </div>
+                          </div>
+                          
+
+                        </div>
+                      </div>
+
+                         
+                       
+                        <div class="row">
+                          <div class="col-md-6 pr-1">                     
+                          <!-- <div class="form-group row m-0 row pr-4">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm red"> Info 4 </label>
+                            <div class="col-sm-7 pr-0">
+                              <input type="text" class="form-control col-form-label-sm" placeholder="info"
+                                     formControlName="info4">
+                            </div>
+                          </div> -->
+                        </div>
+                      </div>
+                      <div class="row mt-4">
+                        <div class="col-md-4 criteriaList">
+                          <ul>
+                            <li *ngFor="let item of swot; let i = index" (click)="activateClass(item.name, i)"
+                                style="cursor: pointer"[class.blockquote]="selectedIndex === i" tabindex="6"><a> {{item.name}}</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-md-8">
+                          <tag-input formControlName="details" (onAdd)="onItemAdded($event)"
+                                     placeholder='Add SWOT'
+                                     (onRemove)="onItemRemoved($event)"></tag-input>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                      <div class="criteria">
+                        <div class="accordion" id="accordionCriteria">
+                          <div class="criteriaTbs">
+                            <div class="criteriaTitle" id="strength"><i class="fa fa-angle-down"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#collapseStrength"></i>
+                              <div class="titleBG"tabindex="1"> Strength</div>
+                            </div>
+                            <div id="collapseStrength" class="collapse show" aria-labelledby="strength"
+                                 data-parent="#accordionCriteria">
+                              <!--<span class="badge badge-pill badge-default"-->
+                              <!--&gt;</span>-->
+                              <div class="card-body"><span class="badge-chip" *ngFor=" let item of
+                                                       strength"> {{item.value ? item.value : item}}</span></div>
+                            </div>
+                          </div>
+                          <div class="criteriaTbs">
+                            <div class="criteriaTitle" id="weakness"><i class="fa fa-angle-down collapsed"
+                                                                        data-toggle="collapse"
+                                                                        data-target="#collapseWeakness"></i>
+                              <div class="titleBG" tabindex="2"> Weakness</div>
+                            </div>
+                            <div id="collapseWeakness" class="collapse" aria-labelledby="weakness"
+                                 data-parent="#accordionCriteria">
+                              <span class="badge-chip"
+                                    *ngFor="let item of weaknesses">{{item.value ? item.value : item}}</span>
+                            </div>
+                          </div>
+                          <div class="criteriaTbs">
+                            <div class="criteriaTitle" id="opportunities"><i class="fa fa-angle-down collapsed"
+                                                                             data-toggle="collapse"
+                                                                             data-target="#collapseOpportunities"></i>
+                              <div class="titleBG" tabindex="3"> Opportunities</div>
+                            </div>
+                            <div id="collapseOpportunities" class="collapse" aria-labelledby="opportunities"
+                                 data-parent="#accordionCriteria">
+                              <span class="badge-chip"
+                                    *ngFor="let item of opportunities">{{item.value ? item.value : item}}</span>
+                            </div>
+                          </div>
+                          <div class="criteriaTbs">
+                            <div class="criteriaTitle" id="threats"><i class="fa fa-angle-down collapsed"
+                                                                       data-toggle="collapse"
+                                                                       data-target="#collapseThreats"></i>
+                              <div class="titleBG" tabindex="4"> Threats</div>
+                            </div>
+                            <div id="collapseThreats" class="collapse" aria-labelledby="threats"
+                                 data-parent="#accordionCriteria">
+                              <span class="badge-chip"
+                                    *ngFor="let item of threats">{{item.value ? item.value : item}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="float-right">
+                        <button type="button" class="btn btn-info mr-1 btn-sm "
+                                (click)="saveStrategiySwotAnalysis('SWOT')"
+                                [disabled]="!swotAnalysisFrom.valid"tabindex="5"
+                                [ngClass]="{'button-disabled': !swotAnalysisFrom.valid}"tabindex="8"> Save
+                        </button>
+                        <button type="button" class="btn btn-cancel btn-sm" (click)="clearFileds()"tabindex="9"> Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

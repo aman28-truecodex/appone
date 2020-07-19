@@ -1,0 +1,201 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="themeForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG">Themes</div>
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-2">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Type </label>
+                <div class="col-sm-6 pr-0">
+                  <span class="form-control col-form-label-sm disabledText"> Theme </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-2">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Code <span
+                  class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0 pb-4">
+                  <select
+                    (change)="getCodeName(); onFocusForElement('orgCode')"
+                    (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('orgCode', themeForm)}"
+                    formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-2">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" readonly
+                         formControlName="orgName" name="orgName"
+                         placeholder="Organization Unit Name">
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Code <span
+                  class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                        title="{{tooltipInfo.scCode}}"></span></label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select class="form-control col-form-label-sm"
+                          (change)="getScorecardName(); onFocusForElement('scCode')" formControlName="scCode"
+                          (focusout)="onFocusOutForElement()"
+                          [ngClass]="{'my-error': shouldShowErrors('scCode', themeForm)}"
+                          name="scCode">
+                    <option selected [value]="null">Select Code</option>
+                    <option *ngFor="let item of balanceScoreCardData" [value]="item.code">{{item.code}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row m-0 pb-2">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm"  placeholder="Scorecard Name"
+                         formControlName="scName" name="scName">
+                </div>
+              </div>
+
+            </div>
+          </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm">Theme Code <span
+                      class="red">*</span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                            title="{{tooltipInfo.thCode}}"></span>
+                    </label>
+                    <div class="col-sm-6 input_i_icon pr-0">
+                      <input type="text" class="form-control col-form-label-sm"  placeholder="Theme Code"
+                             (focus)="onFocusForElement('code')"
+                             (focusout)="onFocusOutForElement()"
+                             [ngClass]="{'my-error': shouldShowErrors('code', themeForm)}"
+                             formControlName="code">
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm">Theme Name
+                      <span class="red">*</span>
+                      <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                            title="{{tooltipInfo.thName}}"></span>
+                    </label>
+                    <div class="col-sm-6 pr-0 pb-2">
+                      <input type="text" class="form-control col-form-label-sm"  placeholder="Theme Name"
+                             (focus)="onFocusForElement('name')"
+                             (focusout)="onFocusOutForElement()"
+                             [ngClass]="{'my-error': shouldShowErrors('name', themeForm)}"
+                             formControlName="name">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">                  
+              <div class="form-group row m-0 pb-2">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 1</label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info1">
+                </div>
+              </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group row m-0" style="margin-top:-10px !important;">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 2</label>
+                    <div class="col-sm-6 pr-0">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info2">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+             
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row m-0 pb-2">
+                    <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 3</label>
+                    <div class="col-sm-6 pr-0">
+                      <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info3">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">           
+              <div class="form-group row m-0 pb-2" style="margin-top:2px !important;">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm red">Info 4</label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="info" formControlName="info4">
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4 mb-0" style="height:339px;">
+          <div class="titleBG"> {{orgCode ? orgCode : 'Code' }}: {{orgName ? orgName : 'Name'}}</div>
+
+          <div class="row mt-4">
+            <div class="col-md-12">
+              <div class="perapectivesRightTitle">
+                <span> {{scCode ? scCode : 'Code' }}: {{codeName ? codeName : 'Name'}} </span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 scrollbart">
+            <div class="col-md-6 offset-md-2" *ngFor="let item of themeByScCode">
+              <div class="perapectivesBSCNames" *ngIf="item.name !== null && item.name !== ''"> {{item.name}}
+                <div class="perapectivesBSCNamesHover"><i class="fa fa-pencil-square-o" (click)="editTheme(item)"></i>
+                  <i class="fa fa-trash" (click)="confirmDelete(item.id)"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="themeByScCode.length === 0" class="center-alignContent">
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom:-20px;">
+      <div class="col-md-12">
+        <div class="float-right">
+          <button type="button" class="btn-sm btn btn-info mr-1"(click)="saveTheme()"
+                  [disabled]="!themeForm.valid"
+                  [ngClass]="{'button-disabled': !themeForm.valid}"> Save
+          </button>
+          <button type="button" class="btn btn-cancel btn-sm "(click)="clearFields()"> Cancel</button>
+        </div>
+      </div>
+    </div>
+    <br>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+th {
+  color: #fff !important;
+  text-transform: uppercase !important;
+  vertical-align: inherit !important;
+}
+
+th, td {
+  vertical-align: inherit;
+  border-right: 1px solid rgba(0, 0, 0, .12);
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  text-align: center !important;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 2px 12px;
+  cursor: pointer;
+}

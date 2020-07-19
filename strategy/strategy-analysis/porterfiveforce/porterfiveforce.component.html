@@ -1,0 +1,251 @@
+<form [formGroup]="portersAnalysisFrom">
+  <div class="strategryAnalysisTbs">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="boxs_BG">
+          <div class="strategryAnalysisTitle" id="portersFiveForceAnalysis">
+            <div class="titleBG"> Porter's Five Force Analysis</div>
+            <i class="fa fa-angle-down collapsed" id="angleup1" data-toggle="collapse"
+               data-target="#collapsePortersFiveForceAnalysis"></i>
+          </div>
+          <div id="collapsePortersFiveForceAnalysis" class="collapse" aria-labelledby="portersFiveForceAnalysis"
+               data-parent="#accordionSTrategryAnalysis">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Code
+                          <span class="red">*</span>
+                          <span class="fa fa-info-circle cursorPointer info-styles"  data-toggle="tooltip"
+                                data-placement="top"
+                                title="{{tooltipInfo.orgCode}}"></span>
+                        </label>
+                        <div class="col-sm-7 input_i_icon">
+                          <select
+                            (change)="getCodeName(); getPosterAnalysis('PORTERSFIVEFORCE'); onFocusForElement('orgCode')"
+                            (focusout)="onFocusOutForElement()" tabindex="1"
+                            [ngClass]="{'my-error': shouldShowErrors('orgCode', portersAnalysisFrom)}"
+                            formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                            <option selected [ngValue]="null">Select Unit Code</option>
+                            <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                              {{ codeName.code}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Organization Unit Name
+                          <span
+                            class="red">*</span> </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="2" formControlName="orgName"
+                                 readonly name="orgName" placeholder="Organization Unit Name">
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Description </label>
+                          <div class="col-sm-7">
+                                <textarea class="form-control col-form-label-sm" tabindex="3" formControlName="description"
+                                          name="description"
+                                          placeholder="Description"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Year <span
+                            class="red">*</span>
+                            <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="{{tooltipInfo.year}}"></span>
+                          </label>
+                          <div class="col-sm-7 input_i_icon pr-0">
+                            <select
+                              (change)="getPosterAnalysis('PORTERSFIVEFORCE'); onFocusForElement('year')"
+                              (focusout)="onFocusOutForElement()" tabindex="4"
+                              [ngClass]="{'my-error': shouldShowErrors('year', portersAnalysisFrom)}"
+                              formControlName='year' name='year' class="form-control col-form-label-sm">
+                              <option selected [ngValue]="null">Select Year</option>
+                              <option *ngFor="let year of years" [ngValue]="year.name">
+                                {{ year.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Version <span
+                            class="red">*</span>
+                            <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="{{tooltipInfo.version}}"></span>
+                          </label>
+                          <div class="col-sm-7 input_i_icon pr-0">
+                            <select
+                              (change)="getPosterAnalysis('PORTERSFIVEFORCE'); onFocusForElement('version')"
+                              (focusout)="onFocusOutForElement()" tabindex="5"
+                              [ngClass]="{'my-error': shouldShowErrors('version', portersAnalysisFrom)}"
+                              formControlName='version' name='version' class="form-control col-form-label-sm">
+                              <option selected [ngValue]="null">Select Version</option>
+                              <option *ngFor="let item of versions" [ngValue]="item.version">
+                                {{ item.version}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label class="col-sm-5 col-form-label col-form-label-sm red">Info 1 </label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control col-form-label-sm" tabindex="6" placeholder="info"
+                                   formControlName="info1">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                       <div class="form-group row m-0">
+                          <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 2</label>
+                          <div class="col-sm-7 pr-0">
+                            <input type="text" class="form-control col-form-label-sm" tabindex="7" placeholder="info"
+                                   formControlName="info2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                   <div class="col-md-6">
+                     <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red">Info 3 </label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="8" placeholder="info"
+                                 formControlName="info3">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label class="col-sm-5 col-form-label col-form-label-sm red"> Info 4 </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" tabindex="9" placeholder="info"
+                                 formControlName="info4">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row mt-4">
+                    <div class="col-md-4 criteriaList">
+                      <ul>
+                        <li *ngFor="let item of portersFiveAnalysis; let i = index" style="cursor: pointer"
+                            [class.blockquote]="selectedIndex === i" tabindex="10"
+                            (click)="activateClass(item.name, i)">
+                          <a>{{item.name}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-8">
+                      <tag-input formControlName="details" name="details" (onAdd)="onItemAdded($event)"
+                                 placeholder='Add Poster Five Analysis'
+                                 (onRemove)="onItemRemoved($event)"></tag-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mt-4">
+                  <div class="criteria">
+                    <div class="accordion" id="accordionCriteria3">
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="supplierPower"><i class="fa fa-angle-down collapsed"
+                                                                         data-toggle="collapse"
+                                                                         data-target="#collapseSupplierPower"></i>
+                          <div class="titleBG"> Supplier Power</div>
+                        </div>
+                        <div id="collapseSupplierPower" class="collapse" aria-labelledby="supplierPower"
+                             data-parent="#accordionCriteria3">
+                          <span class="badge-chip"
+                                *ngFor="let item of supplierPower">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="buyerPower"><i class="fa fa-angle-down"
+                                                                      data-toggle="collapse"
+                                                                      data-target="#collapseBuyerPower"></i>
+                          <div class="titleBG"> Buyer Power</div>
+                        </div>
+                        <div id="collapseBuyerPower" class="collapse" aria-labelledby="buyerPower"
+                             data-parent="#accordionCriteria3">
+                          <span class="badge-chip"
+                                *ngFor="let item of buyerPower">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="competitiveRivalry"><i class="fa fa-angle-down collapsed"
+                                                                              data-toggle="collapse"
+                                                                              data-target="#collapseCompetitiveRivalry"></i>
+                          <div class="titleBG"> Competitive Rivalry</div>
+                        </div>
+                        <div id="collapseCompetitiveRivalry" class="collapse show"
+                             aria-labelledby="competitiveRivalry" data-parent="#accordionCriteria3">
+                          <span class="badge-chip"
+                                *ngFor="let item of competativeRivalry">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="threatsOfSubstitution"><i
+                          class="fa fa-angle-down collapsed"
+                          data-toggle="collapse"
+                          data-target="#collapseThreatsOfSubstitution"></i>
+                          <div class="titleBG"> Threats Of Substitution</div>
+                        </div>
+                        <div id="collapseThreatsOfSubstitution" class="collapse"
+                             aria-labelledby="threatsOfSubstitution" data-parent="#accordionCriteria3">
+                          <span class="badge-chip"
+                                *ngFor="let item of threatsofSubstitution">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+                      <div class="criteriaTbs">
+                        <div class="criteriaTitle" id="threatsOfNewEntry"><i class="fa fa-angle-down collapsed"
+                                                                             data-toggle="collapse"
+                                                                             data-target="#collapseThreatsOfNewEntry"></i>
+                          <div class="titleBG"> Threats of New Entry</div>
+                        </div>
+                        <div id="collapseThreatsOfNewEntry" class="collapse" aria-labelledby="threatsOfNewEntry"
+                             data-parent="#accordionCriteria3">
+                          <span class="badge-chip"
+                                *ngFor="let item of threatsofnewentry">{{item.value ? item.value : item}}</span>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="float-right">
+                    <button type="button" class="btn btn-info  mr-1 btn-sm"
+                            (click)="savePortersAnalysis('PORTERSFIVEFORCE')"
+                            [disabled]="!portersAnalysisFrom.valid"
+                            [ngClass]="{'button-disabled': !portersAnalysisFrom.valid}"> Save
+                    </button>
+                    <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,102 @@
+<div class="container-fluid gryBG">
+  <form [formGroup]="bscForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4">
+          <div class="titleBG"> Balanced Scorecard</div>
+
+          <div class="row mt-4">
+            <div class="col-md-10 offset-md-1">
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Code <span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.orgCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <select (change)="getCodeNameForPestal(); onFocusForElement('orgCode')"
+                    (focusout)="onFocusOutForElement()" [ngClass]="{'my-error': shouldShowErrors('orgCode', bscForm)}"
+                    formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                    <option selected [ngValue]="null">Select Unit Code</option>
+                    <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                      {{ codeName.code}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Name </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" formControlName="orgName" name="orgName"
+                    readonly placeholder="Organization Unit Name"></div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Code <span
+                    class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.scCode}}"></span>
+                </label>
+                <div class="col-sm-6 input_i_icon pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Scorecard Code"
+                    (focus)="onFocusForElement('code')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('code', bscForm)}" formControlName="code" name="code">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Scorecard Name
+                  <span class="red">*</span>
+                  <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip" data-placement="top"
+                    title="{{tooltipInfo.scName}}"></span>
+                </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Scorecard Name"
+                    (focus)="onFocusForElement('name')" (focusout)="onFocusOutForElement()"
+                    [ngClass]="{'my-error': shouldShowErrors('name', bscForm)}" formControlName="name" name="name">
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Descripation </label>
+                <div class="col-sm-6 pr-0">
+                  <textarea class="form-control col-form-label-sm" placeholder="Description"
+                    formControlName="discription" name="discription"></textarea>
+                </div>
+              </div>
+              <div class="form-group row m-0">
+                <label for="" class="col-sm-6 col-form-label col-form-label-sm">Tag </label>
+                <div class="col-sm-6 pr-0">
+                  <input type="text" class="form-control col-form-label-sm" placeholder="Tag" formControlName="tag"
+                    name="tag">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="boxs_BG mt-4" style="height: 310px;">
+          <!-- <div class="titleBG"> Group Company </div> -->
+          <div class="row mt-4 balancedScorecardRadios">
+            <div class="col-md-8 offset-md-2">
+              <div class="custom-control custom-radio" *ngFor="let item of projType">
+                <input type="radio" class="custom-control-input" id="enum_answer_{{item.name}}" [value]='item.option'
+                  (change)="projectType(item.option)" type="radio" name="enums">
+                <label class="custom-control-label cursorPointer" for="enum_answer_{{item.name}}"> {{item.name}}</label>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="row mt-4" >
+          <div class="col-md-12">
+            <div class="float-right">
+              <button type="button" class=" btn-sm btn btn-info  mr-1 " (click)="saveBalanceScoreCard()"
+                [disabled]="!bscForm.valid" [ngClass]="{'button-disabled': !bscForm.valid}">Save</button>
+              <button type="button" class="btn btn-cancel btn-sm"(click)="clearFields()"> Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

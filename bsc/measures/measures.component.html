@@ -1,0 +1,1346 @@
+<div class="container-fluid gryBG">
+  <div class="row">
+    <div class="col-md-12">
+
+
+  <div class="measureTbs mt-2">
+    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+      <li class="nav-item"><a class="nav-link active" id="measure-tab" data-toggle="pill" href="#measure" role="tab"
+                              aria-controls="measure" aria-selected="true">Measure</a></li>
+      <li class="nav-item"><a class="nav-link" id="kPIMaster-tab" data-toggle="pill" href="#kPIMaster" role="tab"
+                              aria-controls="kPIMaster" aria-selected="false">Measure Definition</a></li>
+      <li class="nav-item"><a class="nav-link" id="series-tab" data-toggle="pill" href="#series" role="tab"
+                              aria-controls="series" aria-selected="false">Series</a></li>
+      <li class="nav-item"><a class="nav-link" id="performance-tab" data-toggle="pill" href="#performance" role="tab"
+                              aria-controls="performance" aria-selected="false">Performance</a></li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+
+      <!-- ================= Measure Start================ -->
+
+
+      <div class="tab-pane fade show active" id="measure" role="tabpanel" aria-labelledby="measure-tab">
+        <form [formGroup]="basicMeasureForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="boxs_BG mt-4">
+                <div class="titleBG">Measure</div>
+
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label class="col-sm-5 col-form-label col-form-label-sm">Year
+                            <span class="red">*</span>
+                          </label>
+                          <div class="col-sm-7">
+                            <select formControlName="year" (focus)="onFocusForElement('year')"
+                                    (focusout)="onFocusOutForElement()"
+                                    [ngClass]="{'my-error': shouldShowErrors('year', basicMeasureForm)}"
+                                    class="form-control col-form-label-sm">
+                              <option selected [value]="null">Select Year</option>
+                              <option *ngFor="let year of years" [value]="year.name">
+                                {{ year.name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label class="col-sm-5 col-form-label col-form-label-sm">Period
+                            <span class="red">*</span>
+                          </label>
+                          <div class="col-sm-7">
+                            <select class="form-control col-form-label-sm" formControlName="period" name="period"
+                                    (focus)="onFocusForElement('period')" (focusout)="onFocusOutForElement()"
+                                    [ngClass]="{'my-error': shouldShowErrors('period', basicMeasureForm)}">
+                              <option selected [ngValue]="null">Select Month</option>
+                              <option *ngFor="let item of period" [value]="item.month">{{item.month}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="form-group row m-0">
+                      <label class="col-sm-5 col-form-label col-form-label-sm">Organization Unit
+                        <span class="red">*</span>
+                        <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                              data-placement="top" title="{{tooltipInfo.orgCode}}"></span>
+                      </label>
+                      <div class="col-sm-7">
+                        <select formControlName='orgCode' name='orgCode' (focus)="onFocusForElement('orgCode')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('orgCode', basicMeasureForm)}"
+                                class="form-control col-form-label-sm">
+                          <option selected [ngValue]="null">Select Unit Code</option>
+                          <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                            {{ codeName.code}} -- {{codeName.name}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row m-0">
+                      <label class="col-sm-5 col-form-label col-form-label-sm">Scorecard
+                        <span class="red">*</span>
+                        <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                              data-placement="top" title="{{tooltipInfo.scCode}}"></span>
+                      </label>
+                      <div class="col-sm-7">
+                        <select class="form-control col-form-label-sm" formControlName="scCode"
+                                (ngModelChange)="getScCode($event); onFocusForElement('scCode')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('scCode', basicMeasureForm)}" name="scCode">
+                          <option selected [ngValue]="null">Select Scorecard Code</option>
+                          <option *ngFor="let item of balanceScoreCardData" [ngValue]="item.code">{{ item.code}}
+                            -- {{item.name}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Objective</label>
+                      <div class="col-sm-7">
+                        <select class="form-control col-form-label-sm" (ngModelChange)="getNameForObjective($event)"
+                                formControlName='objectiveCode' name='objectiveCode'>
+                          <option selected [ngValue]="null">Select Objective</option>
+                          <option *ngFor="let item of AllObjectives" [ngValue]="item.code">
+                            {{ item.code}} -- {{item.name}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-5 col-form-label col-form-label-sm">Strategic Measure</label>
+                      <div class="col-sm-7">
+                        <select class="form-control col-form-label-sm" formControlName="code"
+                                (ngModelChange)="getMeasures($event)">
+                          <option selected [ngValue]="null">Select Measure</option>
+                          <option *ngFor="let item of measuresByObj" [ngValue]="item.code">
+                            {{ item.code}} -- {{item.name}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-5 col-form-label col-form-label-sm">Description</label>
+                      <div class="col-sm-7">
+                        <textarea class="form-control col-form-label-sm" placeholder="Description"
+                                  formControlName="description"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row m-0">
+                      <label class="col-sm-5 col-form-label col-form-label-sm">Owner </label>
+                      <div class="col-sm-7">
+                        <select formControlName='owner' name='owner' class="form-control col-form-label-sm">
+                          <option selected [value]="null">Select Owner</option>
+                          <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                            {{ item.employeeName | uppercase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-5 col-form-label col-form-label-sm">Collaborators </label>
+                      <div class="col-sm-7">
+                        <select formControlName='collaborator' name='collaborator'
+                                class="form-control col-form-label-sm">
+                          <option selected [value]="null">Select collaborator</option>
+                          <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                            {{ item.employeeName | uppercase}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="measureTitle_BG mt-4" style="min-height: 150px;">
+                <div class="titleBG"> Analysis</div>
+                <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+                  <textarea placeholder="Analysis..." formControlName="analysis" name="analysis"></textarea>
+                </div>
+              </div>
+              <div class="measureTitle_BG mt-4" style="min-height: 150px;">
+                <div class="titleBG"> Recommendations</div>
+                <div class="col-md-12 mvv_textarea mvv_textarea_child2 mt-1">
+                  <textarea placeholder="Recommendation..." formControlName="recommendation"
+                            name="recommendation"></textarea>
+                </div>
+              </div>
+              <div class="measureTitle_BG mt-4" style="min-height: 150px;">
+                <div class="titleBG"> Initiatives</div>
+                <div class="row">
+                  <div *ngFor="let item of initiatives" style="padding: 10px">
+                    <div class="badge-chip pt-10"> {{item.name}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="measureTitle_BG mt-4" style="height:415px">
+                <div class="titleBG">Strategic measure</div>
+                <span class="fa fa-plus cursorPointer float-right"
+                      (click)="openSeriesModalPopUp('#modalLoginFormSeries1')" data-toggle="modal" #seriesTag></span>
+                <div class="bscTable mt-5" style="width:90%;position:absolute;top:25px;">
+                  <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="sNo">
+                      <th mat-header-cell *matHeaderCellDef>S.No</th>
+                      <td mat-cell *matCellDef="let element; let i = index">
+                        {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="frequency">
+                      <th mat-header-cell *matHeaderCellDef>frequency</th>
+                      <td mat-cell *matCellDef="let element"> {{element.frequency ? element.frequency : 'NA'}}
+                      </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="actual">
+                      <th mat-header-cell *matHeaderCellDef>actual</th>
+                      <td mat-cell *matCellDef="let element"> {{element.actual}}</td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="target">
+                      <th mat-header-cell *matHeaderCellDef>target</th>
+                      <td mat-cell *matCellDef="let element"> {{element.target}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef>status</th>
+                      <td mat-cell *matCellDef="let element"> {{element.status ? element.status : 'NA'}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-primary"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                  <mat-paginator [pageSizeOptions]="[2,4,6,8,10]" [pageSize]="5" #paginatorRef>
+                  </mat-paginator>
+                </div>
+              </div>
+              <div class="measureTitle_BG mt-3" style="height:389px;">
+                <div class="titleBG"> Performance</div>
+                <div class="mt-4 text-center">
+                  <h6> Name of the Chart</h6>
+                  <div class="row">
+                    <div class="col-md-1">
+                      <h6 style="width: 1px; word-break: break-all;position: absolute;top:-25px;"> Y -Axis Name</h6>
+                    </div>
+                    <div class="col-md-11" id="chartdiv"></div>
+                  </div>
+                  <h6> X -Axis Name</h6>
+                </div>
+              </div>
+
+              <div class="measureTitle_BG mt-4" style="min-height: 150px;">
+                <div class="titleBG">Attachment/Reports</div>
+                <div class="mt-4">
+                  <p>Please select Objective</p>
+                </div>
+              </div>
+              <div class="row" >
+                <div class="col-md-12">
+                  <div class="float-right">
+                    <button type="button" class=" btn-sm btn btn-info mr-1"(click)="updateMeasure()"
+                            [disabled]="!basicMeasureForm.valid" [ngClass]="{'button-disabled': !basicMeasureForm.valid}">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-cancel btn-sm"(click)="clearFieldsForBasicMeasure()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+      <div class="modal fade" id="modalLoginFormSeries1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 94%">
+          <div class="modal-content" style="max-width:100% !important;">
+            <div class="modal-header text-center">
+              <h4 class="modal-title w-100 font-weight-bold">{{measureName ? measureName : 'Strategic Measure'}}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <form [formGroup]="addForm" style="width: 100%">
+                  <div class="panel portlet" style="width: 100%" formArrayName="rows">
+                    <div class="formBox portlet-title">
+                      <div class="button mt-2">
+                        <button type="button" class="btn btn-info global-btn btn-sm float-right mr-2"
+                                data-dismiss="modal" (click)="addSeries()">Save
+                        </button>
+                        <button type="button" class="btn btn-info global-btn btn-sm float-right mr-2"
+                                [disabled]="addForm.invalid" [ngClass]="{'button-disabled': addForm.invalid}"
+                                (click)="initGroup()">Add
+                        </button>
+                        <button type="button" class="btn btn-info global-btn btn-sm ml-2" (click)="exportSeries()">
+                          Export
+                        </button>
+                        <label for="file-upload" class="custom-file-upload global-btn btn btn-info">
+                          <i class="fa fa-cloud-download" aria-hidden="true"></i> Import
+                        </label>
+                        <input id="file-upload" type="file" #fileInput (click)="fileInput.value = null" value=""
+                               (change)="ImportAsExcel($event)"/>
+                        <button type="button" class="btn btn-danger btn-sm ml-2" (click)="resetStrategicMeasureForm()">
+                          Cancel
+                        </button>
+                      </div>
+                      <div id="style-8" class="panel-body bscTable mt-4 scrollbar">
+                        <table class="table table-striped">
+                          <thead>
+                          <tr class="bscBg-primary white">
+                            <th>S.No</th>
+                            <th>Frequency/Period</th>
+                            <th>Actual</th>
+                            <th>Target</th>
+                            <th>Remove</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let row of addForm.controls['rows']['controls']; let i = index"
+                              [formGroupName]="i">
+                            <td scope="row">{{i+1}}</td>
+                            <td>
+                              <input type="text" class="form-control" placeholder="Frequency" bsDatepicker
+                                     autocomplete="off"
+                                     [bsConfig]="bsConfig"
+                                     formControlName="frequency"/>
+                            </td>
+                            <td>
+                              <input type="text" class="form-control" formControlName="actual" numbersOnly>
+                            </td>
+                            <td>
+                              <input type="text" class="form-control" formControlName="target" numbersOnly>
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-info global-btn btn-sm float-right mr-2"
+                                      (click)="onDeleteRow(i)"
+                                      [ngClass]="{'button-disabled': addForm.controls.rows.controls.length === 1}"><i
+                                class="fa fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= Measure End================ -->
+
+      <!-- ================= KPI Master Start================ -->
+
+      <div class="tab-pane fade" id="kPIMaster" role="tabpanel" aria-labelledby="kPIMaster-tab">
+        <form [formGroup]="measureDefinationForm">
+
+          <div class="row">
+
+            <div class="col-md-7">
+              <div class="boxs_BG mt-4" style="height:450px">
+                <div class="titleBG"> Measure Definition</div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row mt-3 p-0">
+                      <label for="" class="col-sm-6 col-form-label col-form-label-sm">Organization
+                        Unit code
+                        <span class="red">*</span>
+                        <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                              data-placement="top" title="{{tooltipInfo.orgCode}}"></span>
+                      </label>
+                      <div class="col-sm-6 input_i_icon pr-0">
+                        <select (change)="getCodeAndName();onFocusForElement('orgCode')"
+                                (focusout)="onFocusOutForElement()"
+                                [ngClass]="{'my-error': shouldShowErrors('orgCode', measureDefinationForm)}"
+                                formControlName='orgCode' name='orgCode' class="form-control col-form-label-sm">
+                          <option selected [ngValue]="null">Select Unit Code</option>
+                          <option *ngFor="let codeName of codeAndName" [ngValue]="codeName.code">
+                            {{ codeName.code}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row mt-3 p-0">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Organization Unit Name</label>
+                      <div class="col-sm-6 input_i_icon pr-0">
+                        <input type="text" class="form-control col-form-label-sm" readonly formControlName="orgName"
+                               name="orgName" placeholder="Organization Unit Name">
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+                    <!-- end -->  
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3 p-0">
+                          <label class="col-sm-6 col-form-label col-form-label-sm">Scorecard Code
+                            <span class="red">*</span>
+                            <span class="fa fa-info-circle cursorPointer info-styles" data-toggle="tooltip"
+                                  data-placement="top" title="{{tooltipInfo.scCode}}"></span>
+                          </label>
+                          <div class="col-sm-6 input_i_icon pr-0">
+                            <select class="form-control col-form-label-sm"
+                                    (change)="getScorecardName(); onFocusForElement('scCode')" formControlName="scCode"
+                                    (focusout)="onFocusOutForElement()"
+                                    [ngClass]="{'my-error': shouldShowErrors('scCode', measureDefinationForm)}"
+                                    name="scCode">
+                              <option>Select scorecard Code</option>
+                              <option *ngFor="let item of balanceScoreCardData">{{item.code}}</option>
+                            </select>
+                          </div>
+                        </div>  
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3 p-0">
+                          <label class="col-sm-6 col-form-label col-form-label-sm">Scorecard
+                            Name</label>
+                          <div class="col-sm-6 input_i_icon pr-0">
+                            <input type="text" class="form-control col-form-label-sm" placeholder="Scorecard Name" readonly
+                                   formControlName="scName" name="scName">
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>                 
+                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row mt-3">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Strategic
+                        Measure Code
+                        <span class="red">*</span>
+                      </label>
+                      <div class="col-sm-6 pr-0">
+                        <input type="text" class="form-control col-form-label-sm " formControlName="code" name="code"
+                               (focus)="onFocusForElement('code')" (focusout)="onFocusOutForElement()"
+                               [ngClass]="{'my-error': shouldShowErrors('code', measureDefinationForm)}"
+                               placeholder="Strategic Measure Code">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row mt-3">
+                      <label for="" class="col-sm-6 col-form-label col-form-label-sm">Strategic
+                        Measure Name
+                        <span class="red">*</span>
+                      </label>
+                      <div class="col-sm-6 pr-0">
+                        <input type="text" class="form-control col-form-label-sm " formControlName="name" name="name"
+                               (focus)="onFocusForElement('name')" (focusout)="onFocusOutForElement()"
+                               [ngClass]="{'my-error': shouldShowErrors('name', measureDefinationForm)}"
+                               placeholder="Strategic Measure Name">
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                  
+                 <!--  </div> -->
+              
+
+
+                  <div class="col-md-12">
+                    <div class="row">
+                      <label class="col-sm-3 col-form-label col-form-label-sm">Description
+                      </label>
+                      <div class="col-sm-9 pr-0 pl-8">
+                        <textarea class="form-control col-form-label-sm" id="exampleFormControlTextarea1"
+                                  formControlName="description"
+                                  name="description" rows="3"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row mt-3 p-0">
+                        <label class="col-sm-6 col-form-label col-form-label-sm">Objective
+                          <span class="red">*</span>
+                        </label>
+                        <div class="col-sm-6 input_i_icon pr-0">
+                          <select class="form-control col-form-label-sm"
+                                  (change)="getObjectiveCode($event); onFocusForElement('linkedObjectiveCode')"
+                                  (focusout)="onFocusOutForElement()"
+                                  [ngClass]="{'my-error': shouldShowErrors('linkedObjectiveCode', measureDefinationForm)}"
+                                  formControlName="linkedObjectiveCode" name="linkedObjectiveCode">
+                            <option selected [value]="null">Link Objective</option>
+                            <option *ngFor="let item of AllObjectives" [value]="item.code">{{item.code}}
+                              -- {{item.name}}
+                            </option>
+                          </select>
+  
+                        </div>
+                      </div>
+  
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row mt-3 p-0">
+                        <label class="col-sm-6 col-form-label col-form-label-sm">Frequency</label>
+                        <div class="col-sm-6 input_i_icon pr-0">
+                          <select class="form-control col-form-label-sm" formControlName="frequency" name="frequency">
+                            <option selected [value]="null">Reporting Frequency</option>
+                            <option *ngFor="let item of reportingFrequency" [value]="item.frequency">
+                              {{ item.frequency}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row mt-3 p-0">
+                        <label class="col-sm-6 col-form-label col-form-label-sm">Owner</label>
+                        <div class="col-sm-6 input_i_icon pr-0">
+                          <select formControlName='owner' name='owner' class="form-control col-form-label-sm">
+                            <option selected [value]="null">Select collaborator</option>
+                            <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                              {{ item.employeeName | uppercase}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                      <div class="form-group row mt-3 p-0">
+                        <label class="col-sm-6 col-form-label col-form-label-sm">collaborators</label>
+                        <div class="col-sm-6 input_i_icon pr-0">
+                          <select formControlName='collaborators' name='collaborators'
+                                  class="form-control col-form-label-sm">
+                            <option selected [value]="null">Select collaborator</option>
+                            <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                              {{ item.employeeName | uppercase}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-md-6">                   
+                   
+                  </div>
+
+
+                  <div class="col-md-6">
+                  
+                    
+                  </div>
+                </div>
+
+              </div>
+
+            
+
+            <div class="col-md-5">
+              <div class="boxs_BG" style="height:450px">
+                <div class="titleBG"> {{orgCode ? orgCode : 'Code'}}: {{orgName ? orgName : 'Name'}}</div>
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                    <div class="perapectivesRightTitle"><span> {{scCode ? scCode : 'Code'}}
+                        : {{codeName ? codeName : 'Name'}} </span></div>
+                  </div>
+                </div>
+                <div class="row mt-4 scrollbart">
+                  <div class="col-10 offset-md-2 verticalMenu">
+                    <ul class="nav flex-column flex-nowrap">
+                      <li class="nav-item" *ngFor="let item of objectivesList; let i = index">
+                        <a class="nav-link" [attr.href]="'#'+ 'submenu' + i" data-toggle="collapse"
+                           [attr.data-target]="'#'+ 'submenu' + i" aria-expanded="true">{{item.name}}</a>
+                        <div class="collapse show" [attr.id]="'submenu' + i" aria-expanded="false">
+                          <ul class="flex-column pl-3 nav">
+                            <li class="nav-item" *ngFor="let item of item.objectiveList; let j=index">
+                              <a class="nav-link" [attr.href]="'#'+ 'submenus' + i+j" data-toggle="collapse"
+                                 [attr.data-target]="'#'+ 'submenus' + i+j" aria-expanded="true">{{item.name}}</a>
+                              <div class="collapse show" [attr.id]="'submenus' + i+j" aria-expanded="false">
+                                <ul class="flex-column pl-3 nav">
+                                  <li class="nav-item" *ngFor="let item of item.measureList">
+                                    <a class="nav-link"> {{item.name}}
+                                      <div class="iConsHover"><i class="fa fa-pencil-square-o cursorPointer"
+                                                                 (click)="editMeasure(item)"></i> <i
+                                        class="fa fa-trash cursorPointer"
+                                        (click)="deleteMeasure(item.id)"></i></div>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+
+                    </ul>
+                  </div>
+                  <div *ngIf="showPerspectiveWithObjectivesAndMeasures" class="center-alignContent">
+                    <p>Please Add Measures or select Scorecard Code</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="boxs_BG" style="">
+            <div class="row">
+
+              <div class="col-md-7 ">
+
+                <div>
+                  <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active show" id="measure-tab" data-toggle="pill" href="#measure2" role="tab"
+                         aria-controls="measure" aria-selected="true">Define Data Source</a></li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="measure-tab" data-toggle="pill" href="#kpi2" role="tab"
+                         aria-controls="measure" aria-selected="false">Link to existing KPIs</a></li>
+                  </ul>
+                </div>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade active show" id="measure2" role="tabpanel" aria-labelledby="measure-tab">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3">
+                          <label class="col-sm-6 col-form-label col-form-label-sm">Formula</label>
+                          <div class="col-sm-6 pr-0">
+                            <input type="text" class="form-control col-form-label-sm " formControlName="formula"
+                                   name="formula" placeholder="Formula">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3 p-0">
+                          <label for="" class="col-sm-6 col-form-label col-form-label-sm">Data Collector</label>
+                          <div class="col-sm-6 input_i_icon pr-0">
+                            <select formControlName='dataCollector' name='dataCollector'
+                                    class="form-control col-form-label-sm">
+                              <option selected [value]="null">Data Collector</option>
+                              <option *ngFor="let item of empMasterData" [value]="item.employeeName">
+                                {{ item.employeeName | uppercase}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3">
+                          <label for="" class="col-sm-6 col-form-label col-form-label-sm">Data Source</label>
+                          <div class="col-sm-6 pr-0">
+                            <input type="text" class="form-control col-form-label-sm " formControlName="dataSource"
+                                   name="dataSource" placeholder="Data Source">
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3">
+                          <label for="" class="col-sm-6 col-form-label col-form-label-sm">Data Quality</label>
+                          <div class="col-sm-6 pr-0">
+                            <input type="text" class="form-control col-form-label-sm " formControlName="dataQuality"
+                                   name="dataQuality" placeholder="Data Quality">
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3">
+                          <label for="" class="col-sm-6 col-form-label col-form-label-sm">Polarity
+                            <span class="red">*</span>
+                          </label>
+                          <div class="col-sm-6 pr-0">
+                            <select formControlName='polarity' name='polarity' (focus)="onFocusForElement('polarity')"
+                                    (focusout)="onFocusOutForElement()"
+                                    [ngClass]="{'my-error': shouldShowErrors('polarity', measureDefinationForm)}"
+                                    class="form-control col-form-label-sm">
+                              <option selected [value]="null">Polarity</option>
+                              <option *ngFor="let item of polarity" [value]="item.polarity">
+                                {{ item.polarity}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row mt-3 p-0">
+                          <label for="" class="col-sm-6 col-form-label col-form-label-sm">Lead/LAG</label>
+                          <div class="col-sm-6 input_i_icon pr-0">
+                            <select class="form-control col-form-label-sm" formControlName="leadOrLag" name="leadOrLag">
+                              <option>Select Lead/Log</option>
+                              <option>Lead</option>
+                              <option>Lag</option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                        
+
+
+                  
+                      <div class="col-md-6 m-0">                     
+                        <div class="form-group row">
+                          <label class="col-sm-6 col-form-label col-form-label-sm">Attachment</label>
+                          <div class="col-sm-6 pr-0 custom-file">
+                            <input type="file" #myInput class="custom-file-input cursorPointer" id="customFileLang"
+                                   (change)="uploadLogo($event)">
+                            <label class="custom-file-label" for="customFileLang"><span>{{fileName}}</span></label>
+                          </div>
+                        </div>
+
+                      </div>
+                 <!--    </div> -->
+                  </div>
+                  <div class="tab-pane fade " id="kpi2" role="tabpanel" aria-labelledby="measure-tab">
+                    <div class="p-4">
+                      <!--kpi modal pop up-->
+                      <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog"
+                           aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header text-center">
+                              <h4 class="modal-title w-100 font-weight-bold">KPI's</h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body mx-3">
+                              <ul class="list-group list-group-flush">
+                                <li class="list-group-item" *ngFor="let kpi of allKpis; let i=index">
+                                  <!-- Default checked -->
+                                  <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="check1{{kpi.name}}"
+                                           [ngModel]="isSelected(kpi.code)"
+                                           [ngModelOptions]="{standalone: true}"
+                                           (change)="selectKpi($event, kpi, i)" name="topicgroup_{{i}}">
+                                    <label class="custom-control-label" for="check1{{kpi.name}}">{{kpi.name}}</label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                              <button type="button" class="btn btn-secondary global-btn" data-dismiss="modal"
+                                      (click)="linkKpis()">
+                                Ok
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!--kpi modal pop up-->
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="" style="">
+                            <h5 style="position: absolute;top:-10px;left:10px;font-size:15px; font-weight:normal;">Add
+                              KPI<i class=" m-1 fa fa-plus cursorPointer" data-toggle="modal"
+                                    data-target="#modalLoginForm"></i></h5>
+
+                          </div>
+                        </div>
+                        <span class="badge-chip"
+                              *ngFor="let item of selectedKpis; let i=index">{{item}}</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="boxs_BG">
+                <div class="titleBG"> Link Series</div>
+                <div class="p-4">
+                  <!--kpi modal pop up-->
+                  <div class="modal fade" id="modalLoginFormSeries" tabindex="-1" role="dialog"
+                       aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header text-center">
+                          <h4 class="modal-title w-100 font-weight-bold">Series</h4>
+                        </div>
+                        <div class="modal-body mx-3">
+                          <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngFor="let series of allSeries; let i=index">
+                              <!-- Default checked -->
+                              <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="check11{{series.name}}"
+                                       (change)="selectSeries($event, series, i)">
+                                <label class="custom-control-label" for="check11{{series.name}}">{{series.name}}</label>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="linkSeries()">
+                            Link
+                          </button>
+                          <!--<button class="btn btn-info global-btn">Link</button>-->
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!--kpi modal pop up-->
+
+                  <div class="">Add Series
+                    <i class="fa fa-plus cursorPointer" data-toggle="modal" data-target="#modalLoginFormSeries"></i>
+                  </div>
+                  <span class="badge-chip" *ngFor="let item of selectedSeries; let i=index">{{item.name}}</span>
+                </div>
+                <div class="row mt-4 float-right">
+                  <button type="button" class="btn btn-info btn-sm mr-1" (click)="submitMeasures()"
+                          [disabled]="!measureDefinationForm.valid"
+                          [ngClass]="{'button-disabled': !measureDefinationForm.valid}"> Save
+                  </button>
+                  <button type="button" class="btn btn-cancel btn-sm" (click)="clearFields()"> Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+      <!-- ================= KPI Master End================ -->
+
+      <!-- ================= Series Start================ -->
+
+      <div class="tab-pane fade" id="series" role="tabpanel" aria-labelledby="series-tab">
+
+        <!-- ================= Series inner End================ -->
+
+        <!-- ================= Create Series Start================ -->
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="boxs_BG mt-4 createSeries">
+              <div class="titleBG"> Create Series</div>
+              <form [formGroup]="seriesForm">
+                <div class="row mt-5">
+                  <div class="col-md-4">
+                    <div class="form-group row m-0">
+                      <label for="" class="col-sm-6 col-form-label col-form-label-sm">Name
+                        <span class="red">*</span>
+                      </label>
+                      <div class="col-sm-6 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" placeholder="Name"
+                               (focus)="onFocusForElement('name')" (focusout)="onFocusOutForElement()"
+                               [ngClass]="{'my-error': shouldShowErrors('name', seriesForm)}" formControlName="name"
+                               name="name">
+                      </div>
+                    </div>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Frequency</label>
+                      <div class="col-sm-6 pr-0">
+                        <select class="form-control col-form-label-sm" formControlName="frequency" name="frequency">
+                          <option selected [value]="null">Reporting Frequency</option>
+                          <option *ngFor="let item of reportingFrequency" [value]="item.frequency">
+                            {{ item.frequency}}
+                          </option>
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group row m-0">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Alias</label>
+                      <div class="col-sm-6 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" placeholder="Alias"
+                               (focus)="onFocusForElement('alias')" (focusout)="onFocusOutForElement()"
+                               [ngClass]="{'my-error': shouldShowErrors('alias', seriesForm)}" formControlName="alias">
+                      </div>
+                    </div>
+                    <div class="form-group row m-0">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Data Type </label>
+                      <div class="col-sm-6 pr-0">
+                        <select class="form-control col-form-label-sm" formControlName="dataType" name="dataType"
+                                (change)="showCurrencyField($event)">
+                          <option selected [value]="null">Select Data Type</option>
+                          <option *ngFor="let item of dataType" [value]="item.type">{{item.type}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+
+                    <!--<div class="custom-control custom-radio mt-4 ml-3">-->
+                    <!--<input type="checkbox" class="custom-control-input" id="newProjectWith4Perapectives"-->
+                    <!--name="balancedScorecardRadios1"-->
+                    <!--(change)="setFlagOne($event.target)" [checked]="checkedOptionInSummaryReport">-->
+                    <!--<label class="custom-control-label cursorPointer" for="newProjectWith4Perapectives">Display-->
+                    <!--Series in Summary Reports</label>-->
+                    <!--</div>-->
+                    <!--<div class="custom-control custom-radio mt-4 ml-3">-->
+                    <!--<input type="checkbox" class="custom-control-input" id="emptyProject"-->
+                    <!--(change)="setFlagTwo($event.target)" [checked]="checkedOptionInDataTables"-->
+                    <!--name="balancedScorecardRadios">-->
+                    <!--<label class="custom-control-label cursorPointer" for="emptyProject">Display Series in Data-->
+                    <!--Tables</label>-->
+                    <!--</div>-->
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group row m-0 mb-2">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Formula </label>
+                      <div class="col-sm-6 pr-0">
+                        <input type="text" class="form-control col-form-label-sm" placeholder="Formula"
+                               (focus)="onFocusForElement('formula')" (focusout)="onFocusOutForElement()"
+                               [ngClass]="{'my-error': shouldShowErrors('formula', seriesForm)}"
+                               formControlName="formula"
+                               name="formula">
+                      </div>
+                    </div>
+                    <div class="form-group row m-0 mb-2" *ngIf="showCurrency">
+                      <label class="col-sm-6 col-form-label col-form-label-sm">Currency </label>
+                      <div class="col-sm-6 pr-0">
+                        <select class="form-control col-form-label-sm" formControlName="currencyType"
+                                name="currencyType">
+                          <option selected [value]="null">Select currency Unit</option>
+                          <option *ngFor="let unit of currencyUnit" [value]="unit.type">
+                            {{ unit.type}}
+                          </option>
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-md-12">
+                    <div class="float-right">
+                      <button type="button" class=" btn-sm btn btn-info mr-1"(click)="saveSeries()"
+                              [disabled]="!seriesForm.valid" [ngClass]="{'button-disabled': !seriesForm.valid}"> Save
+                      </button>
+                      <button type="button" class="btn btn-cancel btn-sm"(click)="clearSeriesFields()"> Cancel
+                      </button>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="boxs_BG">
+              <div class="titleBG"> Series</div>
+
+
+              <div class="col-md-12 bscTable scrollbart2">
+                <div class="bscTable">
+                  <table class=" table table-striped mt-2">
+                    <thead>
+                    <tr class="bscBg-primary white">
+                      <th scope="col">No</th>
+                      <th scope="col">Series</th>
+                      <th scope="col">Alias</th>
+                      <th scope="col">Formula</th>
+                      <th scope="col">Edit/Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of allSeries; let i=index">
+                      <td>{{i + 1}}</td>
+                      <td>{{item.name}}</td>
+                      <td>{{item.alias ? item.alias : 'NA'}}</td>
+                      <td>{{item.formula ? item.formula: 'NA'}}</td>
+                      <td><span class="iConsHover"> <i class="fa fa-pencil-square-o" (click)="editSeries(item)"></i>
+                            <i class="fa fa-trash" (click)="confirmDelete(item.id)"></i></span>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= Series End================ -->
+
+      <!-- ================= Performance Start================ -->
+
+      <div class="tab-pane fade" id="performance" role="tabpanel" aria-labelledby="performance-tab">
+        <div class="row">
+          <!-- ================= Left Said Start================ -->
+          <div class="col-md-7">
+            <div class="boxs_BG mt-4">
+              <div class="titleBG"> Performance</div>
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Chart Name </label>
+                        <div class="col-sm-7 ">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Chart Name">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Show Future Periods </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Show Future Periods">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Chart Title </label>
+                        <div class="col-sm-7 ">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Chart Title">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Y-Axis Title </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Y-Axis Title">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">X-Axis Title </label>
+                        <div class="col-sm-7 ">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="X-Axis Title">
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Y-Axis Min Value </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Y-Axis Min Value">
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                   <div class="row">
+                     <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Chart Type </label>
+                        <div class="col-sm-7">
+                          <select class="form-control col-form-label-sm">
+                            <option>Select Chart</option>
+                            <option>Chart 1</option>
+                            <option>Chart 2</option>
+                          </select>
+                        </div>
+                      </div>
+
+                     </div>
+                     <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Y-Axis Max Value </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Y-Axis Max Value">
+                        </div>
+                      </div>
+
+                     </div>
+                   </div>   
+                   <div class="row">
+                     <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Sort Chart Series</label>
+                        <div class="col-sm-7">
+                          <select class="form-control col-form-label-sm">
+                            <option>Select Sort Chart</option>
+                            <option>Chart 1</option>
+                            <option>Chart 2</option>
+                          </select>
+                        </div>
+                      </div>
+
+                     </div>
+                     <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Y-Axis Formate </label>
+                        <div class="col-sm-7 pr-0">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="Y-Axis Formate">
+                        </div>
+                      </div>
+
+                     </div>
+                   </div>
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <div class="form-group row m-0">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm">Chart Size </label>
+                            <div class="col-sm-7">
+                              <select class="form-control col-form-label-sm">
+                                <option>Select Chart Size</option>
+                                <option>2343</option>
+                                <option>5464</option>
+                              </select>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row mt-3 bscCustomSwitch">
+                            <label for="" class="col-sm-5 col-form-label col-form-label-sm"> </label>
+                            <div class="col-sm-7 pr-0 custom-controls-stacked d-block">
+                              <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="switch1">
+                                <label class="custom-control-label" for="switch1">Reverse Y-Axis</label>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Chart Description </label>
+                          <div class="col-sm-7">
+                            <textarea class="form-control col-form-label-sm" placeholder="Chart Description"></textarea>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Chart Series </label>
+                          <div class="col-sm-7 pr-0">
+                            <input type="text" class="form-control col-form-label-sm" placeholder="Chart Series">
+                          </div>
+                        </div>
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Shape </label>
+                          <div class="col-sm-7 pr-0">
+                            <select class="form-control col-form-label-sm">
+                              <option>Select Shape</option>
+                              <option>Shape 1</option>
+                              <option>Shape 2</option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Reporting Frequency </label>
+                          <div class="col-sm-7">
+                            <select class="form-control col-form-label-sm">
+                              <option>Select Frequency</option>
+                              <option>Frequency 1</option>
+                              <option>Frequency 2</option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">No. of Periods </label>
+                          <div class="col-sm-7 pr-0">
+                            <input type="text" class="form-control col-form-label-sm" placeholder="No. of Periods">
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Period to Display </label>
+                          <div class="col-sm-7">
+                            <select class="form-control col-form-label-sm">
+                              <option>Select Period</option>
+                              <option>Period 1</option>
+                              <option>Period 2</option>
+                            </select>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm">Datalable Style </label>
+                          <div class="col-sm-7 pr-0">
+                            <input type="text" class="form-control col-form-label-sm" placeholder="Datalable Style">
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Market </label>
+                        <div class="col-sm-7">
+                          <select class="form-control col-form-label-sm">
+                            <option>Select Market</option>
+                            <option>Market 1</option>
+                            <option>Market 2</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm">Custom Chart Formates </label>
+                        <div class="col-sm-7">
+                          <select class="form-control col-form-label-sm">
+                            <option>Select Custom Chart Formates</option>
+                            <option>2343</option>
+                            <option>5464</option>
+                          </select> 
+                        </div>
+                      </div>
+
+                    </div>
+                    </div>
+                  <!-- </div> -->
+                  <br/>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row m-0"> 
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm red">Additianal Fields </label>
+                        <div class="col-sm-7 ">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group row m-0">
+                        <label for="" class="col-sm-5 col-form-label col-form-label-sm red">Additianal Fields </label>
+                        <div class="col-sm-7 ">
+                          <input type="text" class="form-control col-form-label-sm" placeholder="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm red">Additianal Fields </label>
+                          <div class="col-sm-7">
+                            <input type="text" class="form-control col-form-label-sm" placeholder="">
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group row m-0">
+                          <label for="" class="col-sm-5 col-form-label col-form-label-sm red">Additianal Fields </label>
+                          <div class="col-sm-7 ">
+                            <input type="text" class="form-control col-form-label-sm" placeholder="">
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                    <div class="col-md-6">
+                     
+                     
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-12">
+                      <div class="float-right">
+                        <button type="button" class=" btn-sm btn btn-cancel mr-1"> Cancel</button>
+                        <button type="button" class="btn btn-info btn-sm"> Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- ================= Left Said End================ -->
+
+          <!-- ================= Right Said Start================ -->
+          <div class="col-md-5">
+            <div class="boxs_BG mt-4">
+              <div class="titleBG"> Chart</div>
+
+              <div class="mt-4 text-center">
+                <h6> Name of the Chart</h6>
+                <div class="row">
+                  <div class="col-md-1">
+                    <h6 style="width: 1px; word-break: break-all;"> Y -Axis</h6>
+                  </div>
+                  <div class="col-md-11" id="chartdiv2" style="height: 290px;"></div>
+                </div>
+                <h6> X -Axis</h6>
+              </div>
+
+            </div>
+          </div>
+          <!-- ================= Right Said End================ -->
+        </div>
+
+
+      </div>
+
+      <!-- ================= Performance End================ -->
+
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+

@@ -1,0 +1,42 @@
+<div class="container-fluid loginBG">
+  <div class="row">
+    <div class="col-md-8 bse">
+      <img src="assets/images/BSE.svg">
+    </div>
+    <div class="col-md-3 loginFormBg">
+      <div class="text-center">
+        <img src="assets/images/Fruisce.png" class="img-fluid"/>
+      </div>
+      <form class="example-form" [formGroup]="loginForm">
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput type="email"  placeholder="Email" (keydown)="preventAfterSubmit()" formControlName="username"
+                tabindex="1"   name="username">
+            <mat-error *ngIf="loginForm.controls['username'].errors?.required">This is required</mat-error>
+            <mat-error *ngIf="loginForm.controls['username'].errors?.email">Enter a Valid email</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput type="password" tabindex="2"  placeholder="Password" formControlName="password">
+            <mat-error *ngIf="loginForm.controls['password'].errors?.required">This is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="float-right">
+          <a class="forgetpassword linktxt"  routerLink="/forgotpassword">Forgot Password? </a>
+        </div>
+        <div class="text-center" style="margin-top: 2rem">
+          <button type="button" class="btn btn-login global-btn" tabindex="3" (click)="RedirectToDashboard()"
+                  [disabled]="!loginForm.valid" autofocus
+                  [ngClass]="{'button-disabled': !loginForm.valid}"
+          >Login
+          </button>
+        </div>
+      </form>
+      <div *ngIf="InvalidUser" style="text-align: center">
+        <span class="red">{{InvalidUser}}</span>
+      </div>
+
+    </div>
+  </div>
+</div>

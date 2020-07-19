@@ -1,0 +1,30 @@
+.p-t-30 {
+  padding-top: 30px;
+}
+.example-full-width {
+  width: 100%;
+}
+table {
+  width: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+th {
+  color: #fff !important;
+  text-transform: uppercase !important;
+  vertical-align: inherit !important;
+}
+
+th, td {
+  vertical-align: inherit;
+  border-right: 1px solid rgba(0, 0, 0, .12);
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  text-align: center !important;
+}
+
+.boxs_BG input {
+  background-color: transparent;
+  font-size: 12px;
+  margin-bottom: 0;
+}

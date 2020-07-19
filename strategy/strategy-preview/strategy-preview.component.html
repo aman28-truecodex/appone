@@ -1,0 +1,146 @@
+<div class="container-fluid gryBG">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="boxs_BG mt-5" style="min-height: 485px;">
+        <div class="titleBG"> Organization Structure</div>
+        <div class="mt-4 scrollbart">
+          <div class="row">
+            <div id="left" class="span3">
+              <ul id="menu-group-1" class="nav menu">
+                <li class="item-1 deeper parent active cursorPointer" *ngFor="let item of orgTree">
+                  <a class="minGroupCompany" (click)="getGroupCompDetails(item.id)">
+                    <span class="ml-4">{{item.name}}</span>
+                    <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                  </a>
+                  <ul class="children" id="sub-item-1">
+                    <li class="rightListHover corporateUnit" *ngFor="let child of item.children">
+                      <ng-container *ngIf="item.children.length > 0">
+                        <a class="hoverArrow" (click)="getOrganization(child.id)">
+                          <span>{{child.name}}</span>
+                          <span class="float-right"><i class="fa fa-angle-right"></i></span>
+                        </a>
+                        <ul class="children">
+                          <li class="item-3 mt-0" *ngFor="let subChild of child.children"
+                              (click)="getSubUnitById(subChild.id)">
+                            <a>
+                              <span class="sign"><i class="icon-play"></i></span>
+                              <span>{{subChild.name}}</span>
+                              <!--<i class="fa fa-trash float-right" style="font-size: 20px;cursor: pointer"-->
+                              <!--(click)="deleteOrg(subChild.id)" fghghghgh-->
+                              <!--&gt;</i>-->
+                            </a>
+                          </li>
+
+                        </ul>
+                      </ng-container>
+                      <div *ngIf="item.children.length <= 0" class="center-alignContent">
+                        Please Add Organization units
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <br/>
+          <br/><br/><br/>
+          <br/>
+          <br/><br/><br/>
+          <br/>
+          <br/>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="boxs_BG mt-5">
+        <div class="titleBG"> Group Company</div>
+        <div class="float-lg-right"><span><a class="padding10" style="cursor: pointer;margin-right: 8px"
+                                             (click)="editOrganization()"><i
+          class="fa fa-edit"></i></a>
+          <a class="padding10" style="cursor: pointer;margin-left: 8px;" (click)="addOrganization()"><i
+            class="fa fa-plus"></i></a>
+          </span></div>
+        <div class="row mt-4">
+          <div class="col-md-6 groupCompanyList">
+
+            <div class="row">
+              <div class="col-md-6">Organization Unit Code:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.code}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Organization Unit Name:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.name}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Parnet Organization Unit Code:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.parentCode}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Type of Unit:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.type}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Position:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.head}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Number of Employees:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.employeeCount}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Location of Organization Unit:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.location}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">Manager:</div>
+              <div class="col-md-6 gCompRightList">{{organizationData.managerName}}</div>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="text-center" *ngIf="logoUrl">
+              <p>Organization Logo </p>
+              <img [src]="logoUrl" width="120" height="120"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="groupCompanyTabs tabs-content">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs " role="tablist">
+
+              <li class="nav-item" *ngFor="let item of missionVisionValues; let i = index" style="float: left"
+                  (click)="showTab(item.tab, i)">
+                <a class="nav-link show" data-toggle="tab" role="tab" [ngClass]="{'active': i == selectedIndex}"> <img
+                  style="height: 20px;width: 20px"
+                  [src]="i == selectedIndex ? item.img_white : item.img_black" alt=""> {{item.title}}</a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div>
+              <div class="active show pr-2 pl-2" id="home" role="tabpanel" *ngIf="isStepOne">
+                <p>{{organizationData.missionStmt}}</p>
+              </div>
+              <div class="tab-pane pr-2 pl-2" id="profile" role="tabpanel" *ngIf="isStepTwo">
+                <p>{{organizationData.visionStmt}} </p>
+              </div>
+              <div class="tab-pane pr-2 pl-2" id="messages" role="tabpanel" *ngIf="isStepThree">
+                <p>{{organizationData.valuesStmt}} </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
